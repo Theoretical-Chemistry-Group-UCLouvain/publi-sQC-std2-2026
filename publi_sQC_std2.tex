@@ -1,0 +1,119 @@
+\documentclass[%
+ aip,
+% jmp,
+% bmf,
+% sd,
+% rsi,
+ amsmath,amssymb,
+preprint,%
+% reprint,%
+%author-year,%
+%author-numerical,
+]{revtex4-2}
+
+\usepackage{graphicx}
+\usepackage{dcolumn}
+\usepackage{bm}
+%\linenumbers\relax % Commence numbering lines
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage{etoolbox}
+
+%% Apr 2021: AIP requests that the corresponding 
+%% email to be moved after the affiliations
+\makeatletter
+\def\@email#1#2{%
+ \endgroup
+ \patchcmd{\titleblock@produce}
+  {\frontmatter@RRAPformat}
+  {\frontmatter@RRAPformat{\produce@RRAP{*#1\href{mailto:#2}{#2}}}\frontmatter@RRAPformat}
+  {}{}
+}%
+\makeatother
+
+\begin{document}
+
+
+\title{Molecular responses in a snap: the \texttt{std2} package}
+
+\author{Pierre Beaujean}
+ \affiliation{
+Theoretical Chemistry Laboratory, Unit of Theoretical and Structural Physical Chemistry, Namur Institute of Structured Matter (NISM), University of Namur, Rue de Bruxelles, 61, B-5000 Namur (Belgium)
+ }
+ 
+\author{Stephan Grimme}%
+\affiliation{ 
+	Mulliken Center for Theoretical Chemistry, Institut für Physikalische und Theoretische Chemie, Beringstr. 4, G-53115 Bonn (Germany)
+}
+
+\author{Marc de Wergifosse}
+\email{marc.dewergifosse@uclouvain.be}
+\affiliation{
+	Theoretical Chemistry Group, Molecular Chemistry, Materials and Catalysis Division (MOST), Institute of Condensed Matter and Nanosciences, Université Catholique de Louvain, Louvain-la-Neuve B-1348 (Belgium)
+}
+
+\date{\today}
+
+\begin{abstract}
+An abstract.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+We need sQC for large system and/or snapshots of smaller system + history of the different flavors of sQC, using Refs.~\citenum{dewergifossePerspectiveSimplifiedQuantum2021}, \citenum{loffelsenderSimplifiedQuantumChemistry2024}, and \citenum{dewergifosseEXactIntegralSimplified2024}.
+
+\section{Theory}
+
+Using Ref.~\citenum{loffelsenderSimplifiedQuantumChemistry2024}:
+
+\begin{itemize}
+	\item DFT ;
+	\item TD-DFT, then simplified TD-DFT, from XsTD to sTD ;
+	\item NTOs and response orbitals ;
+	\item Implementation details (Fortran, libcint, etc).
+\end{itemize}
+
+\section{Illustrations}
+
+\subsection{Obtaining the ground state}
+
+... And interfacing with other programs.
+
+\subsection{Excitations and 1PA spectra}
+
+\texttt{stda} was originally designed for UV and ECD spectra \cite{grimmeSimplifiedTammDancoffDensity2013,bannwarthSimplifiedTimedependentDensity2014,grimmeUltrafastComputationElectronic2016,loffelsenderAllAtomQuantumMechanical2025} (and then with XsTD \cite{dewergifosseEXactIntegralSimplified2024,dewergifosseComputingExcitedStates2024,maraldiEvaluatingPerformanceExact2025}), but was later extended to spin-flip \cite{dewergifosseSimplifiedSpinFlipTimeDependent2019,dewergifosseAreFullyConjugated2019}, XAS [?], and ESA \cite{dewergifosseNonlinearresponsePropertiesSimplified2019}.
+
+\subsection{Linear responses}
+
+Optical rotations \cite{dewergifosseSimplifiedTimedependentDensity2020} and alpha.
+
+\subsection{Quadratic responses}
+
+beta \cite{dewergifosseNonlinearresponsePropertiesSimplified2018,seibertDynamicStructuralEffects2020,beaujeanAllAtomQuantumMechanical2021,lescosSelfassemblingStructureNonlinear2021,dewergifosseEXactIntegralSimplified2024} and 2PA spectra \cite{dewergifosseUltrafastEvaluationTwoPhoton2022,dewergifosseEXactIntegralSimplified2024,dewergifosseComputingExcitedStates2024,loffelsenderAllAtomQuantumMechanical2025,maraldiEvaluatingPerformanceExact2025}
+
+\subsection{Post-treatments}
+
+NTOs and response orbitals \cite{dewergifosseUnifiedStrategyChemically2020}.
+
+\section{Conclusions and perspectives}
+
+\begin{itemize}
+	\item ``\texttt{std2} provides approximations that retain most of the physics" [citation needed]
+	\item What about AI?
+\end{itemize}
+
+\begin{acknowledgments}
+	We acknowledge past and future devs.
+\end{acknowledgments}
+
+\section*{Data Availability Statement}
+
+Data sharing is not applicable to this article as no new data were created or analyzed in this study.
+
+\bibliography{biblio}
+
+\end{document}
