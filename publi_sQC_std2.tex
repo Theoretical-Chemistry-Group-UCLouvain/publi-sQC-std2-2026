@@ -68,7 +68,7 @@ We need sQC for large system and/or snapshots of smaller system + history of the
 
 \section{Theory}
 
-Using Ref.~\citenum{loffelsenderSimplifiedQuantumChemistry2024}:
+Using Ref.~\citenum{loffelsenderSimplifiedQuantumChemistry2024} (and others):
 
 \begin{itemize}
 	\item DFT ;
@@ -85,29 +85,29 @@ Using Ref.~\citenum{loffelsenderSimplifiedQuantumChemistry2024}:
 
 \subsection{Excitations and 1PA spectra}
 
-\texttt{stda} was originally designed for UV and ECD spectra \cite{grimmeSimplifiedTammDancoffDensity2013,bannwarthSimplifiedTimedependentDensity2014,grimmeUltrafastComputationElectronic2016,loffelsenderAllAtomQuantumMechanical2025} (and then with XsTD \cite{dewergifosseEXactIntegralSimplified2024,dewergifosseComputingExcitedStates2024,maraldiEvaluatingPerformanceExact2025}), but was later extended to spin-flip \cite{dewergifosseSimplifiedSpinFlipTimeDependent2019,dewergifosseAreFullyConjugated2019}, XAS [?], and ESA \cite{dewergifosseNonlinearresponsePropertiesSimplified2019}.
+\texttt{stda} was originally designed for UV/Vis and ECD spectra with sTD-DFT\cite{grimmeSimplifiedTammDancoffDensity2013,bannwarthSimplifiedTimedependentDensity2014,bannwarthElectronicCircularDichroism2015,grimmeUltrafastComputationElectronic2016,bannwarthElectronicCircularDichroism2016,seibertExtensionElementParameter2019,loffelsenderAllAtomQuantumMechanical2025}, then with XsTD \cite{dewergifosseEXactIntegralSimplified2024,dewergifosseComputingExcitedStates2024,maraldiEvaluatingPerformanceExact2025}, but was later extended to spin-flip \cite{dewergifosseSimplifiedSpinFlipTimeDependent2019,dewergifosseAreFullyConjugated2019,kostadinovaSingletFissionTinkertoys2022}, XAS [?], and ESA \cite{dewergifosseNonlinearresponsePropertiesSimplified2019}. Note that UV/Vis\cite{wiebelerQMMMBenchmarking2019,streiterImpactChlorineInternal2020,batraBenchmarkSimplifiedTimeDependent2020,mayOpticalLimitingProperties2020,hidalgo-rosaSensingMechanismElucidation2020,greensteinOrganicPhotovoltaicEfficiency2022,buninLowSymmetryPhthalocyaninesBearing2022,yangEnergybasedFragmentationContribution2022,dmitrienkoExploringReplacementAxially2022,usoltsevSemiEmpiricalCalculationBodipy2022,eroshinIronIIComplexesPorphyrin2023,degtyarevInvestigationSpectraElectronic2023,seveurModelingPhotoAbsorptionProperties2023,lindenthalUnderstandingOpticalProperties2023,paulsEfficientExcitonCoupling2025} (and many others, in fact) and ECD\cite{gehroldAxialHelicalPlanar2016,covingtonAtropoisomerismBiflavonesAbsolute2016,jarzebskiDiastereoselectiveSelfAssemblyNeutral2017,ianniApplicationInvertedChirality2019,mohrEnantioselectivePropertiesNeglected2025} calculations (with sTD-DFT) are also done the wild... Mostly thanks to the ORCA implementation.
 
 \subsection{Linear responses}
 
-Optical rotations \cite{dewergifosseSimplifiedTimedependentDensity2020} and alpha.
+Optical rotations \cite{dewergifosseSimplifiedTimedependentDensity2020} and alpha (no XsTD there, so should we revamp the OR45 benchmark?).
 
 \subsection{Quadratic responses}
 
-beta \cite{dewergifosseNonlinearresponsePropertiesSimplified2018,seibertDynamicStructuralEffects2020,beaujeanAllAtomQuantumMechanical2021,lescosSelfassemblingStructureNonlinear2021,dewergifosseEXactIntegralSimplified2024} and 2PA spectra \cite{dewergifosseUltrafastEvaluationTwoPhoton2022,dewergifosseEXactIntegralSimplified2024,dewergifosseComputingExcitedStates2024,loffelsenderAllAtomQuantumMechanical2025,maraldiEvaluatingPerformanceExact2025}
+beta \cite{dewergifosseNonlinearresponsePropertiesSimplified2018,seibertDynamicStructuralEffects2020,beaujeanAllAtomQuantumMechanical2021,lescosSelfassemblingStructureNonlinear2021,dewergifosseEXactIntegralSimplified2024} and 2PA spectra \cite{dewergifosseUltrafastEvaluationTwoPhoton2022,dewergifosseEXactIntegralSimplified2024,dewergifosseComputingExcitedStates2024,loffelsenderAllAtomQuantumMechanical2025,maraldiEvaluatingPerformanceExact2025} (but mostly from the XsTD era).
 
 \subsection{Post-treatments}
 
-NTOs and response orbitals \cite{dewergifosseUnifiedStrategyChemically2020}.
+NTOs (first seen in Ref.~\citenum{dewergifosseAreFullyConjugated2019}?) and response orbitals \cite{dewergifosseUnifiedStrategyChemically2020}.
 
 \section{Conclusions and perspectives}
 
 \begin{itemize}
 	\item ``\texttt{std2} provides approximations that retain most of the physics" [citation needed]
-	\item What about AI?
+	\item What about AI?\cite{greensteinOrganicPhotovoltaicEfficiency2022,greensteinTutorialDeterminingBest2023}
 \end{itemize}
 
 \begin{acknowledgments}
-	We acknowledge past and future devs.
+	We acknowledge past, present, and future devs.
 \end{acknowledgments}
 
 \section*{Data Availability Statement}
