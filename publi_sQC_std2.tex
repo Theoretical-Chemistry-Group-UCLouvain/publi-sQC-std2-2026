@@ -35,6 +35,8 @@ preprint,%
 }%
 \makeatother
 
+\newcommand\dstack[2]{\overset{#2}{#1}}
+
 \begin{document}
 
 
@@ -110,11 +112,11 @@ When such quantities cannot be obtained directly as expectation values of approp
 For example: 
 \begin{inparaenum}[(i)]
 	\item a change in molecular geometry ($\Delta \vec{x}$) is linked to the molecular gradient (first order) and to harmonic vibrational frequencies derived from the molecular Hessian (second order),
-	\item the application of a time-dependent magnetic field $\vec{B}(t)$ yields properties such as optical rotation (via the electric-magnetic polarizability, $G$) and NMR shieldings, or
-	\item the application of a time-dependent electric field $\vec{F}(t)$ gives access to the polarizability ($\alpha$), the first hyperpolarizability ($\beta$), and related quantities.
+	\item the application of a time-dependent magnetic field $\vec{B}(t)$ yields properties such as optical rotation (via the electric-magnetic polarizability, $\dstack{G}{\leftrightarrow}$) and NMR shieldings, or
+	\item the application of a time-dependent electric field $\vec{F}(t)$ gives access to the polarizability ($\dstack{\alpha}{\leftrightarrow}$), the first hyperpolarizability ($\dstack{\beta}{\dstack{\leftrightarrow}{\leftarrow}}$), and related quantities.
 \end{inparaenum}
 In passing, when an electromagnetic field is applied, the induced dipole moment is given by the following Taylor expansion:\begin{equation}
-	\vec\mu_{ind} = \alpha\cdot\vec{F} + \frac{1}{2}\beta:\vec{F}\vec{F}+ G\cdot\frac{\partial\vec B}{\partial t} + \ldots
+	\vec\mu_{ind} = \dstack{\alpha}{\leftrightarrow}\cdot\vec{F} + \frac{1}{2}\dstack{\beta}{\dstack{\leftrightarrow}{\leftarrow}}:\vec{F}\vec{F}+ \dstack{G}{\leftrightarrow}\cdot\frac{\partial\vec B}{\partial t} + \ldots
 \end{equation}
 
 However, the Hohenberg-Kohn and Kohn-Sham theorems are valid only for stationary (time-independent) situations. 
@@ -297,14 +299,14 @@ Formally, any linear response function admits a sum-over-states representation:\
 	\braket{\braket{\hat A; \hat B}}_{\omega} = \sum_{\ket{m}} \frac{\braket{0|\hat A|m}\braket{m|\hat B|0}}{\omega-\omega_m} - \frac{\braket{0|\hat B|m}\braket{m|\hat A|0}}{\omega+\omega_m}.
 	\label{eq:soslin}
 \end{equation}
-For $\hat A = \hat B = \hat\mu$ ($\vec\mu$ is the electric dipole operator), Eq.~\eqref{eq:soslin} yields the electric dipole polarizability $\alpha$, whereas choosing $\hat A = \hat\mu$ and $\hat B = \hat m$ ($\hat m$ is the magnetic moment operator) gives the electric–magnetic dipole polarizability $G$.
+For $\hat A = \hat B = \hat\mu$ ($\vec\mu$ is the electric dipole operator), Eq.~\eqref{eq:soslin} yields the electric dipole polarizability $\dstack{\alpha}{\leftrightarrow}$, whereas choosing $\hat A = \hat\mu$ and $\hat B = \hat m$ ($\hat m$ is the magnetic moment operator) gives the electric–magnetic dipole polarizability $\dstack{G}{\leftrightarrow}$.
 Using the response vectors defined in Eq.~\eqref{eq:response}, the same quantity can be recast as
 \begin{equation}
-	\braket{\braket{\hat A_\zeta; \hat B_\eta}}_{\omega} = 2\,\sum_{ia} A_{\zeta,ia}\,\underbrace{[X_{\eta, ia}(\omega) \pm Y_{\eta,ia}(\omega)]}_{\gamma^{(\pm)}_{\eta,ia}(\omega)},
+	\braket{\braket{\hat A_\zeta; \hat B_\eta}}_{\omega} = Tr[A_\zeta \gamma^{(\pm)}_\eta(\omega)] = 2\,\sum_{ia} A_{\zeta,ia}\,\underbrace{[X_{\eta, ia}(\omega) \pm Y_{\eta,ia}(\omega)]}_{\gamma^{(\pm)}_{\eta,ia}(\omega)},
 	\label{eq:linresp}
 \end{equation}
 where the occupied–virtual elements of $\mathbf A_\zeta$ are given by $\braket{i|\hat A_\zeta|a}$, and $\gamma^{(\pm)}_{\eta}(\omega)$ defines the frequency-dependent transition density matrix ($\omega$PDM).  
-For real operators $\hat B$ such as $\hat\mu$, the $+$ branch is used to obtain the relevant tensor components of $\alpha$ and $G$.
+For real operators $\hat A$ such as $\hat\mu$, the $+$ branch is used to obtain the relevant tensor components of $\dstack{\alpha}{\leftrightarrow}$ and $\dstack{G}{\leftrightarrow}$.
 
 Residues of Eq.~\eqref{eq:soslin} yield the ground-to-excited-state transition moments,
 \begin{equation*}
