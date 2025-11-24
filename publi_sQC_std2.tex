@@ -110,9 +110,12 @@ When such quantities cannot be obtained directly as expectation values of approp
 For example: 
 \begin{inparaenum}[(i)]
 	\item a change in molecular geometry ($\Delta \vec{x}$) is linked to the molecular gradient (first order) and to harmonic vibrational frequencies derived from the molecular Hessian (second order),
-	\item the application of a time-dependent magnetic field $\vec{H}(t)$ yields properties such as NMR shieldings, or
-	\item the application of a time-dependent electric field $\vec{F}(t)$ gives access to the dipole moment ($\mu$), the polarizability ($\alpha$), the first hyperpolarizability ($\beta$), and related quantities.
+	\item the application of a time-dependent magnetic field $\vec{B}(t)$ yields properties such as optical rotation (via the electric-magnetic polarizability, $G$) and NMR shieldings, or
+	\item the application of a time-dependent electric field $\vec{F}(t)$ gives access to the polarizability ($\alpha$), the first hyperpolarizability ($\beta$), and related quantities.
 \end{inparaenum}
+In passing, when an electromagnetic field is applied, the induced dipole moment is given by the following Taylor expansion:\begin{equation}
+	\vec\mu_{ind} = \alpha\cdot\vec{F} + \frac{1}{2}\beta:\vec{F}\vec{F}+ G\cdot\frac{\partial\vec B}{\partial t} + \ldots
+\end{equation}
 
 However, the Hohenberg-Kohn and Kohn-Sham theorems are valid only for stationary (time-independent) situations. 
 Fortunately, Runge and Gross~\cite{rungeDensityFunctionalTheoryTimeDependent1984} extended DFT to the time-dependent domain by proving that the time-dependent electron density uniquely determines the time-dependent external potential, thereby generalizing the first Hohenberg-Kohn theorem. 
@@ -148,7 +151,7 @@ In time-dependent DFT (TD-DFT), for a time-dependent perturbation operator $\hat
 	\end{pmatrix},
 	\label{eq:response}
 \end{equation}
-where the elements of $\mathbf{V}_\zeta$ and $\mathbf{V}_\zeta^\star$ are given by $\mathbf{V}_{\zeta, ia} = \langle i | \hat{V} | a \rangle$ and $\mathbf{V}_{\zeta, ia}^\star = \langle a | \hat{V} | i \rangle$. 
+where the elements of $\mathbf{V}_\zeta$ and $\mathbf{V}_\zeta^\star$ are given by ${V}_{\zeta, ia} = \langle i | \hat{V} | a \rangle$ and ${V}_{\zeta, ia}^\star = \langle a | \hat{V} | i \rangle$. 
 These vectors collect the off-diagonal matrix elements of $\langle p | \hat{V} | q \rangle$ corresponding to excitation ($i \to a$) and de-excitation ($a \to i$) processes. 
 The vectors $\mathbf{X}_\zeta(\omega)$ and $\mathbf{Y}_\zeta(\omega)$ therefore describe the excitation and de-excitation components of the linear response, respectively.
 The matrices $\mathbf{A}$ and $\mathbf{B}$ constitute the electronic Hessian (supermatrices). 
@@ -196,12 +199,12 @@ which is known as the Casida equation~\cite{casidaTimeDependentDensityFunctional
 More precisely, Eq.~\eqref{eq:casida} is a symplectic eigenvalue problem~\cite{furcheAcceleratingMolecularProperty2016}, where each positive eigenvalue $\omega_m$ corresponds to a transition energy from the ground state $\ket{0}$ to an excited state $\ket{m}$. 
 The associated amplitude vectors $\mathbf{X}$ and $\mathbf{Y}$ describe, respectively, the excitation and de-excitation components of each transition.
 
-Once the excitation or response vectors are computed, they can be assembled into the desired property tensors. 
-For large systems, however, the dimensions of the $\mathbf{A}$ and $\mathbf{B}$ matrices and the cost of computing their elements rapidly become prohibitive. 
+Once the excitation or response vectors are computed, they can be assembled into the desired property tensors (see below). 
+In practice, this is done via the computation of the $\mathbf A \pm \mathbf B$ matrices, rather than the $\mathbf A$ and $\mathbf B$ matrices themselves.\cite{casidaTimeDependentDensityFunctional1995,bannwarthSimplifiedTimedependentDensity2014,furcheAcceleratingMolecularProperty2016,parkerQuadraticResponseProperties2018}
+For large systems, however, the dimensions of the $\mathbf{A} \pm \mathbf{B}$ matrices and the cost of computing their elements rapidly become prohibitive. 
 To address this issue and provide a more efficient alternative that balances computational cost and accuracy, \citeauthor{grimmeSimplifiedTammDancoffDensity2013} introduced in 2013 a simplified variant of TD-DFT within the TDA framework, known as simplified TDA (sTDA)~\cite{grimmeSimplifiedTammDancoffDensity2013}. 
-One year later, the same simplifications were extended to the full TD-DFT formalism, yielding the sTD-DFT method~\cite{bannwarthSimplifiedTimedependentDensity2014}. 
-Originally developed for UV/Vis and ECD spectra, these simplified approaches have since been generalized to various types of molecular response properties~\cite{dewergifossePerspectiveSimplifiedQuantum2021,loffelsenderSimplifiedQuantumChemistry2024}. 
-This generalization forms the topic of the next subsection.
+One year later, the same simplifications were extended to the full TD-DFT formalism, yielding the sTD-DFT method~\cite{bannwarthSimplifiedTimedependentDensity2014}, which was recently extended to yield XsTD-DFT\cite{dewergifosseEXactIntegralSimplified2024}. 
+This is the topic of the next subsection.
 
 \subsection{The simplified TD-DFT framework}
 
@@ -235,7 +238,7 @@ As a consequence, each (X)sTD-DFT calculation proceeds through the following seq
 
 Two simplified TD-DFT variants are examined in this work: the recently introduced XsTD-DFT approach,\cite{dewergifosseEXactIntegralSimplified2024} and the original sTD-DFT formalism.\cite{bannwarthSimplifiedTimedependentDensity2014}  
 The XsTD-DFT method was specifically designed to overcome several shortcomings of sTD-DFT, most notably its limited reliability for systems with substantial long-range exchange or pronounced charge-transfer character.  
-XsTD-DFT assumes a range-separated hybrid (RSH) exchange–correlation functional,\cite{dewergifosseComputingExcitedStates2024} and constructs the approximate TD-DFT supermatrix elements by removing all explicit XCF contributions. The resulting expressions are:
+XsTD-DFT assumes a range-separated hybrid (RSH) XCFs,\cite{dewergifosseComputingExcitedStates2024} and constructs the approximate TD-DFT supermatrix elements by removing all explicit XCF contributions. The resulting expressions are:
 \begin{align}
 	(\mathbf A'+ \mathbf B')_{ia,jb} &=  \delta_{ij}\delta_{ab} (\varepsilon_a - \varepsilon_i)
 	+ 4\,(ia|jb)' - b_x\,[(ib|aj)'+(ij|ab)'] \nonumber\\&\hspace{2em}- c_x\,[(ij|\mathrm{erf}(\omega r)|ab)'+ (ib|\mathrm{erf}(\omega r)|aj)'],\nonumber\\
@@ -252,7 +255,7 @@ Since XsTD-DFT respects the ZDO approximation, and all requisite bielectronic te
 \end{equation}
 with $\mathbf C^\perp = \mathbf C\,\mathbf S^{-1/2}$.
 
-In contrast, the sTD-DFT model retains the global hybrid form of the exchange–correlation functional.  
+In contrast, the sTD-DFT model retains the global hybrid form of the XCF (Eq.~\eqref{eq:TD-AandB}).  
 The approximate electronic Hessian elements take the form\cite{grimmeSimplifiedTammDancoffDensity2013,bannwarthSimplifiedTimedependentDensity2014}
 \begin{align}
 	(\mathbf A'+ \mathbf B')_{ia,jb} &= \delta_{ij}\delta_{ab} (\varepsilon_a - \varepsilon_i)
@@ -265,7 +268,7 @@ These integrals are evaluated through a (atomic) monopole-based representation i
 	(ia|jb)'_K = \sum_{AB} q_A^{ia}\,q_B^{jb}\,(AA|BB)_K, 
 	\qquad 
 	q_A^{ia} = \sum_{\mu \in A} \big(C^{\perp}_{\mu i}\big)^\star C^{\perp}_{\mu a},
-	\label{eq:cstd}
+	\label{eq:sints}
 \end{equation}
 where the sums run over atomic centers $A$ and $B$.  
 The required two-center terms $(AA|BB)$ are evaluated with Mataga–Nishimoto–Ohno–Klopman (MNOK) damped Coulomb operators.\cite{klopmanSemiempiricalTreatmentMolecular1964}  
@@ -281,18 +284,89 @@ Exchange-type integrals employ
 	\left[\frac{1}{R_{AB}^{\gamma_K} + \eta_{AB}^{-\gamma_K}}\right]^{1/\gamma_K}.
 \end{equation*}
 
-Note, however, that because the explicit evaluation of all $(pq|rs)'$ terms via Eq.~\eqref{eq:xsints} is significantly more demanding in XsTD-DFT than the corresponding sTD-DFT expressions, Ref.~\citenum{dewergifosseEXactIntegralSimplified2024} recommends a hybrid workflow.  
+Note, however, that because the explicit evaluation of all $(pq|rs)'$ terms via Eq.~\eqref{eq:xsints} is significantly more demanding in XsTD-DFT than the corresponding sTD-DFT expressions via Eq.~\eqref{eq:sints}, Ref.~\citenum{dewergifosseEXactIntegralSimplified2024} recommends a hybrid workflow.  
 In this strategy, CSF screening is performed using sTD-DFT expressions [Eq.~\eqref{eq:stddft}], while the final $\mathbf{A}'\pm\mathbf{B}'$ supermatrices are constructed using the more accurate XsTD-DFT formulation [Eq.~\eqref{eq:xstddft}].  
 Parameter sets ensuring consistency between the screening stage and the final XsTD-DFT matrices are provided in Ref.~\citenum{dewergifosseEXactIntegralSimplified2024} for several XCF.
 
+\subsection{Obtaining and interpreting responses}
+
+Initially developed for UV/Vis and ECD spectroscopy, the simplified TD-DFT framework has since been extended to a broad range of molecular response properties,\cite{dewergifossePerspectiveSimplifiedQuantum2021,loffelsenderSimplifiedQuantumChemistry2024} including optical rotation (OR),\cite{dewergifosseSimplifiedTimedependentDensity2020} first hyperpolarizabilities,\cite{dewergifosseNonlinearresponsePropertiesSimplified2018} two-photon absorption (2PA),\cite{dewergifosseUltrafastEvaluationTwoPhoton2022} and excited-state absorption (ESA).\cite{dewergifosseNonlinearresponsePropertiesSimplified2019}
+
+Formally, any linear response function admits a sum-over-states representation:\cite{orrPerturbationTheoryNonlinear1971}
+\begin{equation}
+	\braket{\braket{\hat A; \hat B}}_{\omega} = \sum_{\ket{m}} \frac{\braket{0|\hat A|m}\braket{m|\hat B|0}}{\omega-\omega_m} - \frac{\braket{0|\hat B|m}\braket{m|\hat A|0}}{\omega+\omega_m}.
+	\label{eq:soslin}
+\end{equation}
+For $\hat A = \hat B = \hat\mu$ ($\vec\mu$ is the electric dipole operator), Eq.~\eqref{eq:soslin} yields the electric dipole polarizability $\alpha$, whereas choosing $\hat A = \hat\mu$ and $\hat B = \hat m$ ($\hat m$ is the magnetic moment operator) gives the electric–magnetic dipole polarizability $G$.
+Using the response vectors defined in Eq.~\eqref{eq:response}, the same quantity can be recast as
+\begin{equation}
+	\braket{\braket{\hat A_\zeta; \hat B_\eta}}_{\omega} = 2\,\sum_{ia} A_{\zeta,ia}\,\underbrace{[X_{\eta, ia}(\omega) \pm Y_{\eta,ia}(\omega)]}_{\gamma^{(\pm)}_{\eta,ia}(\omega)},
+	\label{eq:linresp}
+\end{equation}
+where the occupied–virtual elements of $\mathbf A_\zeta$ are given by $\braket{i|\hat A_\zeta|a}$, and $\gamma^{(\pm)}_{\eta}(\omega)$ defines the frequency-dependent transition density matrix ($\omega$PDM).  
+For real operators $\hat B$ such as $\hat\mu$, the $+$ branch is used to obtain the relevant tensor components of $\alpha$ and $G$.
+
+Residues of Eq.~\eqref{eq:soslin} yield the ground-to-excited-state transition moments,
+\begin{equation*}
+	\lim_{\omega\to\omega_m} (\omega-\omega_m)\braket{\braket{\hat A; \hat B}}_{\omega} = \braket{0|\hat A|m}\braket{m|\hat B|0},
+\end{equation*}
+which can be evaluated directly from the amplitude vectors:
+\begin{equation}
+	A_{\zeta}^{0m} = \braket{0|A_\zeta|m} = \sqrt{2}\,\sum_{ia} \mu_{\zeta,ia}\underbrace{[X_{ia} \pm Y_{ia}]}_{\gamma^{(\pm)}_{0m,ia}}.
+\end{equation}
+Here, $\gamma^{(\pm)}_{0m}$ corresponds to the one-electron transition density matrix (1TDM), with $\gamma^{(+)}_{0m}$ used for UV/Vis intensities ($\vec\mu_{0m}$) and $\gamma^{(-)}_{0m}$ for ECD rotational strengths ($\vec m_{0m}$).
+
+To enable chemically transparent interpretation, both the linear response and its residues may be expressed in terms of natural response orbitals (NROs)\cite{dewergifosseUnifiedStrategyChemically2020} or, in the resonant limit, natural transition orbitals (NTOs).\cite{dewergifosseAreFullyConjugated2019}  
+Within the NTO framework, the 1TDM admits a compact singular-value decomposition,
+\begin{equation*}
+	\gamma^{(\pm)}_{0m} = \mathbf U\Lambda_{0m}\mathbf V^T,
+\end{equation*}
+where $\mathbf U$ and $\mathbf V$ define the hole and particle orbital subspaces, respectively, and $\Lambda_{0m} = \mathrm{diag}(\sqrt{\lambda_1},\sqrt{\lambda_2},\ldots)$.  
+The set $\{\lambda_i\}$ provides the weight of each NTO, and the effective number of contributing pairs is quantified via the participation ratio:
+\begin{equation}
+	PR_{NTO} = \frac{[\sum_i\lambda_i]^2}{\sum_i \lambda_i^2}.
+\end{equation}
+Typically, only a small number of NTO pairs dominate, providing a chemically intuitive picture of the excitation.
+
+Analogously, the frequency-dependent $\omega$PDM can be compressed into NROs\cite{dewergifosseUnifiedStrategyChemically2020} via
+\begin{equation*}
+	\gamma^{(\pm)}_{\eta}(\omega) = \mathbf U\,\Lambda_\eta\,\mathbf V^T,
+\end{equation*}
+leading to
+\begin{equation}
+	\braket{\braket{\hat A_\zeta; \hat B_\eta}}_{\omega} = 2 \sum_i \Upsilon_{\zeta,i}\Lambda_{ \eta,i}(\omega) = \sum_i R_{\zeta\eta, i}(\omega),
+\end{equation}
+with $\Upsilon_\zeta = \mathbf U^T \mathbf A_\zeta \mathbf V$.  
+The weight of each NRO contribution is given by
+\begin{equation*}
+	w_i(\omega) = \frac{|R_{\zeta\eta,i}(\omega)|}{\sum_i R_{\zeta\eta, i}(\omega)},
+\end{equation*}
+and the corresponding participation ratio reads
+\begin{equation}
+	PR_{NRO}(\omega)  = \frac{[\sum_i w_i(\omega)]^2}{\sum_i w_i(\omega)}.
+\end{equation}
+An alternative perspective is obtained by applying a Löwdin orthogonalization to $\mathbf A$ and the 1TDM.  
+Starting from $\mathbf C = \mathbf P \Sigma \mathbf Q^T$, one defines
+\begin{equation*}
+	\tilde{\Upsilon}_{\zeta} = (\mathbf P\mathbf Q^T) \mathbf A_\zeta(\mathbf P\mathbf Q^T)^T
+	\quad\text{and}\quad
+	\tilde{\Lambda}_{\eta}(\omega) = (\mathbf P\mathbf Q^T)[\gamma^{(\pm)}_{\eta}(\omega)](\mathbf P\mathbf Q^T)^T,
+\end{equation*}
+such that
+\begin{equation}
+	\braket{\braket{\hat A_\zeta; \hat B_\eta}}_{\omega} = 2 \sum_{\mu\nu} \tilde\Upsilon_{\zeta,\mu\nu}\tilde\Lambda_{ \eta,\mu\nu}(\omega) = \sum_{\mu\nu} \tilde R_{\zeta\eta, \mu\nu}(\omega).
+\end{equation}
+This formulation decomposes the response into atomic-orbital contributions, which may be further aggregated over chemically meaningful fragments.  
+The resulting site (AA) and inter-fragment (AB) terms are given by
+\begin{equation*}
+	\Omega_{\zeta\eta}^{AB}(\omega) = 2\sum_{\mu\in A,\nu\in B} \tilde R_{\zeta\eta, \mu\nu}(\omega).
+\end{equation*}
+Together, these two complementary decompositions constitute the RespA analysis protocol,\cite{dewergifosseUnifiedStrategyChemically2020} enabling concise and chemically interpretable descriptions of both static and frequency-dependent response phenomena.
 
 
-Using Ref.~\citenum{loffelsenderSimplifiedQuantumChemistry2024} (and others):
+\subsection{Implementation details}
 
-\begin{itemize}
-	\item NTOs and response orbitals ;
-	\item Implementation details (Fortran, libcint, etc).
-\end{itemize}
+Fortran, libcint, etc.
 
 \section{Illustrations}
 
