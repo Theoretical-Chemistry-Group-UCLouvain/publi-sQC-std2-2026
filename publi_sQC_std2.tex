@@ -299,7 +299,7 @@ Formally, any linear response function admits a sum-over-states representation:\
 	\braket{\braket{\hat A; \hat B}}_{\omega} = \sum_{\ket{m}} \frac{\braket{0|\hat A|m}\braket{m|\hat B|0}}{\omega-\omega_m} - \frac{\braket{0|\hat B|m}\braket{m|\hat A|0}}{\omega+\omega_m}.
 	\label{eq:soslin}
 \end{equation}
-For $\hat A = \hat B = \hat\mu$ ($\vec\mu$ is the electric dipole operator), Eq.~\eqref{eq:soslin} yields the electric dipole polarizability $\dstack{\alpha}{\leftrightarrow}$, whereas choosing $\hat A = \hat\mu$ and $\hat B = \hat m$ ($\hat m$ is the magnetic moment operator) gives the electric–magnetic dipole polarizability $\dstack{G}{\leftrightarrow}$.
+For $\hat A = \hat B = \hat\mu$ ($\hat\mu$ is the electric dipole operator), Eq.~\eqref{eq:soslin} yields the electric dipole polarizability $\dstack{\alpha}{\leftrightarrow}$, whereas choosing $\hat A = \hat\mu$ and $\hat B = \hat m$ ($\hat m$ is the magnetic moment operator) gives the electric–magnetic dipole polarizability $\dstack{G}{\leftrightarrow}$.
 Using the response vectors defined in Eq.~\eqref{eq:response}, the same quantity can be recast as
 \begin{equation}
 	\braket{\braket{\hat A_\zeta; \hat B_\eta}}_{\omega} = Tr[A_\zeta \gamma^{(\pm)}_\eta(\omega)] = 2\,\sum_{ia} A_{\zeta,ia}\,\underbrace{[X_{\eta, ia}(\omega) \pm Y_{\eta,ia}(\omega)]}_{\gamma^{(\pm)}_{\eta,ia}(\omega)},
@@ -368,13 +368,23 @@ Together, these two complementary decompositions constitute the RespA analysis p
 
 \subsection{Implementation details}
 
-Fortran, libcint, etc.
+The methods discussed in the previous section are implemented in the \texttt{std2} executable (currently version~2.0), freely available on GitHub (\url{https://github.com/grimme-lab/std2}). 
+The program is written in Fortran and uses \texttt{libcint}\cite{libcint} for the evaluation of atomic-orbital integrals, while linear-algebra routines are delegated to either netlib's BLAS/LAPACK or Intel's oneAPI MKL, to be chosen at compilation times. 
+The most computationally demanding modules are parallelized using OpenMP.
+
+The executable works as a command-line input (CLI) program, whose options are documented in the GitHub repository (\url{https://github.com/grimme-lab/std2/blob/master/std2_manual.pdf}).
+
+Every (X)sTD-DFT calculation requires a ground-state wavefunction as input. 
+For this purpose, \texttt{std2} reads MOLDEN-formatted files, which are produced by most quantum-chemistry packages.
+If needed, external tools such as Multiwfn\cite{luMultiwfnMultifunctionalWavefunction2012} can also convert wavefunction information into MOLDEN format.
+For very large systems, one of the main application domains of \texttt{std2},\cite{beaujeanAllAtomQuantumMechanical2021,lescosSelfassemblingStructureNonlinear2021,loffelsenderAllAtomQuantumMechanical2025} obtaining a sufficiently accurate ground-state wavefunction at a standard DFT level may be challenging or prohibitively costly. 
+To address this, the auxiliary program \texttt{xtb4stda} (\url{https://github.com/grimme-lab/xtb4stda}) has been developed.\cite{grimmeUltrafastComputationElectronic2016}
+It generates a wavefunction at the xTB level using a specially optimized augmented basis set that includes an additional set of polarization functions, significantly improving the description of the virtual orbital space, which is traditionally a weakness of xTB methods. 
+We expect the upcoming g-xTB approach\cite{froitzheimGxTBGeneralPurposeExtended2025} explicitly designed to remedy deficiencies in the HOMO-LUMO gap and virtual space to further enhance the quality of such starting wavefunctions.
+
 
 \section{Illustrations}
 
-\subsection{Obtaining the ground state}
-
-We have \texttt{xtb4stda} and the interface with other programs thanks to MOLDEN files.
 
 \subsection{Excitations and 1PA spectra}
 
