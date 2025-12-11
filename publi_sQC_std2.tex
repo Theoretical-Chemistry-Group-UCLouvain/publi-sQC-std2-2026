@@ -239,6 +239,9 @@ As a consequence, each (X)sTD-DFT calculation proceeds through the following seq
 \end{enumerate}
 
 Two simplified TD-DFT variants are examined in this work: the recently introduced XsTD-DFT approach,\cite{dewergifosseEXactIntegralSimplified2024} and the original sTD-DFT formalism.\cite{bannwarthSimplifiedTimedependentDensity2014}  
+
+\subsubsection{XsTD-DFT}
+
 The XsTD-DFT method was specifically designed to overcome several shortcomings of sTD-DFT, most notably its limited reliability for systems with substantial long-range exchange or pronounced charge-transfer character.  
 XsTD-DFT assumes a range-separated hybrid (RSH) XCFs,\cite{dewergifosseComputingExcitedStates2024} and constructs the approximate TD-DFT supermatrix elements by removing all explicit XCF contributions. The resulting expressions are:
 \begin{align}
@@ -248,14 +251,47 @@ XsTD-DFT assumes a range-separated hybrid (RSH) XCFs,\cite{dewergifosseComputing
 	\label{eq:xstddft}
 \end{align}
 Here, $b_x$ and $c_x$ denote the constant and long-range fractions of Hartree–Fock exchange, respectively, and $\omega$ is the RSH range-separation parameter.
-Since XsTD-DFT respects the ZDO approximation, and all requisite bielectronic terms are computed from atomic-orbital monopoles and transition charges obtained after Löwdin orthogonalization:
+
+The approximate form of the $(ia|jb)'$ integrals follows from a sequence of controlled simplifications.  
+We begin with the general expression of the bielectronic integrals in the MO basis,
+\begin{equation*}
+	(ia|jb) = \sum_{\mu\alpha\nu\beta} C_{i\mu}^\star C_{a\alpha} C^\star_{j\nu} C_{b\beta}\,(\mu\alpha|\nu\beta),
+\end{equation*}
+where $(\mu\alpha|\nu\beta)$ denotes a four-center two-electron AO integral.  
+Introducing the Löwdin-orthogonalized coefficients $\mathbf{C}^\perp = \mathbf{S}^{1/2}\mathbf{C}$ gives
+\begin{equation*}
+	(ia|jb) = \sum_{\mu\alpha\nu\beta}( C_{i\mu}^\perp)^\star C_{a\alpha}^\perp (C^\perp_{j\nu})^\star C_{b\beta}^\perp\,(\lambda_\mu\lambda_\alpha|\lambda_\nu\lambda_\beta),
+\end{equation*}
+where each orthogonalized AO is written as $\lambda_\mu = \sum_\beta \phi_\beta\,S_{\mu\beta}^{-1/2}$, with $\{\phi_\beta\}$ the original atomic basis functions.
+The ZDO approximation then replaces the four-center integrals by\begin{equation*}
+	(\lambda_\mu\lambda_\alpha|\lambda_\nu\lambda_\beta) \approx \delta_{\mu\alpha}\delta_{\nu\beta}\,(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu),
+\end{equation*}
+so that
+\begin{equation*}
+	(ia|jb) \approx (ia|jb)' = \sum_{\mu\nu}( C_{i\mu}^\perp)^\star C_{a\mu}^\perp (C^\perp_{j\nu})^\star C_{b\nu}^\perp\,(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu).
+\end{equation*}
+The remaining two-center quantity is, by definition,
+\begin{align*}
+	(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu)
+	= \sum_{\alpha\beta\kappa\eta} (\alpha\beta|\kappa\eta)\,
+	S^{-1/2}_{\mu\alpha}S^{-1/2}_{\mu\beta}S^{-1/2}_{\nu\kappa}S^{-1/2}_{\nu\eta},
+\end{align*}
+and, keeping only the leading contributions,
+\begin{align*}
+	(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu) &= 
+	2\,(\mu\mu|\nu\nu)\, (S^{-1/2}_{\mu\mu})^2(S^{-1/2}_{\nu\nu})^2 
+	+ (\mu\mu|\mu\mu)\, (S^{-1/2}_{\mu\mu})^4+ (\nu\nu|\nu\nu)\, (S^{-1/2}_{\nu\nu})^4 + \ldots
+\end{align*}
+so that, to first approximation, $(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu) \approx (\mu\mu|\nu\nu)$.
+Introducing the transition charges $q^{ia}_\mu = \big(C^{\perp}_{\mu i}\big)^\star C^{\perp}_{\mu a}$ finally leads to
 \begin{equation}
-	(ia|jb)' = \sum_{\mu\nu} q^{ia}_\mu\,q^{jb}_\nu\,(\mu\mu|\nu\nu),
-	\qquad
-	q^{ia}_\mu = \big(C^{\perp}_{\mu i}\big)^\star C^{\perp}_{\mu a},
-	\label{eq:xsints}
+	(ia|jb)' = \sum_{\mu\nu} q^{ia}_\mu\,q^{jb}_\nu\,(\mu\mu|\nu\nu). \label{eq:xsints}
 \end{equation}
-with $\mathbf C^\perp = \mathbf C\,\mathbf S^{-1/2}$.
+
+
+
+
+\subsubsection{sTD-DFT}
 
 In contrast, the sTD-DFT model retains the global hybrid form of the XCF (Eq.~\eqref{eq:TD-AandB}).  
 The approximate electronic Hessian elements take the form\cite{grimmeSimplifiedTammDancoffDensity2013,bannwarthSimplifiedTimedependentDensity2014}
@@ -265,14 +301,14 @@ The approximate electronic Hessian elements take the form\cite{grimmeSimplifiedT
 	(\mathbf A' - \mathbf B')_{ia,jb} &= \delta_{ij}\delta_{ab} (\varepsilon_a - \varepsilon_i) - (ij|ab)'_J + a_x\,(ib|aj)'_K.
 	\label{eq:stddft}
 \end{align}
-These integrals are evaluated through a (atomic) monopole-based representation in terms of atomic transition charges:
+In contrast with Eq.~\eqref{eq:xsints}, these integrals are evaluated through a atomic monopole-based representation, with the transition charges compressed on atoms:
 \begin{equation}
 	(ia|jb)'_K = \sum_{AB} q_A^{ia}\,q_B^{jb}\,(AA|BB)_K, 
 	\qquad 
 	q_A^{ia} = \sum_{\mu \in A} \big(C^{\perp}_{\mu i}\big)^\star C^{\perp}_{\mu a},
 	\label{eq:sints}
 \end{equation}
-where the sums run over atomic centers $A$ and $B$.  
+where the sums now run over atomic centers $A$ and $B$.  
 The required two-center terms $(AA|BB)$ are evaluated with Mataga–Nishimoto–Ohno–Klopman (MNOK) damped Coulomb operators.\cite{klopmanSemiempiricalTreatmentMolecular1964}  
 For Coulomb-type contributions,
 \begin{equation*}
