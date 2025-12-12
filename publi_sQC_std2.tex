@@ -274,15 +274,19 @@ The remaining two-center quantity is, by definition,
 \begin{align*}
 	(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu)
 	= \sum_{\alpha\beta\kappa\eta} (\alpha\beta|\kappa\eta)\,
-	S^{-1/2}_{\mu\alpha}S^{-1/2}_{\mu\beta}S^{-1/2}_{\nu\kappa}S^{-1/2}_{\nu\eta},
+	S^{-1/2}_{\mu\alpha}S^{-1/2}_{\mu\beta}S^{-1/2}_{\nu\kappa}S^{-1/2}_{\nu\eta},.
 \end{align*}
-and, keeping only the leading contributions,
+The leading contributions are:
 \begin{align*}
 	(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu) &= 
-	2\,(\mu\mu|\nu\nu)\, (S^{-1/2}_{\mu\mu})^2(S^{-1/2}_{\nu\nu})^2 
-	+ (\mu\mu|\mu\mu)\, (S^{-1/2}_{\mu\mu})^4+ (\nu\nu|\nu\nu)\, (S^{-1/2}_{\nu\nu})^4 + \ldots
+	(\mu\mu|\nu\nu)\, (S^{-1/2}_{\mu\mu})^2(S^{-1/2}_{\nu\nu})^2 
+   \\
+  &\hspace{1em}+2\sum_{\alpha\neq\mu}(\mu\alpha|\nu\nu)\,S^{-1/2}_{\mu\mu} S^{-1/2}_{\mu\alpha} (S^{-1/2}_{\nu\nu})^2 + 2\sum_{\alpha\neq\nu} (\mu\mu|\nu\alpha)\, (S^{-1/2}_{\mu\mu})^2S^{-1/2}_{\nu\nu}S^{-1/2}_{\nu\alpha}\\
+  &\hspace{1em}+ \ldots,
+	%+ (\mu\mu|\mu\mu)\, (S^{-1/2}_{\mu\mu})^2(S^{-1/2}_{\nu\mu})^2 + (\nu\nu|\nu\nu)\,(S^{-1/2}_{\mu\nu})^2 (S^{-1/2}_{\nu\nu})^2  + \ldots
 \end{align*}
-so that, to first approximation, $(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu) \approx (\mu\mu|\nu\nu)$.
+with $S^{-1/2}_{\mu\mu}\geq  1 \land S^{-1/2}_{\nu\nu} \geq 1$, while $|S^{-1/2}_{\mu\alpha}| \ll 1 \land |S^{-1/2}_{\nu\alpha}| \ll 1$ (and generally negative).
+So, to first approximation, $(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu) \approx (\mu\mu|\nu\nu)$.
 Introducing the transition charges $q^{ia}_\mu = \big(C^{\perp}_{\mu i}\big)^\star C^{\perp}_{\mu a}$ finally leads to
 \begin{equation}
 	(ia|jb)' = \sum_{\mu\nu} q^{ia}_\mu\,q^{jb}_\nu\,(\mu\mu|\nu\nu). \label{eq:xsints}
@@ -301,7 +305,7 @@ The approximate electronic Hessian elements take the form\cite{grimmeSimplifiedT
 	(\mathbf A' - \mathbf B')_{ia,jb} &= \delta_{ij}\delta_{ab} (\varepsilon_a - \varepsilon_i) - (ij|ab)'_J + a_x\,(ib|aj)'_K.
 	\label{eq:stddft}
 \end{align}
-In contrast with Eq.~\eqref{eq:xsints}, these integrals are evaluated through a atomic monopole-based representation, with the transition charges compressed on atoms:
+Contrary to Eq.~\eqref{eq:xsints}, these integrals are evaluated through a atomic monopole-based representation, with the transition charges compressed on atoms:
 \begin{equation}
 	(ia|jb)'_K = \sum_{AB} q_A^{ia}\,q_B^{jb}\,(AA|BB)_K, 
 	\qquad 
