@@ -274,7 +274,7 @@ The remaining two-center quantity is, by definition,
 \begin{align*}
 	(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu)
 	= \sum_{\alpha\beta\kappa\eta} (\alpha\beta|\kappa\eta)\,
-	S^{-1/2}_{\mu\alpha}S^{-1/2}_{\mu\beta}S^{-1/2}_{\nu\kappa}S^{-1/2}_{\nu\eta},.
+	S^{-1/2}_{\mu\alpha}S^{-1/2}_{\mu\beta}S^{-1/2}_{\nu\kappa}S^{-1/2}_{\nu\eta}.
 \end{align*}
 The leading contributions are:
 \begin{align*}
@@ -408,6 +408,8 @@ Together, these two complementary decompositions constitute the RespA analysis p
 
 \subsection{Implementation details}
 
+\textbf{+ SCHEME like Fig. 1 of J. Phys. Chem. A 2021}
+
 The methods discussed in the previous section are implemented in the \texttt{std2} executable (currently version~2.0), freely available on GitHub (\url{https://github.com/grimme-lab/std2}). 
 The program is written in Fortran and uses \texttt{libcint}\cite{libcint} for the evaluation of atomic-orbital integrals, while linear-algebra routines are delegated to either netlib's BLAS/LAPACK or Intel's oneAPI MKL, to be chosen at compilation times. 
 The most computationally demanding modules are parallelized using OpenMP.
@@ -428,19 +430,31 @@ We expect the upcoming g-xTB approach\cite{froitzheimGxTBGeneralPurposeExtended2
 
 \subsection{Excitations and 1PA spectra}
 
-\texttt{stda} was originally designed for UV/Vis and ECD spectra with sTD-DFT\cite{grimmeSimplifiedTammDancoffDensity2013,bannwarthSimplifiedTimedependentDensity2014,bannwarthElectronicCircularDichroism2015,grimmeUltrafastComputationElectronic2016,bannwarthElectronicCircularDichroism2016,seibertExtensionElementParameter2019,loffelsenderAllAtomQuantumMechanical2025}, then with XsTD \cite{dewergifosseEXactIntegralSimplified2024,dewergifosseComputingExcitedStates2024,maraldiEvaluatingPerformanceExact2025}, but was later extended to spin-flip \cite{dewergifosseSimplifiedSpinFlipTimeDependent2019,dewergifosseAreFullyConjugated2019,kostadinovaSingletFissionTinkertoys2022}, XAS [?], and ESA \cite{dewergifosseNonlinearresponsePropertiesSimplified2019}. Note that UV/Vis\cite{wiebelerQMMMBenchmarking2019,streiterImpactChlorineInternal2020,batraBenchmarkSimplifiedTimeDependent2020,mayOpticalLimitingProperties2020,hidalgo-rosaSensingMechanismElucidation2020,greensteinOrganicPhotovoltaicEfficiency2022,buninLowSymmetryPhthalocyaninesBearing2022,yangEnergybasedFragmentationContribution2022,dmitrienkoExploringReplacementAxially2022,usoltsevSemiEmpiricalCalculationBodipy2022,eroshinIronIIComplexesPorphyrin2023,degtyarevInvestigationSpectraElectronic2023,seveurModelingPhotoAbsorptionProperties2023,lindenthalUnderstandingOpticalProperties2023,paulsEfficientExcitonCoupling2025} (and many others, in fact) and ECD\cite{gehroldAxialHelicalPlanar2016,covingtonAtropoisomerismBiflavonesAbsolute2016,jarzebskiDiastereoselectiveSelfAssemblyNeutral2017,ianniApplicationInvertedChirality2019,mohrEnantioselectivePropertiesNeglected2025} calculations (with sTD-DFT) are also done the wild... Mostly thanks to the ORCA implementation.
+\texttt{stda} was originally designed for UV/Vis and ECD spectra with sTD-DFT\cite{grimmeSimplifiedTammDancoffDensity2013,bannwarthSimplifiedTimedependentDensity2014,bannwarthElectronicCircularDichroism2015,grimmeUltrafastComputationElectronic2016,bannwarthElectronicCircularDichroism2016,seibertExtensionElementParameter2019,loffelsenderAllAtomQuantumMechanical2025}, then with XsTD \cite{dewergifosseEXactIntegralSimplified2024,dewergifosseComputingExcitedStates2024,maraldiEvaluatingPerformanceExact2025}, but was later extended to spin-flip \cite{dewergifosseSimplifiedSpinFlipTimeDependent2019,dewergifosseAreFullyConjugated2019,kostadinovaSingletFissionTinkertoys2022}, XAS\cite{dewergifosseUltrafastNearEdgeXray2025}, and ESA \cite{dewergifosseNonlinearresponsePropertiesSimplified2019}. Note that UV/Vis\cite{wiebelerQMMMBenchmarking2019,streiterImpactChlorineInternal2020,batraBenchmarkSimplifiedTimeDependent2020,mayOpticalLimitingProperties2020,hidalgo-rosaSensingMechanismElucidation2020,greensteinOrganicPhotovoltaicEfficiency2022,buninLowSymmetryPhthalocyaninesBearing2022,yangEnergybasedFragmentationContribution2022,dmitrienkoExploringReplacementAxially2022,usoltsevSemiEmpiricalCalculationBodipy2022,eroshinIronIIComplexesPorphyrin2023,degtyarevInvestigationSpectraElectronic2023,seveurModelingPhotoAbsorptionProperties2023,lindenthalUnderstandingOpticalProperties2023,paulsEfficientExcitonCoupling2025} (and many others, in fact) and ECD\cite{gehroldAxialHelicalPlanar2016,covingtonAtropoisomerismBiflavonesAbsolute2016,jarzebskiDiastereoselectiveSelfAssemblyNeutral2017,ianniApplicationInvertedChirality2019,mohrEnantioselectivePropertiesNeglected2025} calculations (with sTD-DFT) are also done the wild... Mostly thanks to the ORCA implementation.
+
+In practice : \begin{itemize}
+	\item for UV/VIS,Various small- to medium-size molecules: the ``benchmark set of 77 molecules"\cite{dewergifosseEXactIntegralSimplified2024,dewergifosseComputingExcitedStates2024}, the QUEST  and CT sets\cite{maraldiEvaluatingPerformanceExact2025}: discuss computation times, theory-theory correlation graphs, impact of $E_{thr}$ and improvements with the size of the system.
+	One should probably insist on the kind of transition that are well/not-well described (see Xs paper). Then, a few large-size systems (proteins, molecules in solutions, etc). Here, we should introduce the different methodologies to do so (ASQM vs ADQM).\cite{loffelsenderAllAtomQuantumMechanical2025} Then, a few calculations from the wild.
+	\item Then, SF.
+	\item Finally, ECD/XAS/ESA: focus on examples + calculations from the wild.
+\end{itemize}
+
 
 \subsection{Linear responses}
 
-Optical rotations \cite{dewergifosseSimplifiedTimedependentDensity2020} and alpha (no XsTD there, so should we revamp the OR45 benchmark?).
+Optical rotations\cite{dewergifosseSimplifiedTimedependentDensity2020} with a new and updated OR45 benchmark, and alpha, teasing damping.
 
 \subsection{Quadratic responses}
 
 beta \cite{dewergifosseNonlinearresponsePropertiesSimplified2018,seibertDynamicStructuralEffects2020,beaujeanAllAtomQuantumMechanical2021,lescosSelfassemblingStructureNonlinear2021,dewergifosseEXactIntegralSimplified2024} and 2PA spectra \cite{dewergifosseUltrafastEvaluationTwoPhoton2022,dewergifosseEXactIntegralSimplified2024,dewergifosseComputingExcitedStates2024,loffelsenderAllAtomQuantumMechanical2025,maraldiEvaluatingPerformanceExact2025} (but mostly from the XsTD era).
+In practice:\begin{itemize}
+	\item For 2PA: the QUEST/CT sets of small molecules, again with benchmarking, then large systems with a mix of recent Xs papers and Sarah.
+	\item For beta: large systems, such as collagen and bR. Tease ADQM.
+\end{itemize}
 
 \subsection{Post-treatments}
 
-NTOs (first seen in Ref.~\citenum{dewergifosseAreFullyConjugated2019}?) and response orbitals \cite{dewergifosseUnifiedStrategyChemically2020}.
+NTOs (first seen in Ref.~\citenum{dewergifosseAreFullyConjugated2019}?) and response orbitals \cite{dewergifosseUnifiedStrategyChemically2020}. The formers were used in Xs papers and 2PA by Marilu, so it gives good examples of practical applications.
 
 \section{Conclusions and perspectives}
 
