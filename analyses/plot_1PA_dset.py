@@ -3,7 +3,8 @@ import matplotlib.pyplot as plt
 import numpy
 import argparse
 
-from scipy.stats import gaussian_kde
+def mad(data, axis=None):
+    return numpy.mean(numpy.abs(data - numpy.mean(data, axis)), axis)
 
 def prepare_data(data: pandas.DataFrame):
     return data
@@ -26,7 +27,7 @@ def plot_XC(ax, data, k, name, val: str = 'E0n', ref: str = 'RI-CC2', gmax: floa
         
         ax.text(
             diff.max() if diff.max() < .75 * gmax else diff.min(), 
-            k + i / 4 - .25, ' {:.2f}$\\pm${:.2f} '.format(diff.mean(), diff.std()), 
+            k + i / 4 - .25, ' {:.2f} ({:.2f}) '.format(numpy.mean(diff), mad(diff)), 
             va='center', 
             ha='left' if diff.max() < .75 * gmax else 'right')
 
@@ -48,12 +49,13 @@ axes[1].vlines(0, -1, 9, linestyle='--', color='gray', linewidth=0.7)
 XCFs = ['TPSSH', 'B3LYP', 'PBE0', 'M06', 'BHHLYP', 'M06-2X', 'CAM-B3LYP', 'ωB97X-D3', 'ωB97M-V']
 
 axes[0].set_ylim(-.5, 8.5)
-axes[0].set_yticks(range(len(XCFs)), XCFs)
+axes[0].set_yticks(numpy.ravel([(j -.25, j, j + .25) for j in range(len(XCFs))]), ['TD', 'sTD', 'XsTD'] * len(XCFs))
 
-axes[0].set_xlabel('$\\Delta\\Delta E_{0n}$ (eV)')
-axes[1].set_xlabel('$\\Delta f_{0n}$')
+axes[0].set_xlabel('$\\Delta\\Delta E_{0\\rightarrow n}$ (eV)')
+axes[1].set_xlabel('$\\Delta f_{0\\rightarrow n}$')
 
 for i, n in enumerate(XCFs):
+    axes[0].text(-.15, i / len(XCFs) + .055, n, transform=axes[0].transAxes, ha='center', va='center', rotation=90, fontsize=11, color='gray')
     plot_XC(axes[0], data, i, n, val='E0n', gmax=args.gmax)
     plot_XC(axes[1], data, i, n, val='f0n', gmax=args.gmax)
 

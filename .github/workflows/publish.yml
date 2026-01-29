@@ -30,6 +30,11 @@ jobs:
         if: contains(github.ref, 'tags')
         run: |
             echo "REF=${{ github.ref_name }}" >> "$GITHUB_ENV"
+      - name: make images
+        run: |
+          cd analyses
+          pip install -r requirements.txt
+          ./make.sh
       - name: build PDFs
         run: |
            latexmk -pdflatex
@@ -39,6 +44,14 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: publi_sQC_std2.pdf
           asset_name: Main_Text.pdf
+          tag: ${{ env.REF }}
+          overwrite: true
+      - name: Upload SI
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: publi_sQC_std2_SI.pdf
+          asset_name: SI.pdf
           tag: ${{ env.REF }}
           overwrite: true
 
