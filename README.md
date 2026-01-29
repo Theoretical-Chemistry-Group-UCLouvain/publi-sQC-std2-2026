@@ -4,4 +4,4 @@ A publication to showcase std2 in the "[Electronic Structure Software 2.0](https
 
 Note: Let's not forget about <https://publishing.aip.org/resources/researchers/author-instructions/>.
 
-Latest PDF: [Main text](https://github.com/pierre-24/publi-sQC-std2/releases/download/latest/Main_Text.pdf).
+Latest PDF: [Main text](https://github.com/pierre-24/publi-sQC-std2/releases/download/latest/Main_Text.pdf), [Supporting information](https://github.com/pierre-24/publi-sQC-std2/releases/download/latest/SI.pdf).
