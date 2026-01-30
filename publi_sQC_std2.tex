@@ -23,6 +23,7 @@ preprint,%
 \usepackage{braket}
 \usepackage{paralist}
 \usepackage{siunitx}
+\usepackage{hyperref}
 
 %% Apr 2021: AIP requests that the corresponding 
 %% email to be moved after the affiliations
@@ -64,9 +65,53 @@ An abstract.
 
 \section{Introduction}
 
-We need sQC for large system and/or snapshots of smaller system + history of the different flavors of sQC, using Refs.~\citenum{dewergifossePerspectiveSimplifiedQuantum2021}, \citenum{loffelsenderSimplifiedQuantumChemistry2024}, and \citenum{dewergifosseEXactIntegralSimplified2024}.
+The accurate theoretical characterization of electronic excited states and response properties in complex molecular environments remains a central challenge in computational chemistry.  
+Time-dependent density functional theory (TD-DFT) is widely used for medium-sized systems, yet its formal $O(N^4)$ scaling and known limitations in the treatment of charge-transfer, Rydberg, and doubly excited states typically restrict routine applications to a few hundred atoms.
+As research increasingly targets biomolecular assemblies, supramolecular aggregates, and functional materials, methods capable of combining predictive accuracy with favorable scaling have become essential. \cite{burschBestPracticeDFTProtocols2022}
 
-\section{Theory}
+Simplified quantum chemistry (sQC) methods have emerged as an effective route to bridge the longstanding gap between predictive accuracy and computational feasibility.\cite{bannwarthExtendedTightbindingQuantum2021,loffelsenderSimplifiedQuantumChemistry2024}
+Their development was largely motivated by the cost of modern \textit{ab initio} wave-function approaches and TD-DFT, which, despite their improved reliability, remained restricted to relatively small systems.  
+Prior to their widespread adoption, semiempirical techniques constituted the primary tools for modeling excited states in large molecules.\cite{thielSemiempiricalQuantumChemical2014}
+These methodologies frequently relied on the zero-differential overlap (ZDO) approximation.
+Among these, the ZINDO/S method\cite{ridleyIntermediateNeglectDifferential1973,zernerSemiempiricalMolecularOrbital1991} (Intermediate Neglect of Differential Overlap using Configuration Interaction with Singles) proved particularly successful for describing vertical excitations and electronic spectra, enabling early studies of complex chromophores and biological assemblies.  
+Methods based on Neglect of Diatomic Differential Overlap\cite{dewarGroundStatesMolecules1977,dewarDevelopmentUseQuantum1985} (NDDO) with orthogonalization corrections, including the OM$x$ families,\cite{kolbMNDOModelMethodical1993} further improved the exploration of potential energy surfaces and excited-state dynamics.  
+
+The modern simplified framework was inaugurated with the introduction of the simplified Tamm–Dancoff approximation (sTDA) in 2013,\cite{grimmeSimplifiedTammDancoffDensity2013} followed shortly by its TD-DFT counterpart (sTD-DFT).\cite{bannwarthSimplifiedTimedependentDensity2014}
+These methods achieve substantial acceleration through controlled approximations, including the neglect of the exchange–correlation kernel (see below).  
+The approach was subsequently extended to ultra-large systems through the sTD-DFT-xTB variant,\cite{grimmeUltrafastComputationElectronic2016} enabling explicit quantum-mechanical excited-state calculations for systems containing several thousand atoms.  
+Alternative schemes inspired by the success of sTD-DFT/sTDA have also been proposed to further accelerate excited-state calculations.
+The TD-DFT+TB method introduced by Rüger \emph{et al.}\cite{rugerTightbindingApproximationsTimedependent2016} combines a DFT ground state with a monopole approximation and local exchange--correlation functionals, delivering speedups of up to two orders of magnitude while maintaining errors below $\sim$0.15~eV for excitation energies in large plasmonic systems.
+Giannone and Della Sala later proposed the TD-DFT-as approach,\cite{giannoneMinimalAuxiliaryBasis2020} based on a resolution-of-identity scheme with a single $s$-type auxiliary function per atom, from which sTD-DFT, sTDA, and TD-DFT+TB can be viewed as approximations; this strategy was subsequently extended to hybrid functionals through TD-DFT-ris.\cite{zhouMinimalAuxiliaryBasis2023}
+Additional developments include the extension of TD-DFT+TB to analytical excited-state gradients, the incorporation of periodic boundary conditions within sTDA,\cite{hehnExcitedStatePropertiesExtended2022} and the introduction of simplified GW/BSE approaches,\cite{choSimplifiedGWBSE2022} collectively illustrating the sustained effort to reduce computational cost while preserving predictive accuracy.
+
+Over time, the sTD framework has expanded to encompass a broad spectrum of linear and nonlinear response properties,\cite{dewergifossePerspectiveSimplifiedQuantum2021} such as polarizabilities, hyerpolarizabilities,\cite{dewergifosseNonlinearresponsePropertiesSimplified2018} two-photon absor\-ption,\cite{dewergifosseUltrafastEvaluationTwoPhoton2022} excited-state absorption,\cite{dewergifosseNonlinearresponsePropertiesSimplified2019} optical rotation,\cite{dewergifosseSimplifiedTimedependentDensity2020} and spin-flip formulations for strongly correlated situations,\cite{dewergifosseSimplifiedSpinFlipTimeDependent2019}  thereby transforming simplified methods into versatile tools for large-scale excited-state simulations.  
+Recent developments have led to the eXact-integral simplified TD-DFT (XsTD-DFT) methodology,\cite{dewergifosseEXactIntegralSimplified2024} which moves the simplified framework toward a more rigorous first-principles formulation.  
+By replacing semiempirical integral approximations with exact one- and two-center atomic-orbital integrals, XsTD-DFT removes the dependence on fitted parameters while preserving favorable scaling.  
+The extension to support range-separated hybrid functionals\cite{dewergifosseComputingExcitedStates2024} further improves the description of long-range charge-transfer excitations and nonlinear optical responses through the solution of the full Casida equations.  
+Taken together, these advances establish simplified TD-DFT as a reliable platform for predictive simulations of very large molecular systems.  
+
+These capabilities are implemented in the open-source \texttt{std2} program (formerly distributed as \texttt{stda}), which provides a modular environment for computing excited states together with a broad range of linear and nonlinear response properties, including one- (1PA) and two-photon absorption (2PA) spectra, electronic circular dichroism (ECD), optical rotation (OR), second-harmonic generation (SHG), and excited-state absorption (ESA).  
+In this article, we present an overview of the capabilities of \texttt{std2}, beginning with a concise description of the underlying theoretical framework in Section~\ref{sec:theory}, followed by benchmark assessments and representative applications that illustrate its performance across diverse spectroscopic observables and system sizes.  
+
+The availability of robust and computationally efficient methodologies now makes it possible to explicitly target: \begin{inparaenum}[(i)]
+	\item large conformational ensembles, and/or  
+	\item large systems and realistic molecular environments at the fully quantum-mechanical level.\cite{loffelsenderSimplifiedQuantumChemistry2024}
+\end{inparaenum}
+Continuum solvation models, such as PCM, neglect specific solute–environment interactions, whereas multiscale strategies like QM/MM introduce dependencies on force fields, boundary definitions, and polarization treatments.  
+All-atom quantum mechanical (AQM) strategies therefore provide an appealing alternative by treating the entire system at the QM level, avoiding locality assumptions while naturally capturing some long-range effects.  
+Within this framework, two complementary paradigms have emerged (Fig.~\ref{fig:aqm}): the All-Atom Single-structure QM (ASQM) and the All-Atom Dynamic QM (ADQM) approaches. \cite{loffelsenderAllAtomQuantumMechanical2025}
+ASQM evaluates response properties for a representative structure and is particularly effective for rigid systems whose optical signatures are only weakly affected by structural fluctuations.  
+By contrast, ADQM incorporates conformational sampling—typically through molecular dynamics trajectories or Boltzmann-weighted ensembles—thereby accounting for thermal disorder and environment-induced spectral broadening.  
+Together, ASQM and ADQM define a unified strategy for predictive spectroscopy of large molecular systems, enabling the level of structural realism to be matched to the physical complexity of the problem; these approaches constitute the focus of Section~\ref{sec:illu}.  
+
+\begin{figure}[!h]
+	\fbox{SCHEME like Fig. 1 of Ref.~\citenum{loffelsenderAllAtomQuantumMechanical2025}}
+	\caption{Scheme of A(S/D)QM.}
+	\label{fig:aqm}
+\end{figure}
+
+
+\section{Theory}\label{sec:theory}
 
 In this section, the (X)sTD-DFT theory will be explained. Unless otherwise mentioned, $p$, $q$, $r$, $s$,... refer to molecular orbitals (MOs), $i$, $j$,... to occupied, $a$, $b$,... to unoccupied ones, $\ket{m}$,... to electronic excited states, and $\mu$, $\nu$,... to atomic orbitals (AOs). 
 Atomic units should be assumed throughout.
@@ -293,7 +338,7 @@ The leading contributions are:
 	%+ (\mu\mu|\mu\mu)\, (S^{-1/2}_{\mu\mu})^2(S^{-1/2}_{\nu\mu})^2 + (\nu\nu|\nu\nu)\,(S^{-1/2}_{\mu\nu})^2 (S^{-1/2}_{\nu\nu})^2  + \ldots
 \end{align*}
 with $S^{-1/2}_{\mu\mu}\geq  1 \land S^{-1/2}_{\nu\nu} \geq 1$, while $|S^{-1/2}_{\mu\alpha}| \ll 1 \land |S^{-1/2}_{\nu\alpha}| \ll 1$ (and generally negative).
-So, to first approximation, $(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu) \approx (\mu\mu|\nu\nu)$.
+So, to first approximation, $(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu) \approx (\mu\mu|\nu\nu)$ \textbf{[ce qui veut dire qu'au final, on approxime que $S^{-1/2}_{\mu\nu} = \delta_{\mu\nu}$, donc que les orbitales atomiques sont isolées. Je sais pas ce que ça veut dire, mais c'est drôle]}.
 Introducing the transition charges $q^{ia}_\mu = \big(C^{\perp}_{\mu i}\big)^\star C^{\perp}_{\mu a}$ finally leads to
 \begin{equation}
 	(ia|jb)' = \sum_{\mu\nu} q^{ia}_\mu\,q^{jb}_\nu\,(\mu\mu|\nu\nu). \label{eq:xsints}
@@ -339,8 +384,7 @@ Parameter sets ensuring consistency between the screening stage and the final Xs
 
 \subsection{Obtaining and interpreting responses}
 
-Initially developed for UV/Vis and ECD spectroscopy, the simplified TD-DFT framework has since been extended to a broad range of molecular response properties,\cite{dewergifossePerspectiveSimplifiedQuantum2021,loffelsenderSimplifiedQuantumChemistry2024} including optical rotation (OR),\cite{dewergifosseSimplifiedTimedependentDensity2020} first hyperpolarizabilities,\cite{dewergifosseNonlinearresponsePropertiesSimplified2018} two-photon absorption (2PA),\cite{dewergifosseUltrafastEvaluationTwoPhoton2022} and excited-state absorption (ESA).\cite{dewergifosseNonlinearresponsePropertiesSimplified2019}
-
+Initially developed for UV/Vis and ECD spectroscopy, the simplified TD-DFT framework has since been extended to a broad range of linear and quadratic molecular response properties, and  their residues.\cite{dewergifossePerspectiveSimplifiedQuantum2021,loffelsenderSimplifiedQuantumChemistry2024}
 Formally, any linear response function admits a sum-over-states representation:\cite{orrPerturbationTheoryNonlinear1971}
 \begin{equation}
 	\braket{\braket{\hat A; \hat B}}_{\omega} = \sum_{\ket{m}} \frac{\braket{0|\hat A|m}\braket{m|\hat B|0}}{\omega-\omega_m} - \frac{\braket{0|\hat B|m}\braket{m|\hat A|0}}{\omega+\omega_m}.
@@ -430,7 +474,7 @@ It generates a wavefunction at the xTB level using a specially optimized augment
 We expect the upcoming g-xTB approach\cite{froitzheimGxTBGeneralPurposeExtended2025} explicitly designed to remedy deficiencies in the HOMO-LUMO gap and virtual space to further enhance the quality of such starting wavefunctions.
 
 
-\section{Illustrations}
+\section{Illustrations}\label{sec:illu}
 
 
 \subsection{Excitations: 1PA and ECD spectra}
@@ -461,7 +505,7 @@ This behavior suggests that a more rigorous treatment of exchange integrals, aki
 
 \begin{figure}[!h]
 	\centering
-	\fbox{Something like Fig. 4 of Ref.~\citenum{dewergifosseEXactIntegralSimplified2024}}.
+	\fbox{Something like Fig. 4 of Ref.~\citenum{dewergifosseEXactIntegralSimplified2024}}
 	\caption{CPU times (s) to compute 1PA quantities at the TD-DFT level with \textsc{Turbomole} as well as sTD-DFT and XsTD-DFT levels with the   \texttt{std2} program using B3LYP.}
 	\label{fig:1pa-timing}
 \end{figure}
@@ -487,10 +531,6 @@ Higher-energy features are likewise captured once appropriate spectral broadenin
 
 The demonstrated accuracy and efficiency of sQC approaches make it possible to address a longstanding challenge in computational spectroscopy: the realistic simulation of molecules embedded in complex environments. 
 Beyond the electronic structure method itself, reliable spectra require accounting for environmental effects, structural dynamics, and, when necessary, vibronic contributions. 
-Continuum solvation models neglect specific interactions, whereas multiscale strategies such as QM/MM introduce dependencies on force fields, boundary definitions, and polarization treatments. 
-All-atom quantum mechanical (AQM) strategies provide an appealing alternative by treating the entire system at the QM level, thereby avoiding locality assumptions and naturally capturing some long-range effects. 
-Within this framework, the all-atom single-structure QM (ASQM) protocol targets explicit environmental effects from a representative geometry, while all-atom dynamic QM (ADQM) schemes incorporate structural fluctuations through Boltzmann-weighted conformers or molecular dynamics (MD) snapshots.
-
 Flavin mononucleotide (FMN), discussed in Ref.~\citenum{loffelsenderAllAtomQuantumMechanical2025}, offers a stringent test case for these methodologies (Fig.~\ref{fig:1pa-fmn}). 
 Gas-phase RI-CC2 and sTD-DFT-xTB spectra are remarkably similar and correctly reproduce the first experimental absorption band, validating the use of sTD-DFT-xTB as a reliable low-cost approach. 
 Both methods, however, strongly blue-shift the second band, underscoring the decisive role of the aqueous environment. Incorporating implicit solvent within ASQM or ADQM-Boltz. schemes improves the first excitation energy but fails to recover relative intensities and overall spectral shape; Boltzmann averaging produces only minor changes compared to a single optimized structure, indicating that conformational diversity alone is insufficient.
@@ -536,7 +576,7 @@ These findings demonstrate that the full protein environment must be included to
 
 Together, these examples emphasize the complementary roles of ADQM and ASQM: the former enables a realistic treatment of complex chromophores in solution or flexible biomolecules by incorporating structural dynamics, whereas the latter delivers accurate spectra for comparatively rigid systems at a reduced computational cost, while preserving a fully quantum-mechanical description of the entire assembly.
 
-[Note that UV/Vis\cite{wiebelerQMMMBenchmarking2019,streiterImpactChlorineInternal2020,batraBenchmarkSimplifiedTimeDependent2020,mayOpticalLimitingProperties2020,hidalgo-rosaSensingMechanismElucidation2020,greensteinOrganicPhotovoltaicEfficiency2022,buninLowSymmetryPhthalocyaninesBearing2022,yangEnergybasedFragmentationContribution2022,dmitrienkoExploringReplacementAxially2022,usoltsevSemiEmpiricalCalculationBodipy2022,eroshinIronIIComplexesPorphyrin2023,degtyarevInvestigationSpectraElectronic2023,seveurModelingPhotoAbsorptionProperties2023,lindenthalUnderstandingOpticalProperties2023,paulsEfficientExcitonCoupling2025} (and many others, in fact) and ECD\cite{gehroldAxialHelicalPlanar2016,covingtonAtropoisomerismBiflavonesAbsolute2016,jarzebskiDiastereoselectiveSelfAssemblyNeutral2017,ianniApplicationInvertedChirality2019,mohrEnantioselectivePropertiesNeglected2025} calculations (with sTD-DFT) are also done the wild... Mostly thanks to the ORCA implementation.]
+{\bfseries [Note that UV/Vis\cite{wiebelerQMMMBenchmarking2019,streiterImpactChlorineInternal2020,batraBenchmarkSimplifiedTimeDependent2020,mayOpticalLimitingProperties2020,hidalgo-rosaSensingMechanismElucidation2020,greensteinOrganicPhotovoltaicEfficiency2022,buninLowSymmetryPhthalocyaninesBearing2022,yangEnergybasedFragmentationContribution2022,dmitrienkoExploringReplacementAxially2022,usoltsevSemiEmpiricalCalculationBodipy2022,eroshinIronIIComplexesPorphyrin2023,degtyarevInvestigationSpectraElectronic2023,seveurModelingPhotoAbsorptionProperties2023,lindenthalUnderstandingOpticalProperties2023,paulsEfficientExcitonCoupling2025} (and many others, in fact) and ECD\cite{gehroldAxialHelicalPlanar2016,covingtonAtropoisomerismBiflavonesAbsolute2016,jarzebskiDiastereoselectiveSelfAssemblyNeutral2017,ianniApplicationInvertedChirality2019,mohrEnantioselectivePropertiesNeglected2025} calculations (with sTD-DFT) are also done the wild... Mostly thanks to the ORCA implementation.]}
 
 
 
