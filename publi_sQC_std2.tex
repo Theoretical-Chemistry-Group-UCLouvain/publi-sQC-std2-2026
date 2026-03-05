@@ -507,13 +507,22 @@ This behavior suggests that a more rigorous treatment of exchange integrals, sim
 
 \begin{figure}[!h]
 	\centering
-	\fbox{Something like Fig. 4 of Ref.~\citenum{dewergifosseEXactIntegralSimplified2024}}
-	\caption{CPU times (s) to compute 1PA quantities at the TD-DFT level with \textsc{Turbomole} as well as sTD-DFT and XsTD-DFT levels with the   \texttt{std2} program using B3LYP.}
+	\includegraphics[width=.6\linewidth]{Figure4}
+	\caption{CPU times (s) to compute 1PA quantities at the TD-DFT level with \textsc{Turbomole} as well as sTD-DFT and XsTD-DFT levels with the   \texttt{std2} program using B3LYP, from Ref.~\citenum{dewergifosseEXactIntegralSimplified2024}.}
 	\label{fig:1pa-timing}
 \end{figure}
 
 
-\textbf{[...  and there is spin-flip]} \cite{dewergifosseSimplifiedSpinFlipTimeDependent2019,dewergifosseAreFullyConjugated2019,kostadinovaSingletFissionTinkertoys2022}
+\textbf{[...  and there is spin-flip, see Fig.~\ref{fig:1pa-sf}.]} \cite{dewergifosseSimplifiedSpinFlipTimeDependent2019,dewergifosseAreFullyConjugated2019,kostadinovaSingletFissionTinkertoys2022}
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=.49\linewidth]{Figure5a}
+	\includegraphics[width=.49\linewidth]{Figure5b}
+	\caption{1PA with spin-flip.}
+	\label{fig:1pa-sf}
+\end{figure}
+
 
 The computation of excitation spectra has recently been extended to near-edge X-ray absorption fine structure (NEXAFS), further broadening the applicability of simplified excited-state methods.\cite{dewergifosseUltrafastNearEdgeXray2025}
 For chlorophyll~A (Fig.~\ref{fig:nexafs}) , the carbon K-edge spectrum computed at the XsSRC2/TDA/cc-pCVDZ level reproduces the experimental lineshape with remarkable fidelity, despite a small systematic energy shift.  
@@ -526,8 +535,9 @@ Higher-energy features are likewise captured once appropriate spectral broadenin
 
 \begin{figure}[!h]
 	\centering
-	\fbox{Mix Figs.~4 and 5 of Ref.~\citenum{dewergifosseUltrafastNearEdgeXray2025}}
-	\caption{Experimental carbon K-edge NEXAFS spectrum of  chlorophyll A and  PPG10 in comparison to the XsSRC2/TDA/cc-pCVDZ one.}
+	\includegraphics[width=.6\linewidth]{Figure6a}
+	\includegraphics[width=.6\linewidth]{Figure6b}
+	\caption{Experimental carbon K-edge NEXAFS spectrum of  chlorophyll A and  PPG10 in comparison to the XsSRC2/TDA/cc-pCVDZ one, from Ref.~\citenum{dewergifosseUltrafastNearEdgeXray2025}.}
 	\label{fig:nexafs}
 \end{figure}
 
@@ -543,8 +553,9 @@ These findings demonstrate that the FMN spectrum is governed by specific solute-
 
 \begin{figure}[!h]
 	\centering
-	\fbox{Mix Figure 18 and 19 of Ref.~\citenum{loffelsenderAllAtomQuantumMechanical2025}}
-	\caption{Experimental 1PA spectra of FMN recorded in water in comparison with ASQM and ADQM methodologies.}
+	\includegraphics[width=.49\linewidth]{Figure7a}
+	\includegraphics[width=.49\linewidth]{Figure7b}
+	\caption{Experimental 1PA spectra of FMN recorded in water in comparison with ASQM and ADQM methodologies, from Ref.~\citenum{loffelsenderAllAtomQuantumMechanical2025}.}
 	\label{fig:1pa-fmn}
 \end{figure}
 
@@ -556,8 +567,8 @@ Owing to the presence of eight $\alpha$-helices, the CD response is dominated by
 
 \begin{figure}[!h]
 	\centering
-	\fbox{Fig.~2 of Ref.~\citenum{seibertBiomolecularStructureInformation2017}}
-	\caption{Calculated CD spectra of myoglobin computed (blue solid line).}
+	\includegraphics[width=.8\linewidth]{Figure8}
+	\caption{Calculated CD spectra of myoglobin computed (blue solid line), from Ref.~\citenum{seibertBiomolecularStructureInformation2017}.}
 	\label{fig:ecd-myo}
 \end{figure}
 
@@ -571,8 +582,8 @@ These findings demonstrate that the full protein environment must be included to
 
 \begin{figure}[!h]
 	\centering
-	\fbox{Fig.~5 of Ref.~\citenum{dewergifosseComputingExcitedStates2024}}
-	\caption{UV/vis absorption and CD spectra of PYP in water in comparison with XsCAM-B3LYP/TDA/6-31+G(d)/631G//C-PCM(water) ones.}
+	\includegraphics[width=.8\linewidth]{Figure9}
+	\caption{UV/vis absorption and CD spectra of PYP in water in comparison with XsCAM-B3LYP/TDA/6-31+G(d)/631G//C-PCM(water) ones, from  Ref.~\citenum{dewergifosseComputingExcitedStates2024}}
 	\label{fig:1pa+ecd-pyp}
 \end{figure}
 
@@ -601,7 +612,7 @@ Overall, the same considerations guiding XCFs selection in conventional TD-DFT a
 
 \begin{figure}[!h]
 \centering
-\includegraphics[width=\linewidth]{./Figure9}
+\includegraphics[width=\linewidth]{./Figure10}
 \caption{Violin plots of the difference 2PA properties (excitation energies, $\Delta E_{0\to n}$, and strength, $\delta^{\mathrm{2PA}}$) relative to RI-CC2 reference values for the CT dataset, as reported in Ref.~\citenum{maraldiEvaluatingPerformanceExact2025}, computed with the aug-cc-pVDZ basis set. Results are shown for several XCFs and levels of approximation (TD, sTD, and XsTD). Left: excitation energies. Right: 2PA strength expressed as $\log_{10}(\delta^{\mathrm{2PA}})$ (a difference of 1 translates into an order of magnitude). For each method, the MD of this difference is reported, with the MAD are given in parentheses.}
 \label{fig:2pa-ct}
 \end{figure}
@@ -617,8 +628,8 @@ Despite the expected breakdown of response theory in the resonance regime, the a
 
 \begin{figure}[!h]
 	\centering
-	\fbox{Figure 4 of Ref.~\citenum{beaujeanAllAtomQuantumMechanical2021}}
-	\caption{$\beta_{\mathrm{HRS}}$ dispersion curve of bR}
+	\includegraphics[width=.8\linewidth]{Figure11}
+	\caption{$\beta_{\mathrm{HRS}}$ dispersion curve of bR, from Ref.~\citenum{beaujeanAllAtomQuantumMechanical2021}}
 	\label{fig:beta-bR}
 \end{figure}
 
@@ -635,8 +646,8 @@ Despite the neglect of explicit vibronic structure and inhomogeneous broadening 
 
 \begin{figure}[!h]
 	\centering
-	\fbox{Figure 6 of Ref.~\citenum{dewergifosseNonlinearresponsePropertiesSimplified2019}}
-	\caption{ESA of PYP.}
+	\includegraphics[width=.6\linewidth]{Figure12}
+	\caption{ESA of PYP, from Ref.~\citenum{dewergifosseNonlinearresponsePropertiesSimplified2019}.}
 	\label{fig:esa-pyp}
 \end{figure}
 
@@ -648,8 +659,9 @@ When sufficiently large solvation environments are included, the ADQM-MD spectra
 
 \begin{figure}[!h]
 	\centering
-	\fbox{Mix Figure 22 and 23 of Ref.~\citenum{loffelsenderAllAtomQuantumMechanical2025}}
-	\caption{Experimental 2PA spectra of FMN recorded in water in comparison with ASQM and ADQM methodologies.}
+	\includegraphics[width=.49\linewidth]{Figure13a}
+	\includegraphics[width=.49\linewidth]{Figure13b}
+	\caption{Experimental 2PA spectra of FMN recorded in water in comparison with ASQM and ADQM methodologies, from  Ref.~\citenum{loffelsenderAllAtomQuantumMechanical2025}.}
 	\label{fig:2pa-fmn}
 \end{figure}
 
@@ -661,8 +673,8 @@ In this case, comparisons between ADQM-MD  properties and ADQM-Boltz.~show simil
 
 \begin{figure}[!h]
 	\centering
-	\fbox{Fig. 9 of Ref.~\citenum{seibertDynamicStructuralEffects2020} is nice, but another one too?}
-	\caption{Frequency dispersion computed with sTD-DFT-xTB for 200 snapshots and the MD average.}
+	\includegraphics[width=.8\linewidth]{Figure14}
+	\caption{Frequency dispersion computed with sTD-DFT-xTB for 200 snapshots and the MD average, from Ref.~\citenum{seibertDynamicStructuralEffects2020}.}
 	\label{fig:beta-kwwkwwk}
 \end{figure}
 
@@ -671,9 +683,28 @@ In this case, comparisons between ADQM-MD  properties and ADQM-Boltz.~show simil
 
 \subsection{Post-treatments}
 
-NTOs (first seen in Ref.~\citenum{dewergifosseAreFullyConjugated2019}?) and response orbitals \cite{dewergifosseUnifiedStrategyChemically2020}. The formers were used in Sarah, Xs and  Marilu papers, so it gives good examples of practical applications.
+\textbf{[NTOs (Figs.~\ref{fig:nto-pyp} and \ref{fig:nto-fmn}) and response orbitals (Fig.~\ref{fig:nro-or}).]}
 
-In practice: OR from \citenum{dewergifosseUnifiedStrategyChemically2020} (NROs), Fig.~S8 in Ref.~\citenum{maraldiEvaluatingPerformanceExact2025} (NTOs), PYP in Ref.~\citenum{dewergifosseComputingExcitedStates2024} (NTOs), Fig. 13 and 20 in Ref.~\citenum{loffelsenderSimplifiedQuantumChemistry2024} (NTOs)
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=.8\linewidth]{Figure15}
+	\caption{ PYP in Ref.~\citenum{dewergifosseComputingExcitedStates2024} (NTOs)}
+	\label{fig:nto-pyp}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=.5\linewidth]{Figure16}
+	\caption{Fig. 20 of Ref.~\citenum{loffelsenderSimplifiedQuantumChemistry2024} }
+	\label{fig:nto-fmn}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=.5\linewidth]{Figure17}
+\caption{OR from \citenum{dewergifosseUnifiedStrategyChemically2020} (NROs)}
+\label{fig:nro-or}
+\end{figure}
 
 
 \clearpage
