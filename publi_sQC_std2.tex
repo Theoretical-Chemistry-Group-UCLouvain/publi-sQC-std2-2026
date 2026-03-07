@@ -512,16 +512,30 @@ This behavior suggests that a more rigorous treatment of exchange integrals, sim
 	\label{fig:1pa-timing}
 \end{figure}
 
-
-\textbf{[...  and there is spin-flip, see Fig.~\ref{fig:1pa-sf}.]} \cite{dewergifosseSimplifiedSpinFlipTimeDependent2019,dewergifosseAreFullyConjugated2019,kostadinovaSingletFissionTinkertoys2022}
+The capability of simplified approaches to describe the linear absorption of strongly correlated systems can be illustrated by large polycyclic diradicals such as teranthene and superoctazethrene derivatives (Fig.~\ref{fig:1pa-sf}).\cite{dewergifosseSimplifiedSpinFlipTimeDependent2019} 
+For these systems, spin-flip formulations are required to properly account for the multiconfigurational character of the ground and low-lying excited states.  
+Figure~\ref{fig:1pa-sf} compares experimental spectra to SF-TD-DFT, SF-sTD-DFT, and SF-XsTD-DFT results obtained with the BHHLYP functional.  
+For the teranthene derivative, the experimental spectrum is dominated by a low-energy band at \SI{1.42}{\electronvolt}.  
+This feature is reproduced most accurately by the SF-sTD-DFT method (\SI{1.48}{\electronvolt}), followed by SF-XsTD-DFT (\SI{1.53}{\electronvolt}), whereas the full SF-TD-DFT calculation predicts a more pronounced blue shift (\SI{1.66}{\electronvolt}).  
+A similar trend is observed for superoctazethrene, for which the SF-sTD-DFT approach again provides the best agreement with the experimental absorption maximum.  
+In this case, the full SF-TD-DFT scheme significantly blue-shifts the main band, although it reproduces the oscillator strength more accurately, while the SF-XsTD-DFT result lies between both approaches.  
+These results highlight the favorable balance achieved by the simplified formulation, which benefits from modified response integrals that tend to produce slightly red-shifted excitation energies relative to the full method, thereby improving agreement with experiment for this class of diradicals.  
+At the same time, the computational cost is drastically reduced, enabling the calculation of hundreds of spin-flip excited states within minutes on standard desktop hardware.  
+For spin-flip calculations, however, the XsTD formulation provides only marginal improvements over the original simplified scheme.
 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=.49\linewidth]{Figure5a}
 	\includegraphics[width=.49\linewidth]{Figure5b}
-	\caption{1PA with spin-flip.}
+	\caption{Experimental absorption spectra of teranthene and superoctazethrene derivatives, compared to SF-TD-DFT and SF-(X)sTD-DFT/BHHLYP/cc-pVDZ calculations, from Ref.~\citenum{dewergifosseSimplifiedSpinFlipTimeDependent2019}.}
 	\label{fig:1pa-sf}
 \end{figure}
+
+The SF-sTD-DFT framework has also proven valuable for studying large polycyclic hydrocarbons with diradical character. 
+For instance, investigations of indeno[1,2b]fluorene and related diindeno[n]thiophene derivatives\cite{dewergifosseAreFullyConjugated2019} showed that the method efficiently reproduces experimental absorption trends while allowing an intuitive interpretation of excited states using natural transition orbitals (NTOs).  
+Importantly, the spin-flip formulation captures small contributions from doubly excited configurations that are inaccessible to conventional TD-DFT, leading to a consistent correlation between theoretical and experimental excitation energies.  
+Beyond spectroscopy, SF-sTD-DFT has also been applied to the design of singlet-fission chromophores.\cite{kostadinovaSingletFissionTinkertoys2022}  
+Because many efficient singlet-fission materials exhibit significant diradical character, the method provides a computationally efficient strategy to explore large candidate systems and rationalize how structural factors such as topology, conjugation length, or substituents influence singlet-fission propensity.
 
 
 The computation of excitation spectra has recently been extended to near-edge X-ray absorption fine structure (NEXAFS), further broadening the applicability of simplified excited-state methods.\cite{dewergifosseUltrafastNearEdgeXray2025}
