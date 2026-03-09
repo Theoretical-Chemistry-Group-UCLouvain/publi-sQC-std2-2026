@@ -508,7 +508,7 @@ This behavior suggests that a more rigorous treatment of exchange integrals, sim
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=.6\linewidth]{Figure4}
-	\caption{CPU times (s) to compute 1PA quantities at the TD-DFT level with \textsc{Turbomole} as well as sTD-DFT and XsTD-DFT levels with the   \texttt{std2} program using B3LYP, from Ref.~\citenum{dewergifosseEXactIntegralSimplified2024}.}
+	\caption{B3LYP, sB3LYP, XsB3LYP computation wall times as a function of the number of basis functions for the set of molecules presented in Ref.~\citenum{dewergifosseEXactIntegralSimplified2024}. TDA calculations computed 20 excited states while sTDA and XsTDA ones considered  $E_{thr}=\SI{10}{\electronvolt}$. Reprinted with permission  from Ref.~\citenum{dewergifosseEXactIntegralSimplified2024} with the permission of AIP Publishing.}
 	\label{fig:1pa-timing}
 \end{figure}
 
@@ -527,7 +527,7 @@ For spin-flip calculations, however, the XsTD formulation provides only marginal
 	\centering
 	\includegraphics[width=.49\linewidth]{Figure5a}
 	\includegraphics[width=.49\linewidth]{Figure5b}
-	\caption{Experimental absorption spectra of teranthene and superoctazethrene derivatives, compared to SF-TD-DFT and SF-(X)sTD-DFT/BHHLYP/cc-pVDZ calculations, from Ref.~\citenum{dewergifosseSimplifiedSpinFlipTimeDependent2019}.}
+	\caption{Experimental absorption spectra of teranthene and superoctazethrene derivatives, compared to SF-TD-DFT and SF-(X)sTD-DFT/BHHLYP/cc-pVDZ calculations. Reprinted with permission from  Ref.~\citenum{dewergifosseSimplifiedSpinFlipTimeDependent2019}, Copyright 2019 American Chemical Society.}
 	\label{fig:1pa-sf}
 \end{figure}
 
@@ -542,7 +542,7 @@ The computation of excitation spectra has recently been extended to near-edge X-
 For chlorophyll~A (Fig.~\ref{fig:nexafs}) , the carbon K-edge spectrum computed at the XsSRC2/TDA/cc-pCVDZ level reproduces the experimental lineshape with remarkable fidelity, despite a small systematic energy shift.  
 The main absorption band is dominated by two intense transitions near 285~eV, in close agreement with the experimental maximum, demonstrating that core--valence excitations of complex chromophores can be described at modest computational cost.  
 Notably, 632 excited states involving more than 3000 basis functions are obtained within seconds, highlighting the efficiency of the approach.  
-The scalability of the method is further illustrated by the PPG$_{10}$ collagen model comprising 600 atoms.  
+The scalability of the method is further illustrated by the PPG$_{10}$ collagen model  (Fig.~\ref{fig:nexafs}) comprising 600 atoms.  
 Its oxygen K-edge spectrum, constructed from more than 85\,000 excited states, shows excellent agreement with experiment across a broad energy window.  
 The first absorption band is accurately reproduced in both position and width, with the most intense transition lying within \SI{0.6}{\electronvolt} of the experimental maximum and corresponding to a localized $1s_{\mathrm O}\rightarrow n/\pi^\star$ excitation on the peptide bond.  
 Higher-energy features are likewise captured once appropriate spectral broadening is applied, reflecting the dense manifold of short-lived states above the ionization threshold.  
@@ -551,57 +551,89 @@ Higher-energy features are likewise captured once appropriate spectral broadenin
 	\centering
 	\includegraphics[width=.6\linewidth]{Figure6a}
 	\includegraphics[width=.6\linewidth]{Figure6b}
-	\caption{Experimental carbon K-edge NEXAFS spectrum of  chlorophyll A and  PPG10 in comparison to the XsSRC2/TDA/cc-pCVDZ one, from Ref.~\citenum{dewergifosseUltrafastNearEdgeXray2025}.}
+	\caption{Experimental carbon K-edge NEXAFS spectrum of  chlorophyll A51 (top) and oxygen K-edge NEXAFS spectrum of collagen,  in comparison to the XsSRC2/TDA/cc-pCVDZ ones. 
+		A broadening factor of \SI{0.5}{\electronvolt}  (\SI{1.2}{\electronvolt}) was employed for the convoluted spectrum of chlorophyl (collagen). Reprinted with permission from Ref.~\citenum{dewergifosseUltrafastNearEdgeXray2025}, Copyright 2025 American Chemical Society.}
 	\label{fig:nexafs}
 \end{figure}
 
 The demonstrated accuracy and efficiency of sQC approaches make it possible to address a longstanding challenge in computational spectroscopy: the realistic simulation of molecules embedded in complex environments. 
 Beyond the electronic structure method itself, reliable spectra require accounting for environmental effects, structural dynamics, and, when necessary, vibronic contributions. 
-Flavin mononucleotide (FMN), discussed in Ref.~\citenum{loffelsenderAllAtomQuantumMechanical2025}, offers a stringent test case for these methodologies (Fig.~\ref{fig:1pa-fmn}). 
+Flavin mononucleotide (FMN), discussed in Ref.~\citenum{loffelsenderAllAtomQuantumMechanical2025}, provides a stringent test case for these methodologies (Fig.~\ref{fig:1pa-fmn}). 
 Gas-phase RI-CC2 and sTD-DFT-xTB spectra are remarkably similar and correctly reproduce the first experimental absorption band, validating the use of sTD-DFT-xTB as a reliable low-cost approach. 
-Both methods, however, strongly blue-shift the second band, underscoring the decisive role of the aqueous environment. Incorporating implicit solvent within ASQM or Boltzmann-weighted ADQM (ADQM-Boltz.) schemes improves the first excitation energy but fails to recover relative intensities and overall spectral shape; Boltzmann averaging produces only minor changes compared to a single optimized structure, indicating that conformational diversity alone is insufficient.
-In contrast, the ADQM-MD protocol, which explicitly includes solvent molecules and dynamical fluctuations, yields striking agreement with experiment without empirical energy shifts. 
-The positions, intensities, and broadening of the main absorption bands are accurately reproduced once a sufficiently large solvation sphere is employed. 
-These findings demonstrate that the FMN spectrum is governed by specific solute--solvent interactions and dynamic effects inaccessible to static or implicit models. 
+Both methods, however, strongly blue-shift the second band, underscoring the decisive role of the aqueous environment. 
+The top panel of Fig.~\ref{fig:1pa-fmn} compares spectra obtained with implicit solvent models within the ASQM framework and with a Boltzmann-weighted ensemble of structures (ADQM-Boltz.). 
+While the inclusion of implicit solvation improves the first excitation energy, both approaches fail to reproduce the relative intensities and overall spectral shape. 
+Moreover, Boltzmann averaging induces only minor changes compared to a single optimized structure, indicating that conformational diversity alone is insufficient to capture the experimental spectrum.
+In contrast, the ADQM-MD protocol (bottom panel of Fig.~\ref{fig:1pa-fmn}), which explicitly includes solvent molecules and dynamical fluctuations through snapshots extracted from molecular dynamics simulations, yields striking agreement with experiment without empirical energy shifts. 
+Once a sufficiently large solvation sphere is considered, the positions, intensities, and broadening of the main absorption bands are accurately reproduced. 
+These results demonstrate that the FMN spectrum is strongly governed by specific solute--solvent interactions and dynamical effects that cannot be captured by static or implicit solvent models.
 
 
-\begin{figure}[!h]
+\begin{figure}
 	\centering
-	\includegraphics[width=.49\linewidth]{Figure7a}
-	\includegraphics[width=.49\linewidth]{Figure7b}
-	\caption{Experimental 1PA spectra of FMN recorded in water in comparison with ASQM and ADQM methodologies, from Ref.~\citenum{loffelsenderAllAtomQuantumMechanical2025}.}
+	\includegraphics[width=.6\linewidth]{Figure7a}
+	\includegraphics[width=.6\linewidth]{Figure7b}
+	\caption{Experimental one-photon absorption spectra of flavin mononucleotide (FMN) in water from Antill \textit{et al.}\cite{antillPhotoinduced2019} and List \textit{et al.}\cite{ListEffectChromophore2014} compared with sQC calculations. 
+		Top: spectra computed using static approaches with implicit solvent, including RI-CC2/aug-cc-pVDZ//r2SCAN-3c/DCOSMO-RS and sTD-DFT-xTB//r2SCAN-3c/GBSA(water) ($E_{\mathrm{thr}}=\SI{16}{\electronvolt}$), as well as the Boltzmann-averaged sTD-DFT-xTB/GBSA(water) spectrum obtained from a conformer ensemble generated at room temperature with r2SCAN-3c (ASQM and ADQM-Boltz schemes). 
+		Bottom: average sTD-DFT-xTB/GBSA(water) spectra computed from uncorrelated snapshots extracted from a \SI{1}{\nano\second} GFN2-xTB molecular dynamics trajectory with explicit solvent molecules (ADQM-MD scheme). 
+		Spectra were averaged using solvation spheres of increasing radii (7, 9, 11, and \SI{12}{\angstrom}). 
+		Convolutions used damping factors of $\Gamma=\SI{0.2}{\electronvolt}$ (left) and $\Gamma=\SI{0.1}{\electronvolt}$ (right). 
+		No empirical energy shifts were applied. 
+		Reprinted with permission from Ref.~\citenum{loffelsenderAllAtomQuantumMechanical2025}. Copyright 2025 Wiley-VCH GmbH.}
 	\label{fig:1pa-fmn}
 \end{figure}
 
-The ADQM protocol is also essential for describing the ECD spectra of flexible biomolecules, as it explicitly accounts for structural fluctuations.  
-This is illustrated by myoglobin in Ref.~\citenum{seibertBiomolecularStructureInformation2017}, a prototypical member of the globin family responsible for intramuscular oxygen transport, comprised roughly 2500 atoms, therefore far beyond the reach of conventional excited-state quantum-chemical methods.  
-Within the ADQM framework, performed at the sTDA-xTB level, however, its CD spectrum was obtained by averaging over 100 snapshots extracted from a molecular dynamics trajectory, thereby suppressing artificial spectral features and yielding a physically meaningful lineshape.  
-The resulting spectrum  (Fig.~\ref{fig:ecd-myo}) reproduces all characteristic experimental signatures with very good agreement.  
-Owing to the presence of eight $\alpha$-helices, the CD response is dominated by the backbone transitions typical of helical peptides, confirming that the method correctly captures secondary-structure fingerprints while simultaneously accounting for the heme cofactor and its coupling to the protein environment.  
+The ADQM protocol is also essential for describing the electronic circular dichroism (ECD) spectra of flexible biomolecules, as it explicitly accounts for structural fluctuations.  
+This is illustrated by myoglobin in Ref.~\citenum{seibertBiomolecularStructureInformation2017}, a prototypical member of the globin family responsible for intramuscular oxygen transport and comprising roughly 2500 atoms, well beyond the reach of conventional excited-state quantum-chemical methods.  
+Within the ADQM-MD framework, performed at the sTDA-xTB level, the CD spectrum was obtained by averaging over 100 snapshots extracted from a molecular dynamics trajectory.  
+This ensemble averaging suppresses artificial spectral features associated with individual conformations and yields a physically meaningful lineshape.  
+The resulting spectrum (Fig.~\ref{fig:ecd-myo}) reproduces all characteristic experimental signatures with very good agreement.  
+Because myoglobin contains eight $\alpha$-helices, the CD response is dominated by backbone transitions typical of helical peptides, confirming that the method correctly captures secondary-structure fingerprints while simultaneously accounting for the heme cofactor and its coupling to the protein environment.  
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=.8\linewidth]{Figure8}
-	\caption{Calculated CD spectra of myoglobin computed (blue solid line), from Ref.~\citenum{seibertBiomolecularStructureInformation2017}.}
+	\includegraphics[width=.6\linewidth]{Figure8}
+	\caption{ECD spectrum of myoglobin computed at the sTDA-xTB level within the ADQM-MD protocol (blue solid line), obtained by averaging over 100 snapshots extracted from a molecular dynamics trajectory.
+	Individual transitions were convoluted with Gaussian functions (full width at $1/e$ maximum of \SI{0.35}{\electronvolt}), and the resulting spectrum was uniformly red-shifted by \SI{1.0}{\electronvolt}.
+	The experimental spectrum of myoglobin in aqueous solution is shown for comparison (black dotted line). Reprinted with permission from Ref.~\citenum{seibertBiomolecularStructureInformation2017}. Copyright 2017 American Chemical Society.}
 	\label{fig:ecd-myo}
 \end{figure}
 
 By contrast, for more rigid structures, the ASQM protocol already provides a reliable description of optical properties without the need for extensive configurational averaging.  
-The photoactive yellow protein (PYP), a 1931-atom system, exemplifies this regime: it can be treated at the XsCAM-B3LYP/TDA level using mixed basis sets, making fully quantum-mechanical calculations tractable even on modest computational resources \textbf{[explicit timings]}, as discussed in Ref.~\citenum{dewergifosseComputingExcitedStates2024}.  
+The photoactive yellow protein (PYP), a 1931-atom system, exemplifies this regime: it can be treated at the XsCAM-B3LYP/TDA level using mixed basis sets, making fully quantum-mechanical calculations tractable even on modest computational resources, as discussed in Ref.~\citenum{dewergifosseComputingExcitedStates2024}.  
 Excitation energies and oscillator strengths of the first transition are well reproduced even with relatively small basis sets, provided that diffuse and polarization functions are included on the chromophore.  
-The computed 1PA and ECD spectra (Fig.~\ref{fig:1pa+ecd-pyp}) show striking agreement with experiment after a uniform energy shift, accurately capturing spectral shapes and relative peak positions; only the rotatory strength of the lowest transition is underestimated.  
-Analysis of the excited states reveals that the first band corresponds to a largely chromophore-centered $\pi\to\pi^\star$ transition with partial charge-transfer character.  
-Importantly, the second absorption band originates from a $\pi\to\pi^\star$ transition localized on a tryptophan residue, while a positive ECD feature arises from a transition on a hydrogen-bonded tyrosine.  
-These findings demonstrate that the full protein environment must be included to recover the correct spectral signatures, as chromophore-only models fail to describe such transitions.  
+The computed 1PA and ECD spectra (Fig.~\ref{fig:1pa+ecd-pyp}) show striking agreement with experiment after a uniform energy shift (of \SI{-1.5}{\electronvolt}), accurately capturing spectral shapes and relative peak positions; only the rotatory strength of the lowest transition is slightly underestimated.  
 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=.8\linewidth]{Figure9}
-	\caption{UV/vis absorption and CD spectra of PYP in water in comparison with XsCAM-B3LYP/TDA/6-31+G(d)/631G//C-PCM(water) ones, from  Ref.~\citenum{dewergifosseComputingExcitedStates2024}}
+	\caption{Experimental and computed 1PA (left) and ECD (right) spectra of PYP in aqueous solution. 
+		Theoretical spectra were obtained at the XsCAM-B3LYP/TDA level using mixed basis sets [6-31+G(d) on the chromophore and 6-31G on the remaining atoms] within the C-PCM model for water. 
+		Stick spectra were convoluted with Gaussian functions using broadening parameters of \SI{0.2}{\electronvolt} for the absorption spectrum and \SI{0.3}{\electronvolt} for the ECD spectrum. 
+		Reprinted with permission from Ref.~\citenum{dewergifosseComputingExcitedStates2024}. Copyright 2024 American Chemical Society.}
 	\label{fig:1pa+ecd-pyp}
 \end{figure}
 
+Analysis of the excited states (Fig.~\ref{fig:nto-pyp}) via NTOs provides further insight into the origin of the spectral features.  
+The transition to the first excited state, which appears in both the UV/vis absorption and ECD spectra, corresponds to a $\pi \rightarrow \pi^\star$ excitation localized on the chromophore with partial charge-transfer (CT) character.  
+The second main peak in the UV/vis absorption spectrum arises from a transition to the 23rd excited state, which also corresponds to a $\pi \to \pi^\star$ excitation but localized on a tryptophan residue of the protein.  
+This finding directly explains why calculations performed on the isolated chromophore fail to reproduce this spectral feature.  
+Only an all-atom quantum-mechanical treatment, such as the XsTDA approach, can properly describe such transitions.  
+In multiscale schemes, residues like tryptophan are typically treated at the MM level and would therefore not contribute to the electronic spectrum.  
+These results thus advocate for all-atom approaches when studying fluorescent or photoactive proteins in which additional absorbing residues may significantly contribute to the optical response.  
+In the ECD spectrum, the 21st excited state is responsible for the positive band located at \SI{286}{\nano\meter} and also corresponds to a $\pi \to \pi^\star$ transition, this time localized on a tyrosine residue hydrogen-bonded to the chromophore.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=.8\linewidth]{Figure10_}
+	\caption{Leading natural transition orbital (NTO) pairs associated with the transitions from the ground state to the 1st (top), 21st (middle), and 23rd (bottom) excited states of PYP (extracted from the \texttt{std2} calculation presented in Fig.~\ref{fig:1pa+ecd-pyp}), illustrating the chromophore-centered excitation and the contributions from nearby aromatic residues. 
+	Reprinted with permission from Ref.~\citenum{dewergifosseComputingExcitedStates2024}. Copyright 2024 American Chemical Society.}
+	\label{fig:nto-pyp}
+\end{figure}
+
 Together, these examples emphasize the complementary roles of ADQM and ASQM: the former enables a realistic treatment of complex chromophores in solution or flexible biomolecules by incorporating structural dynamics, whereas the latter delivers accurate spectra for comparatively rigid systems at a reduced computational cost, while preserving a fully quantum-mechanical description of the entire assembly.
+
+
 
 {\bfseries [Note that UV/Vis\cite{wiebelerQMMMBenchmarking2019,streiterImpactChlorineInternal2020,batraBenchmarkSimplifiedTimeDependent2020,mayOpticalLimitingProperties2020,hidalgo-rosaSensingMechanismElucidation2020,greensteinOrganicPhotovoltaicEfficiency2022,buninLowSymmetryPhthalocyaninesBearing2022,yangEnergybasedFragmentationContribution2022,dmitrienkoExploringReplacementAxially2022,usoltsevSemiEmpiricalCalculationBodipy2022,eroshinIronIIComplexesPorphyrin2023,degtyarevInvestigationSpectraElectronic2023,seveurModelingPhotoAbsorptionProperties2023,lindenthalUnderstandingOpticalProperties2023,paulsEfficientExcitonCoupling2025} (and many others, in fact) and ECD\cite{gehroldAxialHelicalPlanar2016,covingtonAtropoisomerismBiflavonesAbsolute2016,jarzebskiDiastereoselectiveSelfAssemblyNeutral2017,ianniApplicationInvertedChirality2019,mohrEnantioselectivePropertiesNeglected2025} calculations (with sTD-DFT) are also done the wild... Mostly thanks to the ORCA implementation.]}
 
@@ -699,12 +731,6 @@ In this case, comparisons between ADQM-MD  properties and ADQM-Boltz.~show simil
 
 \textbf{[NTOs (Figs.~\ref{fig:nto-pyp} and \ref{fig:nto-fmn}) and response orbitals (Fig.~\ref{fig:nro-or}).]}
 
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width=.8\linewidth]{Figure15}
-	\caption{ PYP in Ref.~\citenum{dewergifosseComputingExcitedStates2024} (NTOs)}
-	\label{fig:nto-pyp}
-\end{figure}
 
 \begin{figure}[!h]
 \centering
