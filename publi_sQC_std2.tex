@@ -25,6 +25,8 @@ preprint,%
 \usepackage{siunitx}
 \usepackage{hyperref}
 
+\usepackage{mhchem}
+
 %% Apr 2021: AIP requests that the corresponding 
 %% email to be moved after the affiliations
 \makeatletter
@@ -412,33 +414,33 @@ Similar expressions yield access to the quadratic properties and their residues.
 
 To enable chemically transparent interpretation, both the linear response and its residues may be expressed in terms of natural response orbitals (NROs)\cite{dewergifosseUnifiedStrategyChemically2020} or, in the resonant limit, natural transition orbitals (NTOs).\cite{dewergifosseAreFullyConjugated2019}  
 Within the NTO framework, the 1TDM admits a compact singular-value decomposition,
-\begin{equation*}
-	\gamma^{(\pm)}_{0m} = \mathbf U\Lambda_{0m}\mathbf V^T,
-\end{equation*}
+\begin{equation}
+	\gamma^{(\pm)}_{0m} = \mathbf U\Lambda_{0m}\mathbf V^T, \label{eq:ntos}
+\end{equation}
 where $\mathbf U$ and $\mathbf V$ define the hole and particle orbital subspaces, respectively, and $\Lambda_{0m} = \mathrm{diag}(\sqrt{\lambda_1},\sqrt{\lambda_2},\ldots)$.  
 The set $\{\lambda_i\}$ provides the weight of each NTO, and the effective number of contributing pairs is quantified via the participation ratio:
-\begin{equation}
+\begin{equation*}
 	PR_{NTO} = \frac{[\sum_i\lambda_i]^2}{\sum_i \lambda_i^2}.
-\end{equation}
+\end{equation*}
 Typically, only a small number of NTO pairs dominate, providing a chemically intuitive picture of the excitation.
 
 Analogously, the frequency-dependent $\omega$PDM can be compressed into NROs\cite{dewergifosseUnifiedStrategyChemically2020} via
-\begin{equation*}
-	\gamma^{(\pm)}_{\eta}(\omega) = \mathbf U\,\Lambda_\eta\,\mathbf V^T,
-\end{equation*}
-leading to
 \begin{equation}
-	\braket{\braket{\hat A_\zeta; \hat B_\eta}}_{\omega} = 2 \sum_i \Upsilon_{\zeta,i}\Lambda_{ \eta,i}(\omega) = \sum_i R_{\zeta\eta, i}(\omega),
+	\gamma^{(\pm)}_{\eta}(\omega) = \mathbf U\,\Lambda_\eta\,\mathbf V^T,\label{eq:nros}
 \end{equation}
+leading to
+\begin{equation*}
+	\braket{\braket{\hat A_\zeta; \hat B_\eta}}_{\omega} = 2 \sum_i \Upsilon_{\zeta,i}\Lambda_{ \eta,i}(\omega) = \sum_i R_{\zeta\eta, i}(\omega),
+\end{equation*}
 with $\Upsilon_\zeta = \mathbf U^T \mathbf A_\zeta \mathbf V$.  
 The weight of each NRO contribution is given by
 \begin{equation*}
 	w_i(\omega) = \frac{|R_{\zeta\eta,i}(\omega)|}{\sum_i R_{\zeta\eta, i}(\omega)},
 \end{equation*}
 and the corresponding participation ratio reads
-\begin{equation}
+\begin{equation*}
 	PR_{NRO}(\omega)  = \frac{[\sum_i w_i(\omega)]^2}{\sum_i w_i(\omega)}.
-\end{equation}
+\end{equation*}
 An alternative perspective is obtained by applying a Löwdin orthogonalization to $\mathbf A$ and the 1TDM.  
 Starting from $\mathbf C = \mathbf P \Sigma \mathbf Q^T$, one defines
 \begin{equation*}
@@ -447,9 +449,9 @@ Starting from $\mathbf C = \mathbf P \Sigma \mathbf Q^T$, one defines
 	\tilde{\Lambda}_{\eta}(\omega) = (\mathbf P\mathbf Q^T)[\gamma^{(\pm)}_{\eta}(\omega)](\mathbf P\mathbf Q^T)^T,
 \end{equation*}
 such that
-\begin{equation}
+\begin{equation*}
 	\braket{\braket{\hat A_\zeta; \hat B_\eta}}_{\omega} = 2 \sum_{\mu\nu} \tilde\Upsilon_{\zeta,\mu\nu}\tilde\Lambda_{ \eta,\mu\nu}(\omega) = \sum_{\mu\nu} \tilde R_{\zeta\eta, \mu\nu}(\omega).
-\end{equation}
+\end{equation*}
 This formulation decomposes the response into atomic-orbital contributions, which may be further aggregated over chemically meaningful fragments.  
 The resulting site (AA) and inter-fragment (AB) terms are given by
 \begin{equation*}
@@ -508,12 +510,12 @@ This behavior suggests that a more rigorous treatment of exchange integrals, sim
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=.6\linewidth]{Figure4}
-	\caption{B3LYP, sB3LYP, XsB3LYP computation wall times as a function of the number of basis functions for the set of molecules presented in Ref.~\citenum{dewergifosseEXactIntegralSimplified2024}. TDA calculations computed 20 excited states while sTDA and XsTDA ones considered  $E_{thr}=\SI{10}{\electronvolt}$. Reprinted with permission  from Ref.~\citenum{dewergifosseEXactIntegralSimplified2024} with the permission of AIP Publishing.}
+	\caption{B3LYP, sB3LYP, XsB3LYP computation wall times as a function of the number of basis functions for a set of 77 molecules of varying sizes. TDA calculations computed 20 excited states while sTDA and XsTDA ones considered  $E_{thr}=\SI{10}{\electronvolt}$. Reprinted with permission  from Ref.~\citenum{dewergifosseEXactIntegralSimplified2024}. Copyright 2024 AIP Publishing.}
 	\label{fig:1pa-timing}
 \end{figure}
 
 The capability of simplified approaches to describe the linear absorption of strongly correlated systems can be illustrated by large polycyclic diradicals such as teranthene and superoctazethrene derivatives (Fig.~\ref{fig:1pa-sf}).\cite{dewergifosseSimplifiedSpinFlipTimeDependent2019} 
-For these systems, spin-flip formulations are required to properly account for the multiconfigurational character of the ground and low-lying excited states.  
+For these systems, spin-flip (SF) formulations are required to properly account for the multiconfigurational character of the ground and low-lying excited states.  
 Figure~\ref{fig:1pa-sf} compares experimental spectra to SF-TD-DFT, SF-sTD-DFT, and SF-XsTD-DFT results obtained with the BHHLYP functional.  
 For the teranthene derivative, the experimental spectrum is dominated by a low-energy band at \SI{1.42}{\electronvolt}.  
 This feature is reproduced most accurately by the SF-sTD-DFT method (\SI{1.48}{\electronvolt}), followed by SF-XsTD-DFT (\SI{1.53}{\electronvolt}), whereas the full SF-TD-DFT calculation predicts a more pronounced blue shift (\SI{1.66}{\electronvolt}).  
@@ -574,10 +576,10 @@ These results demonstrate that the FMN spectrum is strongly governed by specific
 	\includegraphics[width=.6\linewidth]{Figure7a}
 	\includegraphics[width=.6\linewidth]{Figure7b}
 	\caption{Experimental one-photon absorption spectra of flavin mononucleotide (FMN) in water from Antill \textit{et al.}\cite{antillPhotoinduced2019} and List \textit{et al.}\cite{ListEffectChromophore2014} compared with sQC calculations. 
-		Top: spectra computed using static approaches with implicit solvent, including RI-CC2/aug-cc-pVDZ//r2SCAN-3c/DCOSMO-RS and sTD-DFT-xTB//r2SCAN-3c/GBSA(water) ($E_{\mathrm{thr}}=\SI{16}{\electronvolt}$), as well as the Boltzmann-averaged sTD-DFT-xTB/GBSA(water) spectrum obtained from a conformer ensemble generated at room temperature with r2SCAN-3c (ASQM and ADQM-Boltz schemes). 
+		Top: spectra computed using static approaches with implicit solvent, including RI-CC2/aug-cc-pVDZ//r2SCAN-3c/DCOSMO-RS and sTD-DFT-xTB//r2SCAN-3c/GBSA(water) (with $E_{\mathrm{thr}}=\SI{16}{\electronvolt}$), as well as the Boltzmann-averaged sTD-DFT-xTB/GBSA(water) spectrum obtained from a conformer ensemble generated at room temperature with r2SCAN-3c (ASQM and ADQM-Boltz schemes). 
 		Bottom: average sTD-DFT-xTB/GBSA(water) spectra computed from uncorrelated snapshots extracted from a \SI{1}{\nano\second} GFN2-xTB molecular dynamics trajectory with explicit solvent molecules (ADQM-MD scheme). 
 		Spectra were averaged using solvation spheres of increasing radii (7, 9, 11, and \SI{12}{\angstrom}). 
-		Convolutions used damping factors of $\Gamma=\SI{0.2}{\electronvolt}$ (left) and $\Gamma=\SI{0.1}{\electronvolt}$ (right). 
+		Convolutions used damping factors of $\Gamma=\SI{0.2}{\electronvolt}$ (top) and $\Gamma=\SI{0.1}{\electronvolt}$ (bottom). 
 		No empirical energy shifts were applied. 
 		Reprinted with permission from Ref.~\citenum{loffelsenderAllAtomQuantumMechanical2025}. Copyright 2025 Wiley-VCH GmbH.}
 	\label{fig:1pa-fmn}
@@ -606,7 +608,7 @@ The computed 1PA and ECD spectra (Fig.~\ref{fig:1pa+ecd-pyp}) show striking agre
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=.8\linewidth]{Figure9}
+	\includegraphics[width=\linewidth]{Figure9}
 	\caption{Experimental and computed 1PA (left) and ECD (right) spectra of PYP in aqueous solution. 
 		Theoretical spectra were obtained at the XsCAM-B3LYP/TDA level using mixed basis sets [6-31+G(d) on the chromophore and 6-31G on the remaining atoms] within the C-PCM model for water. 
 		Stick spectra were convoluted with Gaussian functions using broadening parameters of \SI{0.2}{\electronvolt} for the absorption spectrum and \SI{0.3}{\electronvolt} for the ECD spectrum. 
@@ -614,7 +616,7 @@ The computed 1PA and ECD spectra (Fig.~\ref{fig:1pa+ecd-pyp}) show striking agre
 	\label{fig:1pa+ecd-pyp}
 \end{figure}
 
-Analysis of the excited states (Fig.~\ref{fig:nto-pyp}) via NTOs provides further insight into the origin of the spectral features.  
+Analysis of the excited states (Fig.~\ref{fig:nto-pyp}) via NTOs [Eq.~\eqref{eq:ntos}] provides further insight into the origin of the spectral features.  
 The transition to the first excited state, which appears in both the UV/vis absorption and ECD spectra, corresponds to a $\pi \rightarrow \pi^\star$ excitation localized on the chromophore with partial charge-transfer (CT) character.  
 The second main peak in the UV/vis absorption spectrum arises from a transition to the 23rd excited state, which also corresponds to a $\pi \to \pi^\star$ excitation but localized on a tryptophan residue of the protein.  
 This finding directly explains why calculations performed on the isolated chromophore fail to reproduce this spectral feature.  
@@ -625,7 +627,7 @@ In the ECD spectrum, the 21st excited state is responsible for the positive band
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=.8\linewidth]{Figure10_}
+	\includegraphics[width=.8\linewidth]{Figure10}
 	\caption{Leading natural transition orbital (NTO) pairs associated with the transitions from the ground state to the 1st (top), 21st (middle), and 23rd (bottom) excited states of PYP (extracted from the \texttt{std2} calculation presented in Fig.~\ref{fig:1pa+ecd-pyp}), illustrating the chromophore-centered excitation and the contributions from nearby aromatic residues. 
 	Reprinted with permission from Ref.~\citenum{dewergifosseComputingExcitedStates2024}. Copyright 2024 American Chemical Society.}
 	\label{fig:nto-pyp}
@@ -658,69 +660,105 @@ Overall, the same considerations guiding XCFs selection in conventional TD-DFT a
 
 \begin{figure}[!h]
 \centering
-\includegraphics[width=\linewidth]{./Figure10}
+\includegraphics[width=\linewidth]{./Figure11}
 \caption{Violin plots of the difference 2PA properties (excitation energies, $\Delta E_{0\to n}$, and strength, $\delta^{\mathrm{2PA}}$) relative to RI-CC2 reference values for the CT dataset, as reported in Ref.~\citenum{maraldiEvaluatingPerformanceExact2025}, computed with the aug-cc-pVDZ basis set. Results are shown for several XCFs and levels of approximation (TD, sTD, and XsTD). Left: excitation energies. Right: 2PA strength expressed as $\log_{10}(\delta^{\mathrm{2PA}})$ (a difference of 1 translates into an order of magnitude). For each method, the MD of this difference is reported, with the MAD are given in parentheses.}
 \label{fig:2pa-ct}
 \end{figure}
 
-Consistent with the conclusions drawn from this benchmark, a similarly favorable picture emerges for first hyperpolarizabilities, demonstrating that simplified approaches can reliably describe quadratic response properties.  
+Consistent with the conclusions drawn from the 2PA benchmarks, a similarly favorable picture emerges for first hyperpolarizabilities, demonstrating that simplified approaches can reliably describe quadratic response properties.  
 For small push--pull $\pi$-conjugated molecules, the original sTD-DFT scheme is known to exhibit artificially red-shifted resonance enhancements in $\beta_{\mathrm{HRS}}$.  
-To mitigate this effect, we previously proposed refitting the MNOK two-electron integral parameters so as to better reproduce higher-level reference calculations.  
+To mitigate this limitation, we previously proposed refitting the MNOK two-electron integral parameters in order to better reproduce higher-level reference calculations.  
 This strategy proved particularly effective for large systems.  
-In Ref.~\citenum{beaujeanAllAtomQuantumMechanical2021}, bacteriorhodopsin (bR, $\sim$4000 atoms) was used as a test case, benefiting from the availability of experimental $\beta_{\mathrm{HRS}}$ spectra measured by Clays and co-workers~\cite{decoeneFluorescenceFreeSpectralDispersion2017}.  
-As customary, the experimental data were extrapolated to the static limit using refined two-state models; here, a simple vibronic model was employed, with parameters adjusted to reproduce the experimental 1PA spectrum.  
-As shown in Figure~\ref{fig:beta-bR}, the sTD-DFT-xTB $\beta_{\mathrm{HRS}}$ frequency dispersion quantitatively reproduces the low-energy experimental points below the two-photon resonance and closely follows the extrapolation toward the static limit.  
-Despite the expected breakdown of response theory in the resonance regime, the agreement in the low-frequency domain is striking, underscoring the robustness of this parameterized simplified approach for large proteins.  
+In Ref.~\citenum{beaujeanAllAtomQuantumMechanical2021}, bacteriorhodopsin (bR, $\sim$4000 atoms) was investigated as a challenging test case, benefiting from the availability of experimental $\beta_{\mathrm{HRS}}$ spectra measured by Clays and co-workers.\cite{decoeneFluorescenceFreeSpectralDispersion2017}  
+As customary, the experimental data were extrapolated to the static limit using refined two-state models; here, a simple vibronic model was employed with parameters adjusted to reproduce the experimental one-photon absorption spectrum.  
+As shown in Fig.~\ref{fig:beta-bR}, the sTD-DFT-xTB $\beta_{\mathrm{HRS}}$ frequency dispersion quantitatively reproduces the low-energy experimental points below the two-photon resonance and closely follows the extrapolation toward the static limit.  
+Although response theory is expected to break down close to resonance, the agreement in the low-frequency regime is remarkable, highlighting the robustness of this parameterized simplified approach for large biomolecular systems.  
+Current developments aim at extending the applicability of these methods to the resonant regime through damped response formalisms.\cite{kauczorEfficiencyAlgorithmsSolving2011,KauczorEfficient2014}
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=.8\linewidth]{Figure11}
-	\caption{$\beta_{\mathrm{HRS}}$ dispersion curve of bR, from Ref.~\citenum{beaujeanAllAtomQuantumMechanical2021}}
+	\includegraphics[width=.8\linewidth]{Figure12}
+	\caption{Frequency dispersion of the hyper-Rayleigh scattering first hyperpolarizability $\beta_{\mathrm{HRS}}$ of bacteriorhodopsin (bR). 
+		Experimental measurements\cite{decoeneFluorescenceFreeSpectralDispersion2017} are shown together with the extrapolation to the static limit obtained using a vibronic two-state model (red curve). 
+		Theoretical results were computed at the sTD-DFT-xTB level ($E_{\mathrm{thr}}=\SI{9}{\electronvolt}$) including solvent effects through the GBSA model for water. 
+		Reprinted with permission from Ref.~\citenum{beaujeanAllAtomQuantumMechanical2021}. Copyright 2021 American Chemical Society.}
 	\label{fig:beta-bR}
 \end{figure}
 
-Within the XsTD-DFT framework, which replaces semiempirical MNOK integrals by exact one- and two-center atomic-orbital contributions, the need for reparameterization disappears altogether.  
-Initial benchmark frequency-dispersion curves\cite{dewergifosseEXactIntegralSimplified2024} already demonstrate that XsTD-DFT nearly perfectly reproduces full TD-DFT $\beta_{\mathrm{HRS}}$ profiles, in particular the position of resonance enhancements associated with charge-transfer states.  
-Future work will aim at systematically assessing the improvement brought by XsTD-DFT for $\beta_{\mathrm{HRS}}$, while also exploring extensions toward the near-resonant regime, for instance through the explicit inclusion of damping effects.\cite{kauczorEfficiencyAlgorithmsSolving2011}
+Note that within the XsTD-DFT framework, which replaces semiempirical MNOK integrals with exact one- and two-center atomic-orbital contributions, the need for reparameterization disappears altogether.  
+Initial benchmark frequency-dispersion curves\cite{dewergifosseEXactIntegralSimplified2024} already show that XsTD-DFT nearly perfectly reproduces the $\beta_{\mathrm{HRS}}$ profiles obtained with full TD-DFT, in particular the position of resonance enhancements associated with charge-transfer states.  
+Future work will aim at systematically assessing the improvements provided by XsTD-DFT for $\beta_{\mathrm{HRS}}$.
 
-The sTD-DFT framework has also proven useful for modeling excited-state absorption (ESA) spectra of large molecular systems.  
-A representative example is provided by the photoactive yellow protein (PYP), whose transient absorption spectrum was measured \SI{1.5}{\pico\second} after a \SI{370}{\nano\meter} pump excitation in aqueous buffer.  
-At this delay time, the experimental spectrum is dominated by negative signals arising from ground-state bleaching and stimulated emission, with three main features: an ESA band near \SI{370}{\nano\meter}, ground-state bleaching around \SI{445}{\nano\meter}, and stimulated emission centered at approximately \SI{495}{\nano\meter}.  
-To rationalize these observations, the ground-state absorption and the first singlet ESA of PYP were computed using the sTDA-xTB approach.  
-A global energy shift of \SI{0.5}{\electronvolt} was applied to align the computed spectra with experiment, and the transient absorption signal was obtained by subtracting the ground-state absorption and the modeled stimulated emission from the ESA contribution.  
-Despite the neglect of explicit vibronic structure and inhomogeneous broadening effects, the resulting transient spectrum qualitatively reproduces the main experimental features and clarifies the interplay between ESA and stimulated emission: the calculation correctly captures the attenuation of the stimulated emission by overlapping ESA transitions.  
+The sTD-DFT framework has also proven useful for modeling ESA spectra of large molecular systems.  
+A representative example is provided by PYP, whose transient absorption spectrum was measured \SI{1.5}{\pico\second} after a \SI{370}{\nano\meter} pump excitation in aqueous buffer.  
+At this delay time, the experimental signal is dominated by negative contributions arising from ground-state bleaching and stimulated emission, leading to three main spectral features: an ESA band near \SI{370}{\nano\meter}, ground-state bleaching around \SI{445}{\nano\meter}, and stimulated emission centered at approximately \SI{495}{\nano\meter}.  
+To interpret these observations, the ground-state absorption and the first singlet ESA spectrum of PYP were computed using the sTDA-xTB approach.  
+A global energy shift of \SI{-0.5}{\electronvolt} was applied to align the calculated spectra with experiment, and the transient signal was reconstructed by subtracting the ground-state absorption and a modeled stimulated emission contribution from the ESA spectrum.  
+Despite the neglect of explicit vibronic structure and inhomogeneous broadening effects, the resulting transient spectrum qualitatively reproduces the main experimental features and clarifies the interplay between ESA and stimulated emission, in particular the attenuation of the stimulated emission band due to overlapping ESA transitions.
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=.6\linewidth]{Figure12}
-	\caption{ESA of PYP, from Ref.~\citenum{dewergifosseNonlinearresponsePropertiesSimplified2019}.}
+	\includegraphics[width=.6\linewidth]{Figure13}
+	\caption{Experimental transient absorption spectrum of PYP measured in a 10 mM Tris--HCl buffer solution at pH 8.1, \SI{1.5}{\pico\second} after a \SI{370}{\nano\meter} pump excitation, compared with spectra simulated using the sTDA-xTB approach. 
+		Theoretical curves correspond to the ESA, ground-state absorption, and modeled stimulated emission contributions, whose combination yields the simulated transient spectrum (with a global energy shift of \SI{-0.5}{\electronvolt}). 
+		Reprinted with permission from Ref.~\citenum{dewergifosseNonlinearresponsePropertiesSimplified2019}. 
+		Copyright 2024 AIP Publishing.}
 	\label{fig:esa-pyp}
 \end{figure}
 
 Then, the 2PA spectrum of FMN in water (Fig.~\ref{fig:2pa-fmn}) provides a clear illustration of the respective strengths and limitations of ASQM and ADQM strategies for quadratic responses.\cite{loffelsenderAllAtomQuantumMechanical2025}  
-Similarly to the corresponding 1PA spectrum (Fig.~\ref{fig:1pa-fmn}), ASQM calculations in vacuum, performed at the RI-CC2 and sTD-DFT-xTB levels, already reproduce the position of the lowest experimental 2PA band with reasonable accuracy, but show significant discrepancies in intensity and fail to capture the shape and splitting of higher-energy features.  
-Averaging over uncorrelated gas-phase snapshots marginally improves the agreement, while ADQM-Boltz.~based on optimized structures do not substantially alter the spectral profile, reflecting the fact that 1PA and 2PA probe the same electronic transitions and are weakly sensitive to static structural disorder.  
-In contrast, the ADQM-MD approach, combining sTD-DFT-xTB with explicit solvation spheres extracted from molecular dynamics simulations, yields a striking improvement over ASQM, accurately reproducing both peak positions and the pronounced inhomogeneous broadening of the second 2PA band observed experimentally.  
-When sufficiently large solvation environments are included, the ADQM-MD spectra not only outperform vacuum and continuum-based models but also compare favorably with previous QM/MM calculations, capturing solvent-induced splitting and intensity redistribution at a fraction of the computational cost.
+Similarly to the corresponding 1PA spectrum (Fig.~\ref{fig:1pa-fmn}), ASQM calculations in vacuum, performed at the RI-CC2 and sTD-DFT-xTB levels, already reproduce the position of the lowest experimental 2PA band with reasonable accuracy.  
+However, they show significant discrepancies in intensity and fail to capture the shape and splitting of the higher-energy spectral features.  
+Averaging over uncorrelated gas-phase snapshots provides only marginal improvement, while ADQM-Boltz.~calculations based on optimized conformers do not substantially alter the spectral profile.  
+This behavior reflects the fact that 1PA and 2PA probe the same underlying electronic transitions and are therefore only weakly sensitive to static structural disorder.  
+In contrast, the ADQM-MD protocol, combining sTD-DFT-xTB with explicit solvation spheres extracted from molecular dynamics simulations, yields a marked improvement over ASQM.  
+In particular, it accurately reproduces both peak positions and the pronounced inhomogeneous broadening of the second 2PA band observed experimentally.  
+When sufficiently large solvation environments are included, the ADQM-MD spectra not only outperform vacuum and continuum-based ASQM models but also compare favorably with previous QM/MM calculations, capturing solvent-induced splitting and intensity redistribution at a fraction of the computational cost.
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=.49\linewidth]{Figure13a}
-	\includegraphics[width=.49\linewidth]{Figure13b}
-	\caption{Experimental 2PA spectra of FMN recorded in water in comparison with ASQM and ADQM methodologies, from  Ref.~\citenum{loffelsenderAllAtomQuantumMechanical2025}.}
+	\includegraphics[width=.6\linewidth]{Figure14a}
+	\includegraphics[width=.6\linewidth]{Figure14b}
+	\caption{Two-photon absorption (2PA) spectra of FMN in water comparing ASQM and ADQM strategies. 
+		Top: ASQM results obtained from RI-CC2/aug-cc-pVDZ//r2SCAN-3c and sTD-DFT-xTB//r2SCAN-3c ($E_{\mathrm{thr}}=\SI{16}{\electronvolt}$) calculations using implicit solvent models (DCOSMO-RS and GBSA for water), together with the ADQM-Boltz. spectrum obtained by Boltzmann averaging over optimized conformers at the sTD-DFT-xTB/GBSA level. 
+		Bottom: ADQM-MD spectra computed from averages of dtsTD-DFT-xTB/GBSA(water) calculations on uncorrelated snapshots extracted from a \SI{1}{\nano\second} GFN2-xTB MD trajectory, including explicit solvent molecules through solvation spheres of increasing radii (7, 9, 11, and \SI{12}{\angstrom}). 
+		Experimental spectra measured in water by Homans et al.\cite{HomansTwoPhoton2018} and List et al.\cite{ListEffectChromophore2014} are shown for comparison. 
+		Convolutions used damping factors of $\Gamma=\SI{0.1}{\electronvolt}$ (top) and $\Gamma=\SI{0.05}{\electronvolt}$ (bottom). No empirical energy shifts were applied. 
+		Reprinted with permission from Ref.~\citenum{loffelsenderAllAtomQuantumMechanical2025}. Copyright 2025 Wiley-VCH GmbH.}
 	\label{fig:2pa-fmn}
 \end{figure}
 
-The ADQM approach can be naturally extended to compute $\beta_{\mathrm{HRS}}$ by averaging over an ensemble of structures extracted fromMD, as conformational fluctuations, can also have a pronounced impact on the NLO response of flexible systems.  
-A clear illustration is provided in Ref.~\citenum{seibertDynamicStructuralEffects2020} by Gramicidin-A and its corresponding model peptide, KWWKWWK.  
-For this model, individual MD snapshots show $\beta_{\mathrm{HRS}}$ values that vary by up to a factor of 6, highlighting the sensitivity of the first hyperpolarizability to subtle structural changes, such as the relative orientation of indole side chains (Fig.~\ref{fig:beta-kwwkwwk}).  
-When averaged over the entire trajectory, however, the resulting frequency dispersion of $\beta_{\mathrm{HRS}}$ is only moderately reduced (by 2–22\%) compared to the lowest-energy conformer, indicating that ensemble averaging smooths extreme fluctuations while preserving the overall response.  
-In this case, comparisons between ADQM-MD  properties and ADQM-Boltz.~show similar trends, confirming that relatively short simulations can already capture the essential conformational contributions for systems with shallow potential energy surfaces.  
+To rationalize the broadening of the second absorption band in Fig.~\ref{fig:2pa-fmn}, NTOs were analyzed for two representative snapshots extracted from the GFN2-xTB MD trajectory of FMN in water.  
+Figure~\ref{fig:nto-fmn} shows the NTO pairs for two excited states contributing to this band in the presence of explicit solvent.  
+The transition corresponds primarily to a $\pi \rightarrow \pi^\star$ excitation centered on the isoalloxazine ring, but the dynamic environment significantly modulates its character.  
+In both snapshots, the hole orbital mixes $\pi$ orbitals of the chromophore with nearby $n$ orbitals from water molecules and the phosphate tail, while the particle orbital remains largely localized on the isoalloxazine ring.  
+This interaction induces a variable charge-transfer character and explains the energetic dispersion of the band, highlighting the key role of the fluctuating hydrogen-bond network and supporting the use of the ADQM-MD scheme.
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=.8\linewidth]{Figure14}
-	\caption{Frequency dispersion computed with sTD-DFT-xTB for 200 snapshots and the MD average, from Ref.~\citenum{seibertDynamicStructuralEffects2020}.}
+	\includegraphics[width=.6\linewidth]{Figure15}
+	\caption{NTO pairs for two excited states of FMN contributing to the second absorption band, obtained from representative snapshots of a GFN2-xTB MD trajectory with explicit solvent (\SI{12}{\angstrom} solvation sphere). 
+		Calculations were performed at the sTD-DFT-xTB/GBSA(water) level. 
+		Hole and particle orbitals are separated by dashed lines, and the corresponding NTO weights, excitation energies, oscillator strengths, and 2PA strengths are reported. 
+		Isovalue = 0.03. 
+		Reprinted with permission from Ref.~\citenum{loffelsenderAllAtomQuantumMechanical2025}. Copyright 2025 Wiley-VCH GmbH.}
+	\label{fig:nto-fmn}
+\end{figure}
+
+The ADQM approach can be naturally extended to compute $\beta_{\mathrm{HRS}}$ by averaging over ensembles of structures extracted from MD simulations, as conformational fluctuations can have a pronounced impact on the NLO response of flexible systems.  
+A clear illustration is provided in Ref.~\citenum{seibertDynamicStructuralEffects2020} for Gramicidin-A through its model peptide KWWKWWK.  
+For this system, individual MD snapshots yield $\beta_{\mathrm{HRS}}$ values that vary by up to a factor of six, highlighting the strong sensitivity of the first hyperpolarizability to subtle structural variations, such as the relative orientation of the indole side chains (Fig.~\ref{fig:beta-kwwkwwk}).  
+When averaged over the entire trajectory, however, the resulting frequency dispersion of $\beta_{\mathrm{HRS}}$ is only moderately reduced (by about 2–22\%) compared to that of the lowest-energy conformer.  
+This indicates that ensemble averaging smooths the most extreme fluctuations while preserving the overall NLO response of the system.  
+In this case, comparisons between ADQM-MD and ADQM-Boltz.~results show similar trends, suggesting that relatively short simulations can already capture the dominant conformational contributions for systems characterized by shallow potential energy surfaces.  
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=.8\linewidth]{Figure16}
+	\caption{Frequency dispersion of $\beta_{\mathrm{HRS}}$ for the KWWKWWK peptide computed at the sTD-DFT-xTB level. 
+		Gray curves correspond to results obtained for 200 individual MD snapshots, illustrating the large variability of the response across the trajectory. 
+		The blue curve represents the ADQM-MD average over all snapshots, while the red curve corresponds to the value obtained for the optimized minimum-energy structure (ASQM reference). 
+		Reprinted with permission from Ref.~\citenum{seibertDynamicStructuralEffects2020}. Copyright 2020 American Chemical Society.}
 	\label{fig:beta-kwwkwwk}
 \end{figure}
 
@@ -731,13 +769,6 @@ In this case, comparisons between ADQM-MD  properties and ADQM-Boltz.~show simil
 
 \textbf{[NTOs (Figs.~\ref{fig:nto-pyp} and \ref{fig:nto-fmn}) and response orbitals (Fig.~\ref{fig:nro-or}).]}
 
-
-\begin{figure}[!h]
-\centering
-\includegraphics[width=.5\linewidth]{Figure16}
-	\caption{Fig. 20 of Ref.~\citenum{loffelsenderSimplifiedQuantumChemistry2024} }
-	\label{fig:nto-fmn}
-\end{figure}
 
 \begin{figure}[!h]
 \centering
