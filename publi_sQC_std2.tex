@@ -109,8 +109,9 @@ By contrast, ADQM incorporates conformational sampling, typically through molecu
 Together, ASQM and ADQM define a unified strategy for predictive spectroscopy of large molecular systems, enabling the level of structural realism to be matched to the physical complexity of the problem; these approaches constitute the focus of Section~\ref{sec:illu}.  
 
 \begin{figure}[!h]
-	\fbox{SCHEME like Fig. 1 of Ref.~\citenum{loffelsenderAllAtomQuantumMechanical2025}}
-	\caption{Scheme of A(S/D)QM.}
+	\includegraphics[width=\linewidth]{Figure1}
+	\caption{The different workflows to compute spectra or properties in solution or complex environments that account for dynamic structural effects:  the All-Atom Single-structure QM (ASQM) and the All-Atom Dynamic QM (ADQM) approaches.\cite{loffelsenderAllAtomQuantumMechanical2025}
+	The latter incorporates conformational sampling, via MD trajectories (ADQM-MD) or Boltzmann-weighted ensembles (ADQM-Boltz.).}
 	\label{fig:aqm}
 \end{figure}
 
@@ -287,8 +288,8 @@ As a consequence, each (X)sTD-DFT calculation proceeds through the following seq
 \end{enumerate}
 
 \begin{figure}[!h]
-\fbox{SCHEME like Fig. 1 of Ref.~\citenum{dewergifossePerspectiveSimplifiedQuantum2021}}
-\caption{Scheme.}
+\includegraphics[width=\linewidth]{Figure2}
+\caption{Schematic representation of the (X)sTD-DFT methods theoretical workflow to obtain excitation spectra or properties.}
 \label{fig:computationalsequence}
 \end{figure}
 
