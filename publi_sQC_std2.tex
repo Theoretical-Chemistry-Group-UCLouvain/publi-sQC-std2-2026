@@ -312,40 +312,61 @@ We begin with the general expression of the bielectronic integrals in the MO bas
 \begin{equation*}
 	(ia|jb) = \sum_{\mu\alpha\nu\beta} C_{i\mu}^\star C_{a\alpha} C^\star_{j\nu} C_{b\beta}\,(\mu\alpha|\nu\beta),
 \end{equation*}
-where $(\mu\alpha|\nu\beta)$ denotes a four-center two-electron AO integral.  
-Introducing the Löwdin-orthogonalized coefficients $\mathbf{C}^\perp = \mathbf{S}^{1/2}\mathbf{C}$ gives
+where $(\mu\alpha|\nu\beta)$ denotes an electron repulsion integral (ERI).  
+Introducing the Löwdin-orthogonalized coefficients $\mathbf{C}^\perp = \mathbf{S}^{1/2}\mathbf{C}$ yields
 \begin{equation*}
 	(ia|jb) = \sum_{\mu\alpha\nu\beta}( C_{i\mu}^\perp)^\star C_{a\alpha}^\perp (C^\perp_{j\nu})^\star C_{b\beta}^\perp\,(\lambda_\mu\lambda_\alpha|\lambda_\nu\lambda_\beta),
 \end{equation*}
-where each orthogonalized AO is written as $\lambda_\mu = \sum_\beta \phi_\beta\,S_{\mu\beta}^{-1/2}$, with $\{\phi_\beta\}$ the original atomic basis functions.
-The ZDO approximation then replaces the four-center integrals by\begin{equation*}
+where each orthogonalized AO is written as $\lambda_\mu = \sum_\beta \phi_\beta\,S_{\mu\beta}^{-1/2}$, with $\{\phi_\beta\}$ the original atomic basis functions.  
+The ZDO approximation employed in our simplified methods corresponds to the complete neglect of differential overlap (CNDO):
+\begin{equation*}
 	(\lambda_\mu\lambda_\alpha|\lambda_\nu\lambda_\beta) \approx \delta_{\mu\alpha}\delta_{\nu\beta}\,(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu),
 \end{equation*}
-so that
+which leads to
 \begin{equation*}
-	(ia|jb) \approx (ia|jb)' = \sum_{\mu\nu}( C_{i\mu}^\perp)^\star C_{a\mu}^\perp (C^\perp_{j\nu})^\star C_{b\nu}^\perp\,(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu).
+	(ia|jb) \approx (ia|jb)' = \sum_{\mu\nu}( C_{i\mu}^\perp)^\star C_{a\mu}^\perp (C^\perp_{j\nu})^\star C_{b\nu}^\perp\,(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu),
 \end{equation*}
-The remaining two-center quantity is, by definition,
-\begin{align*}
+introducing some computational saving [integrals are evaluated in $\mathcal{O}(N_{AO}^2)$ rather than $\mathcal{O}(N_{AO}^4)$], and where
+\begin{equation}
 	(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu)
 	= \sum_{\alpha\beta\kappa\eta} (\alpha\beta|\kappa\eta)\,
 	S^{-1/2}_{\mu\alpha}S^{-1/2}_{\mu\beta}S^{-1/2}_{\nu\kappa}S^{-1/2}_{\nu\eta}.
-\end{align*}
-The leading contributions are:
-\begin{align*}
-	(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu) &= 
-	(\mu\mu|\nu\nu)\, (S^{-1/2}_{\mu\mu})^2(S^{-1/2}_{\nu\nu})^2 
-   \\
-  &\hspace{1em}+2\sum_{\alpha\neq\mu}(\mu\alpha|\nu\nu)\,S^{-1/2}_{\mu\mu} S^{-1/2}_{\mu\alpha} (S^{-1/2}_{\nu\nu})^2 + 2\sum_{\alpha\neq\nu} (\mu\mu|\nu\alpha)\, (S^{-1/2}_{\mu\mu})^2S^{-1/2}_{\nu\nu}S^{-1/2}_{\nu\alpha}\\
-  &\hspace{1em}+ \ldots,
-	%+ (\mu\mu|\mu\mu)\, (S^{-1/2}_{\mu\mu})^2(S^{-1/2}_{\nu\mu})^2 + (\nu\nu|\nu\nu)\,(S^{-1/2}_{\mu\nu})^2 (S^{-1/2}_{\nu\nu})^2  + \ldots
-\end{align*}
-with $S^{-1/2}_{\mu\mu}\geq  1 \land S^{-1/2}_{\nu\nu} \geq 1$, while $|S^{-1/2}_{\mu\alpha}| \ll 1 \land |S^{-1/2}_{\nu\alpha}| \ll 1$ (and generally negative).
-So, to first approximation, $(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu) \approx (\mu\mu|\nu\nu)$ \textbf{[ce qui veut dire qu'au final, on approxime que $S^{-1/2}_{\mu\nu} = \delta_{\mu\nu}$, donc que les orbitales atomiques sont isolées. Je sais pas ce que ça veut dire, mais c'est drôle]}.
-Introducing the transition charges $q^{ia}_\mu = \big(C^{\perp}_{\mu i}\big)^\star C^{\perp}_{\mu a}$ finally leads to
-\begin{equation}
-	(ia|jb)' = \sum_{\mu\nu} q^{ia}_\mu\,q^{jb}_\nu\,(\mu\mu|\nu\nu). \label{eq:xsints}
+	\label{eq:loweri}
 \end{equation}
+To analyze the behavior of Eq.~\eqref{eq:loweri}, it is customary\cite{fischer-hjalmarsZeroDifferentialOverlap1966,grayJustifiabilityZDOApproximation1970,chandlerReexaminationJustificationNeglect1980} to introduce a power-series expansion of $\mathbf S^{-1/2}$.  
+Assuming that $S_{\mu\nu} = \delta_{\mu\nu} + \Delta_{\mu\nu}$, with $\forall\mu: \Delta_{\mu\mu} = 0$, one obtains
+\begin{equation}
+	\mathbf S^{-1/2} = (\mathbf I + \bm\Delta)^{-1/2} = \mathbf I - \frac{1}{2}\bm\Delta + \frac{3}{8}\bm\Delta^2 + \mathcal{O}(\bm\Delta^3),
+	\label{eq:pows1/2}
+\end{equation}
+where $\mathbf I$ denotes the identity matrix.  
+To first order, this yields $\lambda_\mu \approx \phi_{\mu} - \frac{1}{2}\sum_{\beta\neq\mu} S_{\mu\beta}\phi_\beta$, and
+\begin{align*}
+	(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu)  = (\mu\mu|\nu\nu) &-\sum_{\alpha\neq\mu} \Delta_{\mu\alpha} (\alpha\mu|\nu\nu) -\sum_{\beta\neq\nu} \Delta_{\nu\beta} (\mu\mu|\beta\nu)\\
+	&+\frac{1}{4}\sum_{\alpha\beta\neq \mu} \Delta_{\mu\alpha}\Delta_{\mu\beta} (\alpha\beta|\nu\nu)+\frac{1}{4}\sum_{\alpha\beta\neq \nu} \Delta_{\nu\alpha}\Delta_{\nu\beta} (\mu\mu|\alpha\beta) \\
+	&+ \frac{3}{4}\sum_{\alpha\neq\mu,\beta\neq\nu} \Delta_{\mu\alpha}\Delta_{\nu\beta} (\alpha\mu|\beta\nu) + \mathcal{O}(\bm\Delta^3).
+\end{align*}
+Since $\Delta_{\alpha\beta}<1$, in the present work we retain only the leading contribution, $(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu) \approx (\mu\mu|\nu\nu)$.  
+Higher-order terms could in principle be included in future developments.  
+It should be noted, however, that the series in Eq.~\eqref{eq:pows1/2} is not guaranteed to converge, although its behavior can be rationalized in specific cases,\cite{chandlerReexaminationJustificationNeglect1980}  the present truncation therefore constitutes a strong approximation.
+Introducing the transition charges $q^{ia}_\mu = \big(C^{\perp}_{i\mu}\big)^\star C^{\perp}_{a\mu}$ finally yields
+\begin{equation}
+	(ia|jb)' = \sum_{\mu\nu} q^{ia}_\mu\,q^{jb}_\nu\,(\mu\mu|\nu\nu).
+	\label{eq:xsints}
+\end{equation}
+
+%The leading contributions are:
+%\begin{align*}
+%	(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu) &= 
+%	(\mu\mu|\nu\nu)\, (S^{-1/2}_{\mu\mu})^2(S^{-1/2}_{\nu\nu})^2 
+%   \\
+%  &\hspace{1em}+2\sum_{\alpha\neq\mu}(\mu\alpha|\nu\nu)\,S^{-1/2}_{\mu\mu} S^{-1/2}_{\mu\alpha} (S^{-1/2}_{\nu\nu})^2 + 2\sum_{\alpha\neq\nu} (\mu\mu|\nu\alpha)\, (S^{-1/2}_{\mu\mu})^2S^{-1/2}_{\nu\nu}S^{-1/2}_{\nu\alpha}\\
+%  &\hspace{1em}+ \ldots,
+%\end{align*}
+%with $S^{-1/2}_{\mu\mu}\geq  1 \land S^{-1/2}_{\nu\nu} \geq 1$, while $|S^{-1/2}_{\mu\alpha}| \ll 1 \land |S^{-1/2}_{\nu\alpha}| \ll 1$ (and generally negative).
+%So, to first approximation, $(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu) \approx (\mu\mu|\nu\nu)$ \textbf{[ce qui veut dire qu'au final, on approxime que $S^{-1/2}_{\mu\nu} = \delta_{\mu\nu}$, donc que les orbitales atomiques sont isolées. Je sais pas ce que ça veut dire, mais c'est drôle]}.
+
+
 
 
 
@@ -364,7 +385,7 @@ Contrary to Eq.~\eqref{eq:xsints}, these integrals are evaluated through a atomi
 \begin{equation}
 	(ia|jb)'_X = \sum_{AB} q_A^{ia}\,q_B^{jb}\,(AA|BB)_X, 
 	\qquad 
-	q_A^{ia} = \sum_{\mu \in A} \big(C^{\perp}_{\mu i}\big)^\star C^{\perp}_{\mu a},
+	q_A^{ia} = \sum_{\mu \in A} \big(C^{\perp}_{i\mu}\big)^\star C^{\perp}_{a\mu},
 	\label{eq:sints}
 \end{equation}
 where the sums now run over atomic centers $A$ and $B$.  
