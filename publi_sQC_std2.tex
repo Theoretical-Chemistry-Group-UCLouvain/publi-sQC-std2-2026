@@ -342,9 +342,9 @@ Assuming that $S_{\mu\nu} = \delta_{\mu\nu} + \Delta_{\mu\nu}$, with $\forall\mu
 where $\mathbf I$ denotes the identity matrix.  
 To first order, this yields $\lambda_\mu \approx \phi_{\mu} - \frac{1}{2}\sum_{\beta\neq\mu} S_{\mu\beta}\phi_\beta$, and
 \begin{align*}
-	(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu)  = (\mu\mu|\nu\nu) &-\sum_{\alpha\neq\mu} \Delta_{\mu\alpha} (\alpha\mu|\nu\nu) -\sum_{\beta\neq\nu} \Delta_{\nu\beta} (\mu\mu|\beta\nu)\\
+	(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu)  = (\mu\mu|\nu\nu) &-\sum_{\alpha\neq\mu} \Delta_{\mu\alpha} (\alpha\mu|\nu\nu) -\sum_{\alpha\neq\nu} \Delta_{\nu\alpha} (\mu\mu|\alpha\nu)\\
 	&+\frac{1}{4}\sum_{\alpha\beta\neq \mu} \Delta_{\mu\alpha}\Delta_{\mu\beta} (\alpha\beta|\nu\nu)+\frac{1}{4}\sum_{\alpha\beta\neq \nu} \Delta_{\nu\alpha}\Delta_{\nu\beta} (\mu\mu|\alpha\beta) \\
-	&+ \frac{3}{4}\sum_{\alpha\neq\mu,\beta\neq\nu} \Delta_{\mu\alpha}\Delta_{\nu\beta} (\alpha\mu|\beta\nu) + \mathcal{O}(\bm\Delta^3).
+	&+\sum_{\alpha\neq\mu,\beta\neq\nu} \Delta_{\mu\alpha}\Delta_{\nu\beta} (\alpha\mu|\beta\nu) + \mathcal{O}(\bm\Delta^3).
 \end{align*}
 Since $\Delta_{\alpha\beta}<1$, in the present work we retain only the leading contribution, $(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu) \approx (\mu\mu|\nu\nu)$.  
 Higher-order terms could in principle be included in future developments.  
