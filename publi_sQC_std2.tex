@@ -418,7 +418,7 @@ Formally, any linear response function admits a sum-over-states representation:\
 For $\hat A = \hat B = \hat\mu$ ($\hat\mu$ is the electric dipole operator), Eq.~\eqref{eq:soslin} yields the electric dipole polarizability $\dstack{\alpha}{\leftrightarrow}$, whereas choosing $\hat A = \hat\mu$ and $\hat B = \hat m$ ($\hat m$ is the magnetic moment operator) gives access to the electric--magnetic dipole polarizability $\dstack{G}{\leftrightarrow}$.
 Using the response vectors defined in Eq.~\eqref{eq:response}, the same quantity can be recast as
 \begin{equation}
-	\braket{\braket{\hat A_\zeta; \hat B_\eta}}_{\omega} = Tr[A_\zeta \gamma^{(\pm)}_\eta(\omega)] = 2\,\sum_{ia} A_{\zeta,ia}\,\underbrace{[X_{\eta, ia}(\omega) \pm Y_{\eta,ia}(\omega)]}_{\gamma^{(\pm)}_{\eta,ia}(\omega)},
+	\braket{\braket{\hat A_\zeta; \hat B_\eta}}_{\omega} = Tr[A_\zeta \gamma^{(\pm)}_\eta(\omega)] = 2\,\sum_{ia} A_{\zeta,ia}\,\underbrace{[X_{\eta, ia}(\omega) \pm Y_{\eta,ia}(\omega)]}_{\gamma^{(\pm)}_{\eta,ia}(\omega)}, 
 	\label{eq:linresp}
 \end{equation}
 where the occupied--virtual elements of $\mathbf A_\zeta$ are given by $\braket{i|\hat A_\zeta|a}$, and $\gamma^{(\pm)}_{\eta}(\omega)$ defines the frequency-dependent transition density matrix ($\omega$PDM), and the factor 2 is introduced assuming a closed-shell wavefunction.  
@@ -664,9 +664,58 @@ Together, these examples emphasize the complementary roles of ADQM and ASQM: the
 
 
 
-\subsection{Linear responses}
+\subsection{Linear response: optical rotation}
 
-\textbf{[Optical rotations\cite{dewergifosseSimplifiedTimedependentDensity2020} with a new and updated OR42 benchmark, and alpha (also benchmarked on OR42?), teasing damping.]}
+The prediction of molar optical rotation $[\Phi]_D$ (in \si{\degree\centi\meter\squared\per\deci\mole}, typically measured at the sodium D-line, \SI{589.3}{\nano\meter}) remains a stringent test for electronic-structure methods, owing to its pronounced sensitivity to the underlying excited-state manifold.  
+A commonly used reference is the OR45 benchmark set introduced by Srebro \textit{et al.},\cite{srebroOpticalRotationCalculated2011} which reports experimental $[\Phi]_D$ values for 42 organic molecules and three transition-metal complexes.  
+For the subset of 35 molecules with rotations between $-400$ and \SI{500}{\degree\centi\meter\squared\per\deci\mole}, TD-DFT calculations typically yield median relative deviations of 25--29\% with respect to experimental liquid-phase data, corresponding to median absolute deviations of \SI{24}{\degree\centi\meter\squared\per\deci\mole} (PBE0) and \SI{29}{\degree\centi\meter\squared\per\deci\mole} (B3LYP).  
+This results in a ``zone of indeterminacy'' of approximately \SI{60}{\degree\centi\meter\squared\per\deci\mole}, below which both the magnitude and even the sign of the rotation may become unreliable.  
+These limitations primarily arise from the sensitivity of optical rotation to Rydberg and charge-transfer states, as well as from neglected effects such as solvation, vibrational contributions, and conformational averaging.
+
+Within this context, sTD-DFT was previously extended\cite{dewergifosseSimplifiedTimedependentDensity2020} to evaluate optical rotation using Eq.~\eqref{eq:linresp}.  
+The method provides good agreement with experiment for systems dominated by valence excitations, such as extended $\pi$-conjugated helicenes (compounds 38-42 or the benchmark set), while offering speedups of one to three orders of magnitude compared to TD-DFT.  
+For smaller systems with significant Rydberg character, the accuracy deteriorates, consistent with the intrinsic limitations observed in the OR45 benchmark.  
+An additional technical aspect concerns gauge-origin invariance: although both length and velocity formulations can be employed, residual deviations remain when finite basis sets are used, typically below 1\% but reaching up to 30\% in challenging cases.
+
+To assess the impact of the XsTD approximation, we revisited the OR45 benchmark (the organic molecules, see Fig.~S6) using the original XC functionals (B3LYP, PBE0, and BHHLYP), complemented by additional hybrid and range-separated hybrid functionals (M06-2X, CAM-B3LYP, and $\omega$B97X-D3).  
+All new TD calculations were carried out with \textsc{Gaussian~16}, employing the aug-cc-pVDZ basis set together with gauge-including atomic orbitals (GIAOs), subsequently used as the starting point for (X)sTD calculations.
+The molar rotation $[\Phi]_\omega$ is \textbf{[correctly!]} defined as
+\begin{equation*}
+	[\Phi]_\omega = \overbrace{72\times 10^6\,\frac{\hbar^2\,\mathcal N_a}{c^2m_e^2}}^{6.4657\times 10^{6}} \times \frac{\omega^2\,\beta(\omega)}{100},
+\end{equation*}
+where $\omega$ is the incident light frequency and $\beta(\omega)$ the rotationally averaged electric--magnetic dipole polarizability, both in atomic units.  
+This quantity can be evaluated in both the length (LG) and velocity (using the momentum operator, $\hat p$) formulations:
+\begin{equation*}
+	\beta^{LG}(\omega) = -\text{Tr}\,\frac{\Im\braket{\braket{\hat\mu^L;\hat m}}_\omega}{3\omega} \text{ or }
+	\beta^{pG}(\omega) = -\text{Tr}\,\frac{\Re\braket{\braket{\hat p;\hat m}}_\omega}{3\omega^2},
+\end{equation*}
+with the latter being formally origin invariant.  
+In practice, improved results are obtained using the modified velocity gauge (MVG),\cite{pedersenOriginInvariantCalculation2004,caricatoOriginInvariantOptical2020}
+\begin{equation*}
+	\beta^{MVG}(\omega) = -\,\text{Tr}\,\frac{\Re\left[\braket{\braket{\hat p;\hat m}}_\omega - \braket{\braket{\hat p;\hat m}}_0\right]}{3\omega^2}.
+\end{equation*}
+The resulting distributions of $[\Phi]_D$ errors, relative to experiment, are summarized in Fig.~\ref{fig:or} for both LG and MVG formulations.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=\linewidth]{Figure11}
+	\caption{Distribution of errors in molar optical rotation $[\Phi]_D$ for the organic (first 42) molecules of the OR45 benchmark set, expressed as $\log_{10}(|[\Phi]_D|)$ relative to experiment (a unit difference corresponds to one order of magnitude).  
+		Results obtained with the aug-cc-pVDZ basis set are shown for different XC functionals and levels of theory (TD, sTD, and XsTD).  
+		TD calculations employ London orbitals.  
+		Following Ref.~\citenum{dewergifosseSimplifiedTimedependentDensity2020}, (X)sTD calculations were performed using $E_{thr}=\SI{50}{\electronvolt}$ (reduced to \SI{20}{\electronvolt} for compounds \textbf{36}-\textbf{42}).
+		Left: length gauge (LG). Right: modified velocity gauge (MVG).}
+	\label{fig:or}
+\end{figure}
+ 
+As shown in Fig.~\ref{fig:or}, the XsTD-DFT predictions of $[\Phi]_D$ closely follow the trends obtained with the sTD-DFT scheme, confirming a good predictive capability, particularly for systems dominated by valence excitations.  
+Among the tested functionals, B3LYP and PBE0 remain reliable choices for predicting molar rotation, whereas RSH functionals do not lead to systematic improvements, although CAM-B3LYP performs reasonably well.  
+While the mean absolute error is slightly reduced with XsTD, the spread of the deviations increases compared to sTD.  
+Moreover, the use of the MVG formulation yields no significant improvement over the LG results, likely because the molecules were positioned close to their center of mass.
+
+\begin{figure}
+	\includegraphics[width=.8\linewidth]{Figure12}
+	\caption{NTOs.}
+\end{figure}
 
 \subsection{Quadratic responses}
 
@@ -683,8 +732,8 @@ Overall, the same considerations guiding XCFs selection in conventional TD-DFT a
 
 \begin{figure}[!h]
 \centering
-\includegraphics[width=\linewidth]{./Figure11}
-\caption{Violin plots of the difference 2PA properties (excitation energies, $\Delta E_{0\to n}$, and strength, $\delta^{\mathrm{2PA}}$) relative to RI-CC2 reference values for the CT dataset, as reported in Ref.~\citenum{maraldiEvaluatingPerformanceExact2025}, computed with the aug-cc-pVDZ basis set. Results are shown for several XCFs and levels of approximation (TD, sTD, and XsTD). Left: excitation energies. Right: 2PA strength expressed as $\log_{10}(\delta^{\mathrm{2PA}})$ (a difference of 1 translates into an order of magnitude). For each method, the MD of this difference is reported, with the MAD are given in parentheses.}
+\includegraphics[width=\linewidth]{./Figure13}
+\caption{Violin plots of the difference of 2PA properties (excitation energies, $\Delta E_{0\to n}$, and strength, $\delta^{\mathrm{2PA}}$) relative to RI-CC2 reference values for the CT dataset, as reported in Ref.~\citenum{maraldiEvaluatingPerformanceExact2025}, computed with the aug-cc-pVDZ basis set. Results are shown for several XCFs and levels of approximation (TD, sTD, and XsTD). Left: excitation energies. Right: 2PA strength expressed as $\log_{10}(\delta^{\mathrm{2PA}})$ (a difference of 1 translates into an order of magnitude). For each method, the MD of this difference is reported, with the MAD are given in parentheses.}
 \label{fig:2pa-ct}
 \end{figure}
 
@@ -700,7 +749,7 @@ Current developments aim at extending the applicability of these methods to the 
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=.8\linewidth]{Figure12}
+	\includegraphics[width=.8\linewidth]{Figure14}
 	\caption{Frequency dispersion of the hyper-Rayleigh scattering first hyperpolarizability $\beta_{\mathrm{HRS}}$ of bacteriorhodopsin (bR). 
 		Experimental measurements\cite{decoeneFluorescenceFreeSpectralDispersion2017} are shown together with the extrapolation to the static limit obtained using a vibronic two-state model (red curve). 
 		Theoretical results were computed at the sTD-DFT-xTB level ($E_{\mathrm{thr}}=\SI{9}{\electronvolt}$) including solvent effects through the GBSA model for water. 
@@ -721,7 +770,7 @@ Despite the neglect of explicit vibronic structure and inhomogeneous broadening 
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=.6\linewidth]{Figure13}
+	\includegraphics[width=.6\linewidth]{Figure15}
 	\caption{Experimental transient absorption spectrum of PYP measured in a 10 mM Tris--HCl buffer solution at pH 8.1, \SI{1.5}{\pico\second} after a \SI{370}{\nano\meter} pump excitation, compared with spectra simulated using the sTDA-xTB approach. 
 		Theoretical curves correspond to the ESA, ground-state absorption, and modeled stimulated emission contributions, whose combination yields the simulated transient spectrum (with a global energy shift of \SI{-0.5}{\electronvolt}). 
 		Reprinted with permission from Ref.~\citenum{dewergifosseNonlinearresponsePropertiesSimplified2019}. 
@@ -740,8 +789,8 @@ When sufficiently large solvation environments are included, the ADQM-MD spectra
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=.6\linewidth]{Figure14a}
-	\includegraphics[width=.6\linewidth]{Figure14b}
+	\includegraphics[width=.6\linewidth]{Figure16a}
+	\includegraphics[width=.6\linewidth]{Figure16b}
 	\caption{Two-photon absorption (2PA) spectra of FMN in water comparing ASQM and ADQM strategies. 
 		Top: ASQM results obtained from RI-CC2/aug-cc-pVDZ//r2SCAN-3c and sTD-DFT-xTB//r2SCAN-3c ($E_{\mathrm{thr}}=\SI{16}{\electronvolt}$) calculations using implicit solvent models (DCOSMO-RS and GBSA for water), together with the ADQM-Boltz. spectrum obtained by Boltzmann averaging over optimized conformers at the sTD-DFT-xTB/GBSA level. 
 		Bottom: ADQM-MD spectra computed from averages of dtsTD-DFT-xTB/GBSA(water) calculations on uncorrelated snapshots extracted from a \SI{1}{\nano\second} GFN2-xTB MD trajectory, including explicit solvent molecules through solvation spheres of increasing radii (7, 9, 11, and \SI{12}{\angstrom}). 
@@ -759,7 +808,7 @@ This interaction induces a variable charge-transfer character and explains the e
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=.6\linewidth]{Figure15}
+	\includegraphics[width=.6\linewidth]{Figure17}
 	\caption{NTO pairs for two excited states of FMN contributing to the second absorption band, obtained from representative snapshots of a GFN2-xTB MD trajectory with explicit solvent (\SI{12}{\angstrom} solvation sphere). 
 		Calculations were performed at the sTD-DFT-xTB/GBSA(water) level. 
 		Hole and particle orbitals are separated by dashed lines, and the corresponding NTO weights, excitation energies, oscillator strengths, and 2PA strengths are reported. 
@@ -777,7 +826,7 @@ In this case, comparisons between ADQM-MD and ADQM-Boltz.~results show similar t
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=.8\linewidth]{Figure16}
+	\includegraphics[width=.8\linewidth]{Figure18}
 	\caption{Frequency dispersion of $\beta_{\mathrm{HRS}}$ for the KWWKWWK peptide computed at the sTD-DFT-xTB level. 
 		Gray curves correspond to results obtained for 200 individual MD snapshots, illustrating the large variability of the response across the trajectory. 
 		The blue curve represents the ADQM-MD average over all snapshots, while the red curve corresponds to the value obtained for the optimized minimum-energy structure (ASQM reference). 
@@ -787,19 +836,6 @@ In this case, comparisons between ADQM-MD and ADQM-Boltz.~results show similar t
 
 \textbf{[now, tease that quadratic responses at the XsTD level for large system are out of reach... For the moment.]
 }
-
-\subsection{Post-treatments}
-
-\textbf{[NTOs (Figs.~\ref{fig:nto-pyp} and \ref{fig:nto-fmn}) and response orbitals (Fig.~\ref{fig:nro-or}).]}
-
-
-\begin{figure}[!h]
-\centering
-\includegraphics[width=.5\linewidth]{Figure17}
-\caption{OR from \citenum{dewergifosseUnifiedStrategyChemically2020} (NROs)}
-\label{fig:nro-or}
-\end{figure}
-
 
 \clearpage
 \section{Conclusions and perspectives}
