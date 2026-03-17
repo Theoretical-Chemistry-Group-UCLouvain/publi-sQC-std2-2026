@@ -79,8 +79,8 @@ Among these, the ZINDO/S method\cite{ridleyIntermediateNeglectDifferential1973,z
 Response functions, such as the first hyperpolarizability, were also considered early on.\cite{papadopoulosCalculationsInducedMoments1982,waiteCalculationsInducedMoments1982,nicolaidesCalculationsInducedMoments1982}
 Later on, methods based on Neglect of Diatomic Differential Overlap\cite{dewarGroundStatesMolecules1977,dewarDevelopmentUseQuantum1985} (NDDO) with orthogonalization corrections, including the OM$x$ families,\cite{kolbMNDOModelMethodical1993} further improved the exploration of potential energy surfaces and excited-state dynamics.  
 
-The modern simplified framework was inaugurated with the introduction of the simplified Tamm–Dancoff approximation (sTDA) in 2013 by Grimme,\cite{grimmeSimplifiedTammDancoffDensity2013} followed shortly by its TD-DFT counterpart (sTD-DFT).\cite{bannwarthSimplifiedTimedependentDensity2014}
-These methods achieve substantial acceleration through controlled approximations, including the neglect of the exchange–correlation kernel and approximate expression for bielectronic integrals (see below).  
+The modern simplified framework was inaugurated with the introduction of the simplified Tamm--Dancoff approximation (sTDA) in 2013 by Grimme,\cite{grimmeSimplifiedTammDancoffDensity2013} followed shortly by its TD-DFT counterpart (sTD-DFT).\cite{bannwarthSimplifiedTimedependentDensity2014}
+These methods achieve substantial acceleration through controlled approximations, including the neglect of the exchange--correlation kernel and approximate expression for bielectronic integrals (see below).  
 The approach was subsequently extended to ultra-large systems through the sTD-DFT-xTB variant,\cite{grimmeUltrafastComputationElectronic2016} enabling explicit quantum-mechanical excited-state calculations for systems containing several thousand atoms, thanks to an early implementation of the xTB scheme.  
 Alternative schemes inspired by the success of sTD-DFT/sTDA have then been proposed to further accelerate excited-state calculations.
 The TD-DFT+TB method introduced by Rüger \emph{et al.}\cite{rugerTightbindingApproximationsTimedependent2016} combines a DFT ground state with a monopole approximation and local exchange--correlation functionals, delivering speedups of up to two orders of magnitude while maintaining errors below $\sim$0.15~eV for excitation energies in large plasmonic systems.
@@ -101,7 +101,7 @@ The availability of robust and computationally efficient methodologies now makes
 	\item large conformational ensembles, and/or  
 	\item large systems and realistic molecular environments at the fully quantum-mechanical level.\cite{loffelsenderSimplifiedQuantumChemistry2024}
 \end{inparaenum}
-Indeed, while continuum solvation models, such as PCM, neglect specific solute–environment interactions, multiscale strategies like QM/MM introduce dependencies on force fields, boundary definitions, and polarization treatments.  
+Indeed, while continuum solvation models, such as PCM, neglect specific solute--environment interactions, multiscale strategies like QM/MM introduce dependencies on force fields, boundary definitions, and polarization treatments.  
 All-atom quantum mechanical (AQM) strategies therefore provide an appealing alternative by treating the entire system at the QM level, avoiding locality assumptions while naturally capturing some long-range effects.  
 Within this framework, two complementary paradigms have emerged (Fig.~\ref{fig:aqm}): the All-Atom Single-structure QM (ASQM) and the All-Atom Dynamic QM (ADQM) approaches. \cite{loffelsenderAllAtomQuantumMechanical2025}
 ASQM evaluates response properties for a representative structure and is particularly effective for rigid systems whose optical signatures are only weakly affected by structural fluctuations.  
@@ -262,7 +262,7 @@ This is the topic of the next subsection.
 In essence, simplified TD-DFT methods achieve substantial reductions in computational cost through three key approximations, while maintaining sufficient accuracy for a wide range of applications: 
 \begin{inparaenum}[(i)]
 	\item the excitation space is truncated by retaining only the most relevant configuration state functions (CSFs),
-	\item one-electron integrals are evaluated exactly, whereas two-electron integrals are approximated using the zero-differential-overlap (ZDO) framework, with different treatments of the electron–repulsion integrals (ERIs) defining the various simplified TD-DFT variants, and
+	\item one-electron integrals are evaluated exactly, whereas two-electron integrals are approximated using the zero-differential-overlap (ZDO) framework, with different treatments of the electron--repulsion integrals (ERIs) defining the various simplified TD-DFT variants, and
 	\item all XCF contributions to the response equations are neglected.
 \end{inparaenum}
 
@@ -305,7 +305,7 @@ XsTD-DFT assumes a range-separated hybrid (RSH) XCFs,\cite{dewergifosseComputing
 	(\mathbf A'-\mathbf B')_{ia,jb} &= \delta_{ij}\delta_{ab} (\varepsilon_a - \varepsilon_i)+  b_x\,[(ib|aj)'  - (ij|ab)'] \nonumber\\&\hspace{2em}-c_x\,[(ij|\mathrm{erf}(\omega r)|ab)'-(ib|\mathrm{erf}(\omega r)|aj)'] . 
 	\label{eq:xstddft}
 \end{align}
-Here, $b_x$ and $c_x$ denote the constant and long-range fractions of Hartree–Fock exchange, respectively, and $\omega$ is the RSH range-separation parameter.
+Here, $b_x$ and $c_x$ denote the constant and long-range fractions of Hartree--Fock exchange, respectively, and $\omega$ is the RSH range-separation parameter.
 
 The approximate form of the $(ia|jb)'$ integrals follows from a sequence of controlled simplifications.  
 We begin with the general expression of the bielectronic integrals in the MO basis,
@@ -319,9 +319,9 @@ Introducing the Löwdin-orthogonalized coefficients $\mathbf{C}^\perp = \mathbf{
 \end{equation*}
 where each orthogonalized AO is written as $\lambda_\mu = \sum_\beta \phi_\beta\,S_{\mu\beta}^{-1/2}$, with $\{\phi_\beta\}$ the original atomic basis functions.  
 The ZDO approximation employed in our simplified methods corresponds to the complete neglect of differential overlap (CNDO):
-\begin{equation*}
-	(\lambda_\mu\lambda_\alpha|\lambda_\nu\lambda_\beta) \approx \delta_{\mu\alpha}\delta_{\nu\beta}\,(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu),
-\end{equation*}
+\begin{equation}
+	(\lambda_\mu\lambda_\alpha|\lambda_\nu\lambda_\beta) \approx \delta_{\mu\alpha}\delta_{\nu\beta}\,(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu), \label{eq:cndo}
+\end{equation}
 which leads to
 \begin{equation*}
 	(ia|jb) \approx (ia|jb)' = \sum_{\mu\nu}( C_{i\mu}^\perp)^\star C_{a\mu}^\perp (C^\perp_{j\nu})^\star C_{b\nu}^\perp\,(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu),
@@ -340,21 +340,28 @@ Assuming that $S_{\mu\nu} = \delta_{\mu\nu} + \Delta_{\mu\nu}$, with $\forall\mu
 	\label{eq:pows1/2}
 \end{equation}
 where $\mathbf I$ denotes the identity matrix.  
-To first order, this yields $\lambda_\mu \approx \phi_{\mu} - \frac{1}{2}\sum_{\beta\neq\mu} S_{\mu\beta}\phi_\beta$, and
+This yields\begin{equation*}
+	\lambda_\mu \approx \phi_{\mu} - \frac{1}{2}\sum_{\alpha\neq\mu} \Delta_{\mu\alpha}\phi_\alpha + \frac{3}{8}\sum_{\alpha\beta\neq\mu}  \Delta_{\mu\alpha}\Delta_{\alpha\beta}\phi_\beta + \mathcal{O}(\bm\Delta^3),
+\end{equation*}
+and
 \begin{align*}
 	(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu)  = (\mu\mu|\nu\nu) &-\sum_{\alpha\neq\mu} \Delta_{\mu\alpha} (\alpha\mu|\nu\nu) -\sum_{\alpha\neq\nu} \Delta_{\nu\alpha} (\mu\mu|\alpha\nu)\\
+	&+\frac{3}{4}\sum_{\alpha\beta\neq \mu} \Delta_{\mu\alpha}\Delta_{\alpha\beta} (\beta\mu|\nu\nu)+\frac{3}{4}\sum_{\alpha\beta\neq \nu} \Delta_{\nu\alpha}\Delta_{\alpha\beta} (\mu\mu|\beta\nu) \\
 	&+\frac{1}{4}\sum_{\alpha\beta\neq \mu} \Delta_{\mu\alpha}\Delta_{\mu\beta} (\alpha\beta|\nu\nu)+\frac{1}{4}\sum_{\alpha\beta\neq \nu} \Delta_{\nu\alpha}\Delta_{\nu\beta} (\mu\mu|\alpha\beta) \\
 	&+\sum_{\alpha\neq\mu,\beta\neq\nu} \Delta_{\mu\alpha}\Delta_{\nu\beta} (\alpha\mu|\beta\nu) + \mathcal{O}(\bm\Delta^3).
 \end{align*}
 Since $\Delta_{\alpha\beta}<1$, in the present work we retain only the leading contribution, $(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu) \approx (\mu\mu|\nu\nu)$.  
-Higher-order terms could in principle be included in future developments.  
-It should be noted, however, that the series in Eq.~\eqref{eq:pows1/2} is not guaranteed to converge, although its behavior can be rationalized in specific cases,\cite{chandlerReexaminationJustificationNeglect1980}  the present truncation therefore constitutes a strong approximation.
+Higher-order terms could in principle be included in future developments; however, the 0\textsuperscript{th}-order approximation already provides an excellent estimate of Eq.~\eqref{eq:loweri} in practice (see Figs.~S1--S3).  
+Furthermore, the series in Eq.~\eqref{eq:pows1/2} is not guaranteed to converge, although its behavior can be rationalized in specific cases.\cite{chandlerReexaminationJustificationNeglect1980}  
+Within the CNDO framework [Eq.~\eqref{eq:cndo}], the present truncation therefore constitutes a reasonable approximation, which could in principle be extended in the future by including additional integral classes (e.g., within intermediate neglect of differential overlap schemes).
+
 Introducing the transition charges $q^{ia}_\mu = \big(C^{\perp}_{i\mu}\big)^\star C^{\perp}_{a\mu}$ finally yields
 \begin{equation}
 	(ia|jb)' = \sum_{\mu\nu} q^{ia}_\mu\,q^{jb}_\nu\,(\mu\mu|\nu\nu).
 	\label{eq:xsints}
 \end{equation}
 
+% Une autre manière d'attaquer la chose, mais qui ne marche pas mieux:
 %The leading contributions are:
 %\begin{align*}
 %	(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu) &= 
@@ -364,12 +371,6 @@ Introducing the transition charges $q^{ia}_\mu = \big(C^{\perp}_{i\mu}\big)^\sta
 %  &\hspace{1em}+ \ldots,
 %\end{align*}
 %with $S^{-1/2}_{\mu\mu}\geq  1 \land S^{-1/2}_{\nu\nu} \geq 1$, while $|S^{-1/2}_{\mu\alpha}| \ll 1 \land |S^{-1/2}_{\nu\alpha}| \ll 1$ (and generally negative).
-%So, to first approximation, $(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu) \approx (\mu\mu|\nu\nu)$ \textbf{[ce qui veut dire qu'au final, on approxime que $S^{-1/2}_{\mu\nu} = \delta_{\mu\nu}$, donc que les orbitales atomiques sont isolées. Je sais pas ce que ça veut dire, mais c'est drôle]}.
-
-
-
-
-
 
 \subsubsection{sTD-DFT}
 
@@ -389,7 +390,7 @@ Contrary to Eq.~\eqref{eq:xsints}, these integrals are evaluated through a atomi
 	\label{eq:sints}
 \end{equation}
 where the sums now run over atomic centers $A$ and $B$.  
-The required two-center terms $(AA|BB)$ are evaluated with Mataga–Nishimoto–Ohno–Klopman (MNOK) damped Coulomb operators.\cite{klopmanSemiempiricalTreatmentMolecular1964}  
+The required two-center terms $(AA|BB)$ are evaluated with Mataga--Nishimoto--Ohno--Klopman (MNOK) damped Coulomb operators.\cite{klopmanSemiempiricalTreatmentMolecular1964}  
 For Coulomb-type contributions ($X=J$),
 \begin{equation*}
 	(AA|BB)_J =
@@ -414,13 +415,13 @@ Formally, any linear response function admits a sum-over-states representation:\
 	\braket{\braket{\hat A; \hat B}}_{\omega} = \sum_{\ket{m}} \frac{\braket{0|\hat A|m}\braket{m|\hat B|0}}{\omega-\omega_m} - \frac{\braket{0|\hat B|m}\braket{m|\hat A|0}}{\omega+\omega_m}.
 	\label{eq:soslin}
 \end{equation}
-For $\hat A = \hat B = \hat\mu$ ($\hat\mu$ is the electric dipole operator), Eq.~\eqref{eq:soslin} yields the electric dipole polarizability $\dstack{\alpha}{\leftrightarrow}$, whereas choosing $\hat A = \hat\mu$ and $\hat B = \hat m$ ($\hat m$ is the magnetic moment operator) gives access to the electric–magnetic dipole polarizability $\dstack{G}{\leftrightarrow}$.
+For $\hat A = \hat B = \hat\mu$ ($\hat\mu$ is the electric dipole operator), Eq.~\eqref{eq:soslin} yields the electric dipole polarizability $\dstack{\alpha}{\leftrightarrow}$, whereas choosing $\hat A = \hat\mu$ and $\hat B = \hat m$ ($\hat m$ is the magnetic moment operator) gives access to the electric--magnetic dipole polarizability $\dstack{G}{\leftrightarrow}$.
 Using the response vectors defined in Eq.~\eqref{eq:response}, the same quantity can be recast as
 \begin{equation}
 	\braket{\braket{\hat A_\zeta; \hat B_\eta}}_{\omega} = Tr[A_\zeta \gamma^{(\pm)}_\eta(\omega)] = 2\,\sum_{ia} A_{\zeta,ia}\,\underbrace{[X_{\eta, ia}(\omega) \pm Y_{\eta,ia}(\omega)]}_{\gamma^{(\pm)}_{\eta,ia}(\omega)},
 	\label{eq:linresp}
 \end{equation}
-where the occupied–virtual elements of $\mathbf A_\zeta$ are given by $\braket{i|\hat A_\zeta|a}$, and $\gamma^{(\pm)}_{\eta}(\omega)$ defines the frequency-dependent transition density matrix ($\omega$PDM), and the factor 2 is introduced assuming a closed-shell wavefunction.  
+where the occupied--virtual elements of $\mathbf A_\zeta$ are given by $\braket{i|\hat A_\zeta|a}$, and $\gamma^{(\pm)}_{\eta}(\omega)$ defines the frequency-dependent transition density matrix ($\omega$PDM), and the factor 2 is introduced assuming a closed-shell wavefunction.  
 For real operators $\hat A$ such as $\hat\mu$, the $+$ branch is used to obtain the relevant tensor components of $\dstack{\alpha}{\leftrightarrow}$ and $\dstack{G}{\leftrightarrow}$.
 
 Residues of Eq.~\eqref{eq:soslin} yield the ground-to-excited-state transition moments,
@@ -510,7 +511,7 @@ Throughout the text, the shorthand ``sXCF'' and ``XsXCF'' (e.g., sB3LYP) will be
 As mentioned in the previous section, the recently introduced XsTD formalism further improves accuracy by restoring key integral contributions at limited additional cost.\cite{dewergifosseEXactIntegralSimplified2024,dewergifosseComputingExcitedStates2024} 
 Establishing the reliability of these low-cost approaches is therefore a prerequisite before extending their use to realistic, large-scale systems.
 Reference~\citenum{maraldiEvaluatingPerformanceExact2025} therefore evaluates the performance of TD, sTD, and XsTD methods for 1PA spectra using several hybrid and range-separated hybrid exchange--correlation functionals, benchmarking against RI-CC2 results obtained with the aug-cc-pVDZ basis set for the first bright excitation ($f_{0\to n} > 0.02$). 
-Results for the CT (QUEST) dataset are presented in Fig.~\ref{fig:1pa-ct} (Fig.~S1). 
+Results for the CT (QUEST) dataset are presented in Fig.~\ref{fig:1pa-ct} (Fig.~S4). 
 These datasets comprise small- to medium-sized push--pull $\pi$-conjugated molecules dominated by valence excitations, often with pronounced charge-transfer character. 
 XsTD-DFT closely tracks conventional TD-DFT for both excitation energies ($\Delta E_{0\to n}$) and oscillator strengths ($f_{0\to n}$), as reflected by comparable mean deviations (MDs) and mean absolute deviations (MADs). 
 In particular, XsCAM-B3LYP shows excellent agreement with RI-CC2 across both datasets. 
@@ -673,10 +674,10 @@ Quadratic response properties, such as SHG, 2PA, and ESA, provide direct access 
 From a theoretical standpoint, their evaluation is significantly more demanding than linear-response quantities: as a result, conventional \textit{ab initio} and full TD-DFT approaches rapidly become prohibitive for realistic system sizes or extensive conformational sampling.  
 Simplified quantum chemical methods therefore offer a particularly appealing route for quadratic responses at a computational cost compatible with large molecules and complex chemical environments.
 
-A comprehensive assessment of 2PA properties with  our simplified methods was also carried out in Ref.~\citenum{maraldiEvaluatingPerformanceExact2025}, again for both the QUEST (Fig.~S1) and CT (Fig.~\ref{fig:2pa-ct}) datasets, against RI-CC2 reference data.  
+A comprehensive assessment of 2PA properties with  our simplified methods was also carried out in Ref.~\citenum{maraldiEvaluatingPerformanceExact2025}, again for both the QUEST (Fig.~S5) and CT (Fig.~\ref{fig:2pa-ct}) datasets, against RI-CC2 reference data.  
 Across both datasets, trends in excitation-energy MDs for 2PA-active states closely mirror those observed for 1PA-active states, with XsTD-DFT consistently improving excitation energies relative to sTD-DFT while retaining similar accuracy for $\delta^{2\mathrm{PA}}$.  
-Global hybrid functionals with modest Hartree–Fock exchange, such as B3LYP and PBE0, yield the best overall agreement with RI-CC2 for 2PA strengths, with MDs below one third of an order of magnitude and reasonable MADs.  
-In contrast, functionals with large Hartree–Fock exchange and range-separated hybrids tend to systematically underestimate 2PA cross sections within simplified schemes, likely due to the neglect of the exchange–correlation kernel response in quadratic properties. 
+Global hybrid functionals with modest Hartree--Fock exchange, such as B3LYP and PBE0, yield the best overall agreement with RI-CC2 for 2PA strengths, with MDs below one third of an order of magnitude and reasonable MADs.  
+In contrast, functionals with large Hartree--Fock exchange and range-separated hybrids tend to systematically underestimate 2PA cross sections within simplified schemes, likely due to the neglect of the exchange--correlation kernel response in quadratic properties. 
 While sTD-DFT and XsTD-DFT deliver comparable MDs (and MADs) for $\log(\delta^{2\mathrm{PA}})$, XsTD-DFT offers a clear advantage for excitation energies, reducing deviations by nearly a factor of two.  
 Overall, the same considerations guiding XCFs selection in conventional TD-DFT apply to XsTD-DFT, with PBE0 and B3LYP emerging as practical compromises for simultaneously reproducing RI-CC2 excitation energies and 2PA strengths, consistent with earlier TD-DFT benchmarks.
 
@@ -770,7 +771,7 @@ This interaction induces a variable charge-transfer character and explains the e
 The ADQM approach can be naturally extended to compute $\beta_{\mathrm{HRS}}$ by averaging over ensembles of structures extracted from MD simulations, as conformational fluctuations can have a pronounced impact on the NLO response of flexible systems.  
 A clear illustration is provided in Ref.~\citenum{seibertDynamicStructuralEffects2020} for Gramicidin-A through its model peptide KWWKWWK.  
 For this system, individual MD snapshots yield $\beta_{\mathrm{HRS}}$ values that vary by up to a factor of six, highlighting the strong sensitivity of the first hyperpolarizability to subtle structural variations, such as the relative orientation of the indole side chains (Fig.~\ref{fig:beta-kwwkwwk}).  
-When averaged over the entire trajectory, however, the resulting frequency dispersion of $\beta_{\mathrm{HRS}}$ is only moderately reduced (by about 2–22\%) compared to that of the lowest-energy conformer.  
+When averaged over the entire trajectory, however, the resulting frequency dispersion of $\beta_{\mathrm{HRS}}$ is only moderately reduced (by about 2--22\%) compared to that of the lowest-energy conformer.  
 This indicates that ensemble averaging smooths the most extreme fluctuations while preserving the overall NLO response of the system.  
 In this case, comparisons between ADQM-MD and ADQM-Boltz.~results show similar trends, suggesting that relatively short simulations can already capture the dominant conformational contributions for systems characterized by shallow potential energy surfaces.  
 

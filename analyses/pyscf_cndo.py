@@ -105,10 +105,12 @@ def MAEs_mo_ERIs(mol: gto.Mole):
                 for beta in range(nao):
                     if alpha != mu and beta != mu:
                         eri_cndo[mu,mu,nu,nu] += 1/4 * S[mu, alpha] * S[mu, beta] * eri_ao[alpha, beta, nu, nu]
+                        eri_cndo[mu,mu,nu,nu] += 3/4 * S[mu, alpha] * S[alpha, beta] * eri_ao[beta, mu, nu, nu]
                     if alpha != nu and beta != nu:
                         eri_cndo[mu,mu,nu,nu] += 1/4 * S[nu, alpha] * S[nu, beta] * eri_ao[mu, mu, alpha, beta]
+                        eri_cndo[mu,mu,nu,nu] += 3/4 * S[nu, alpha] * S[alpha, beta] * eri_ao[mu, mu, beta, nu]
                     if alpha != mu and beta != nu:
-                        eri_cndo[mu,mu,nu,nu] += 3/4*S[mu, alpha] * S[nu, beta] * eri_ao[alpha, mu, beta, nu]
+                        eri_cndo[mu,mu,nu,nu] += S[mu, alpha] * S[nu, beta] * eri_ao[alpha, mu, beta, nu]
 
     eri_mo_cndo_2nd = np.einsum(
         "pi,pj,qk,ql,ppqq->ijkl",

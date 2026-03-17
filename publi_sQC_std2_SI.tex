@@ -11,17 +11,21 @@ preprint,%
 %author-numerical,
 ]{revtex4-2}
 
-\usepackage{graphicx}
-\usepackage{dcolumn}
-\usepackage{bm}
-%\linenumbers\relax % Commence numbering lines
-
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{mathptmx}
 \usepackage{etoolbox}
 \usepackage{braket}
 \usepackage{paralist}
+
+\usepackage{graphicx}
+\usepackage{dcolumn}
+\usepackage{bm}
+\usepackage{hyperref}
+%\linenumbers\relax % Commence numbering lines
+
+\usepackage{mhchem}
+\usepackage{siunitx}
 
 %% Apr 2021: AIP requests that the corresponding 
 %% email to be moved after the affiliations
@@ -60,16 +64,82 @@ Theoretical Chemistry Laboratory, Unit of Theoretical and Structural Physical Ch
 \date{\today}
 \maketitle
 
+\section{Validity of the CNDO approximation}
+
+Within the CNDO approximation, the two-center quantities entering the simplified ERIs are written as
+\begin{equation}
+	(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu)
+	= \sum_{\alpha\beta\kappa\eta} (\alpha\beta|\kappa\eta)\,
+	S^{-1/2}_{\mu\alpha}S^{-1/2}_{\mu\beta}S^{-1/2}_{\nu\kappa}S^{-1/2}_{\nu\eta}.
+	\label{eq:loweri}
+\end{equation}
+To analyze this expression, we expand $\mathbf S^{-1/2}$ as a power series,
+$\mathbf S^{-1/2} = (\mathbf I + \bm\Delta)^{-1/2}
+= \mathbf I - \tfrac{1}{2}\bm\Delta + \frac{3}{8}\bm\Delta^2 + \mathcal{O}(\bm\Delta^3)$,
+with $S_{\mu\nu} = \delta_{\mu\nu} + \Delta_{\mu\nu}$.  
+Substituting this expansion into Eq.~\eqref{eq:loweri} yields
+\begin{align}
+	(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu)  = (\mu\mu|\nu\nu) &-\sum_{\alpha\neq\mu} \Delta_{\mu\alpha} (\alpha\mu|\nu\nu) -\sum_{\alpha\neq\nu} \Delta_{\nu\alpha} (\mu\mu|\alpha\nu)\nonumber\\
+	&+\frac{3}{4}\sum_{\alpha\beta\neq \mu} \Delta_{\mu\alpha}\Delta_{\alpha\beta} (\beta\mu|\nu\nu)+\frac{3}{4}\sum_{\alpha\beta\neq \nu} \Delta_{\nu\alpha}\Delta_{\alpha\beta} (\mu\mu|\beta\nu) \nonumber\\
+	&+\frac{1}{4}\sum_{\alpha\beta\neq \mu} \Delta_{\mu\alpha}\Delta_{\mu\beta} (\alpha\beta|\nu\nu)+\frac{1}{4}\sum_{\alpha\beta\neq \nu} \Delta_{\nu\alpha}\Delta_{\nu\beta} (\mu\mu|\alpha\beta) \nonumber\\
+	&+\sum_{\alpha\neq\mu,\beta\neq\nu} \Delta_{\mu\alpha}\Delta_{\nu\beta} (\alpha\mu|\beta\nu) + \mathcal{O}(\bm\Delta^3).
+	\label{eq:cndo-approx}
+\end{align}
+which provides a systematic hierarchy of approximations.  
+In practice, Eq.~\eqref{eq:cndo-approx} can be truncated at different orders, leading to the 0\textsuperscript{th}-order approximation 
+$[(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu) \approx (\mu\mu|\nu\nu)]$, 
+the first-order approximation (including the linear terms in $\Delta$), 
+or the second-order approximation (including the terms in $\Delta^2$).
+
+The impact of this truncation on the ERIs is illustrated in Figs.~\ref{fig:cndo-lih}--\ref{fig:cndo-c2h4}, which report the mean absolute error (MAE) on the $(pq|rs)$ integrals for representative bond deformations in small molecules.  
+For simple systems such as \ce{LiH} (Fig.~\ref{fig:cndo-lih}), short bond lengths lead to large AO overlaps ($\Delta_{\alpha\beta} \gg 0$), which accentuate the poor convergence behavior of the $\Delta$ power series in Eq.~\eqref{eq:cndo-approx} (especially for large basis sets and number of atoms, see cc-pvTZ results).\cite{chandlerReexaminationJustificationNeglect1980}
+In contrast, at larger bond distances the overlaps become small and the truncated expansion provides a more reliable approximation.  
+Interestingly, the 0\textsuperscript{th}-order approximation consistently follows the ``exact'' limit rather closely for all systems over the full range of bond distances considered.
+Overall, near equilibrium geometries the MAE on the ERIs in the MO basis is on the order of \SI{e-2}{\hartree}, and decreases with increasing basis set size, reaching values below \SI{e-3}{\hartree}.
+
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=\linewidth]{./FigureS1}
+	\caption{Mean absolute error (MAE) of the $(pq|rs)$ ERIs for the deformation of the \ce{Li-H} bond in \ce{LiH}.  
+		Reference integrals were computed at the HF level using basis sets of increasing size.  
+		The CNDO integrals were evaluated either with Eq.~\eqref{eq:loweri} (``exact'' orthogonalized expression) or with different truncation orders of Eq.~\eqref{eq:cndo-approx}.  
+		The dashed line indicates the equilibrium bond length obtained at the HF/cc-pVDZ level.}
+	\label{fig:cndo-lih}
+\end{figure}
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=\linewidth]{./FigureS2}
+	\caption{MAE of the $(pq|rs)$ ERIs for the deformation of one \ce{O-H} bond in \ce{H2O}.  
+		Reference integrals were computed at the HF level with basis sets of increasing complexity.  
+		The CNDO integrals were evaluated either with Eq.~\eqref{eq:loweri} or with truncated forms of Eq.~\eqref{eq:cndo-approx}.  
+		The dashed line marks the equilibrium bond length obtained at the HF/cc-pVDZ level.}
+	\label{fig:cndo-h2o}
+\end{figure}
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=\linewidth]{./FigureS3}
+	\caption{MAE of the $(pq|rs)$ ERIs for the deformation of the \ce{C=C} bond in \ce{H2C=CH2}.  
+		Reference integrals were computed at the HF level using basis sets of increasing size.  
+		The CNDO integrals were evaluated either with Eq.~\eqref{eq:loweri} or with truncated forms of Eq.~\eqref{eq:cndo-approx}.  
+		The dashed line indicates the equilibrium bond length obtained at the HF/cc-pVDZ level.}
+	\label{fig:cndo-c2h4}
+\end{figure}
+
+\clearpage
+\section{QUEST dataset for 1PA and 2PA}
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=\linewidth]{./FigureS5}
 	\caption{Violin plots of the deviations in one-photon absorption (1PA) properties relative to RI-CC2 reference values for the QUEST dataset, as reported in Ref.~\citenum{maraldiEvaluatingPerformanceExact2025}, computed with the aug-cc-pVDZ basis set. Results are shown for several exchange--correlation functionals (XCFs) and levels of approximation (TD, sTD, and XsTD). Left: excitation energies. Right: oscillator strengths. For each method, the mean deviation is reported, with the MAD given in parentheses.}
 \end{figure}
 
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=\linewidth]{./FigureS2}
+	\includegraphics[width=\linewidth]{./FigureS5}
 	\caption{Violin plots of the deviations in two-photon absorption (2PA) properties relative to RI-CC2 reference values for the QUEST dataset, as reported in Ref.~\citenum{maraldiEvaluatingPerformanceExact2025}, computed with the aug-cc-pVDZ basis set. Results are shown for several exchange--correlation functionals (XCFs) and levels of approximation (TD, sTD, and XsTD). Left: excitation energies. Right: 2PA strengths expressed as $\log_{10}(\delta^{\mathrm{2PA}})$. For each method, the mean deviation is reported, with the MAD given in parentheses.}
 \end{figure}
 
