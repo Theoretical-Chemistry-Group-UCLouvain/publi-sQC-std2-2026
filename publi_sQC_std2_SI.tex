@@ -152,6 +152,7 @@ Previous TD results were taken from Ref.~\citenum{dewergifosseSimplifiedTimedepe
 Additional TD calculations, with hybrid and range-separated hybrid functionals (M06-2X, CAM-B3LYP, and $\omega$B97X-D3), were performed with \textsc{Gaussian~16} using the aug-cc-pVDZ basis set in conjunction with gauge-including atomic orbitals (GIAOs).  
 The molecular geometries (Fig.~\ref{fig:or-compounds}) were also taken from Ref.~\citenum{dewergifosseSimplifiedTimedependentDensity2020} and used without further optimization.  
 All resulting wavefunctions were subsequently employed as input for the corresponding (X)sTD calculations.
+Following Ref.~\citenum{dewergifosseSimplifiedTimedependentDensity2020}, (X)sTD calculations were performed using $E_{thr}=\SI{50}{\electronvolt}$ (reduced to \SI{20}{\electronvolt} for compounds \textbf{36}-\textbf{42}).
 
 \begin{figure}[!h]
 	\centering
@@ -171,7 +172,7 @@ In contrast, compounds with predominant $\pi \to \pi^\star$ character (in \textb
 While B3LYP and PBE0 remain robust overall choices (yielding the smallest $\Delta^r$ and $\delta^r$), certain subsets (e.g., six-membered rings, \textbf{19}--\textbf{30}, and helicenes, \textbf{38}--\textbf{42}) benefit from RSH functionals, with, for instance, $\Delta^r < \SI{20}{\percent}$ and $\delta^r < \SI{10}{\percent}$ for helicenes.  
 In this context, sCAM-B3LYP and XsCAM-B3LYP emerge as competitive alternatives, although the former generally performs more consistently (with performances similar to CAM-B3LYP) across all compounds studied here (\textbf{1}--\textbf{42}).  
 Interestingly, XsPBE0, XsBHHLYP, and XsM06-2X can outperform their sTD counterparts for helicenes, highlighting a non-uniform behavior across functionals that warrants further investigation.  
-Finally, the MVG formulation does not provide significant improvements over LG (except in a few specific cases), likely because the molecules were positioned close to their center of mass.
+Finally, the MVG formulation does not provide significant improvements over LG (except in a few specific cases), likely because the molecules were positioned close to their center of charge.
 
 \begin{sidewaystable}
 	\caption{Unsigned relative ($\Delta^r = \lvert[\Phi]_D - [\Phi]_D^{\mathrm{exp}}\rvert / \lvert[\Phi]_D^{\mathrm{exp}}\rvert \times 100$ and $\delta^r$, in \si{\percent}) and absolute ($\Delta = \lvert[\Phi]_D - [\Phi]_D^{\mathrm{exp}}\rvert$ and $\delta$, in \si{\degree\centi\meter\squared\per\deci\mole}) mean ($\Delta$) and median ($\delta$) deviations for different subsets of molecules in the OR45 dataset.}

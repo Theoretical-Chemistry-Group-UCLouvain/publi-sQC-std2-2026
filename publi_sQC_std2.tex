@@ -106,11 +106,11 @@ All-atom quantum mechanical (AQM) strategies therefore provide an appealing alte
 Within this framework, two complementary paradigms have emerged (Fig.~\ref{fig:aqm}): the All-Atom Single-structure QM (ASQM) and the All-Atom Dynamic QM (ADQM) approaches. \cite{loffelsenderAllAtomQuantumMechanical2025}
 ASQM evaluates response properties for a representative structure and is particularly effective for rigid systems whose optical signatures are only weakly affected by structural fluctuations.  
 By contrast, ADQM incorporates conformational sampling, typically through molecular dynamics (MD) trajectories or Boltzmann-weighted ensembles, thereby accounting for thermal disorder and environment-induced spectral broadening.  
-Together, ASQM and ADQM define a unified strategy for predictive spectroscopy of large molecular systems, enabling the level of structural realism to be matched to the physical complexity of the problem; these approaches constitute the focus of Section~\ref{sec:illu}.  
+Together, ASQM and ADQM define a unified strategy for predictive spectroscopy of large molecular systems, enabling the level of structural realism to be matched to the physical complexity of the problem; these approaches constitute one of the focus of Section~\ref{sec:illu}.  
 
 \begin{figure}[!h]
 	\includegraphics[width=\linewidth]{Figure1}
-	\caption{The different workflows to compute spectra or properties in solution or complex environments that account for dynamic structural effects:  the All-Atom Single-structure QM (ASQM) and the All-Atom Dynamic QM (ADQM) approaches.\cite{loffelsenderAllAtomQuantumMechanical2025}
+	\caption{The different workflows to compute spectra or properties in solution or complex environments that account for dynamic structural effects:  ASQM and ADQM approaches.\cite{loffelsenderAllAtomQuantumMechanical2025}
 	The latter incorporates conformational sampling, via MD trajectories (ADQM-MD) or Boltzmann-weighted ensembles (ADQM-Boltz.).}
 	\label{fig:aqm}
 \end{figure}
@@ -180,7 +180,7 @@ The adiabatic approximation is then commonly invoked, meaning that the time-depe
 \end{equation}
 
 In practice, both linear and nonlinear response functions can thus be obtained analytically, and we refer to Refs. \citenum{casidaTimeDependentDensityFunctional1995} and \citenum{parkerQuadraticResponseProperties2018} for an in-depth introduction. 
-In time-dependent DFT (TD-DFT), for a time-dependent perturbation operator $\hat V$ oscillating at frequency $\omega$ and polarized in direction $\zeta$, and assuming real orbitals, the linear response vectors $\mathbf X(\omega)$ and $\mathbf Y(\omega)$are obtained by solving:
+In TD-DFT, for a time-dependent perturbation operator $\hat V$ oscillating at frequency $\omega$ and polarized in direction $\zeta$, and assuming real orbitals, the linear response vectors $\mathbf X(\omega)$ and $\mathbf Y(\omega)$ are obtained by solving:
 \begin{equation}
 	\left[
 	\begin{pmatrix}
@@ -262,7 +262,7 @@ This is the topic of the next subsection.
 In essence, simplified TD-DFT methods achieve substantial reductions in computational cost through three key approximations, while maintaining sufficient accuracy for a wide range of applications: 
 \begin{inparaenum}[(i)]
 	\item the excitation space is truncated by retaining only the most relevant configuration state functions (CSFs),
-	\item one-electron integrals are evaluated exactly, whereas two-electron integrals are approximated using the zero-differential-overlap (ZDO) framework, with different treatments of the electron--repulsion integrals (ERIs) defining the various simplified TD-DFT variants, and
+	\item one-electron integrals are evaluated exactly, whereas two-electron integrals are approximated using the ZDO framework, with different treatments of the electron--repulsion integrals (ERIs) defining the various simplified TD-DFT variants, and
 	\item all XCF contributions to the response equations are neglected.
 \end{inparaenum}
 
@@ -557,17 +557,17 @@ For spin-flip calculations, however, the XsTD formulation provides only marginal
 \end{figure}
 
 The SF-sTD-DFT framework has also proven valuable for studying large polycyclic hydrocarbons with diradical character. 
-For instance, investigations of indeno[1,2b]fluorene and related diindeno[n]thiophene derivatives\cite{dewergifosseAreFullyConjugated2019} showed that the method efficiently reproduces experimental absorption trends while allowing an intuitive interpretation of excited states using natural transition orbitals (NTOs).  
+For instance, investigations of indeno[1,2b]fluorene and related diindeno[n]thiophene derivatives\cite{dewergifosseAreFullyConjugated2019} showed that the method efficiently reproduces experimental absorption trends while allowing an intuitive interpretation of excited states using natural transition orbitals.  
 Importantly, the spin-flip formulation captures small contributions from doubly excited configurations that are inaccessible to conventional TD-DFT, leading to a consistent correlation between theoretical and experimental excitation energies.  
 Beyond spectroscopy, SF-sTD-DFT has also been applied to the design of singlet-fission chromophores.\cite{kostadinovaSingletFissionTinkertoys2022}  
 Because many efficient singlet-fission materials exhibit significant diradical character, the method provides a computationally efficient strategy to explore large candidate systems and rationalize how structural factors such as topology, conjugation length, or substituents influence singlet-fission propensity.
 
 
 The computation of excitation spectra has recently been extended to near-edge X-ray absorption fine structure (NEXAFS), further broadening the applicability of simplified excited-state methods.\cite{dewergifosseUltrafastNearEdgeXray2025}
-For chlorophyll~A (Fig.~\ref{fig:nexafs}) , the carbon K-edge spectrum computed at the XsSRC2/TDA/cc-pCVDZ level reproduces the experimental lineshape with remarkable fidelity, despite a small systematic energy shift.  
+For chlorophyll~A (top panel of Fig.~\ref{fig:nexafs}), the carbon K-edge spectrum computed at the XsSRC2/TDA/cc-pCVDZ level reproduces the experimental lineshape with remarkable fidelity, despite a small systematic energy shift.  
 The main absorption band is dominated by two intense transitions near 285~eV, in close agreement with the experimental maximum, demonstrating that core--valence excitations of complex chromophores can be described at modest computational cost.  
 Notably, 632 excited states involving more than 3000 basis functions are obtained within seconds, highlighting the efficiency of the approach.  
-The scalability of the method is further illustrated by the PPG$_{10}$ collagen model  (Fig.~\ref{fig:nexafs}) comprising 600 atoms.  
+The scalability of the method is further illustrated by the PPG$_{10}$ collagen model  (bottom panel of Fig.~\ref{fig:nexafs}) comprising 600 atoms.  
 Its oxygen K-edge spectrum, constructed from more than 85\,000 excited states, shows excellent agreement with experiment across a broad energy window.  
 The first absorption band is accurately reproduced in both position and width, with the most intense transition lying within \SI{0.6}{\electronvolt} of the experimental maximum and corresponding to a localized $1s_{\mathrm O}\rightarrow n/\pi^\star$ excitation on the peptide bond.  
 Higher-energy features are likewise captured once appropriate spectral broadening is applied, reflecting the dense manifold of short-lived states above the ionization threshold.  
@@ -627,7 +627,7 @@ Because myoglobin contains eight $\alpha$-helices, the CD response is dominated 
 By contrast, for more rigid structures, the ASQM protocol already provides a reliable description of optical properties without the need for extensive configurational averaging.  
 The photoactive yellow protein (PYP), a 1931-atom system, exemplifies this regime: it can be treated at the XsCAM-B3LYP/TDA level using mixed basis sets, making fully quantum-mechanical calculations tractable even on modest computational resources, as discussed in Ref.~\citenum{dewergifosseComputingExcitedStates2024}.  
 Excitation energies and oscillator strengths of the first transition are well reproduced even with relatively small basis sets, provided that diffuse and polarization functions are included on the chromophore.  
-The computed 1PA and ECD spectra (Fig.~\ref{fig:1pa+ecd-pyp}) show striking agreement with experiment after a uniform energy shift (of \SI{-1.5}{\electronvolt}), accurately capturing spectral shapes and relative peak positions; only the rotatory strength of the lowest transition is slightly underestimated.  
+The computed 1PA and ECD spectra (Fig.~\ref{fig:1pa+ecd-pyp}) show striking agreement with experiment after a uniform energy shift (of \SI{-1.5}{\electronvolt}), accurately capturing spectral shapes and relative peak positions; only the rotatory strength of the lowest transition is underestimated.  
 
 \begin{figure}[!h]
 	\centering
@@ -661,7 +661,6 @@ Together, these examples emphasize the complementary roles of ADQM and ASQM: the
 
 
 {\bfseries [Note that UV/Vis\cite{wiebelerQMMMBenchmarking2019,streiterImpactChlorineInternal2020,batraBenchmarkSimplifiedTimeDependent2020,mayOpticalLimitingProperties2020,hidalgo-rosaSensingMechanismElucidation2020,greensteinOrganicPhotovoltaicEfficiency2022,buninLowSymmetryPhthalocyaninesBearing2022,yangEnergybasedFragmentationContribution2022,dmitrienkoExploringReplacementAxially2022,usoltsevSemiEmpiricalCalculationBodipy2022,eroshinIronIIComplexesPorphyrin2023,degtyarevInvestigationSpectraElectronic2023,seveurModelingPhotoAbsorptionProperties2023,lindenthalUnderstandingOpticalProperties2023,paulsEfficientExcitonCoupling2025} (and many others, in fact) and ECD\cite{gehroldAxialHelicalPlanar2016,covingtonAtropoisomerismBiflavonesAbsolute2016,jarzebskiDiastereoselectiveSelfAssemblyNeutral2017,ianniApplicationInvertedChirality2019,mohrEnantioselectivePropertiesNeglected2025} calculations (with sTD-DFT) are also done the wild... Mostly thanks to the ORCA implementation.]}
-
 
 
 \subsection{Linear response: optical rotation}
@@ -700,17 +699,16 @@ The resulting distributions of $[\Phi]_D$ errors, relative to experiment, are su
 	\includegraphics[width=\linewidth]{Figure11}
 	\caption{Distribution of errors in molar optical rotation $[\Phi]_D$ for the organic (first 42) molecules of the OR45 benchmark set, expressed as $\log_{10}(|[\Phi]_D|)$ relative to experiment (a unit difference corresponds to one order of magnitude).  
 		Results obtained with the aug-cc-pVDZ basis set are shown for different XC functionals and levels of theory (TD, sTD, and XsTD).  
-		TD calculations employ London orbitals.  
-		Following Ref.~\citenum{dewergifosseSimplifiedTimedependentDensity2020}, (X)sTD calculations were performed using $E_{thr}=\SI{50}{\electronvolt}$ (reduced to \SI{20}{\electronvolt} for compounds \textbf{36}-\textbf{42}).
+		For each method, the MD of this difference is reported, with the MAD are given in parentheses.
 		Left: length gauge (LG). Right: modified velocity gauge (MVG).}
 	\label{fig:or}
 \end{figure}
  
-As shown in Fig.~\ref{fig:or}, the XsTD-DFT predictions of $[\Phi]_D$ closely follow the trends obtained with the sTD-DFT scheme, confirming a good predictive capability.  
-Overall, XsTD-DFT reproduces the performance trends observed with sTD-DFT, with comparable or slightly improved mean errors but a somewhat larger spread of deviations.  
+As shown in Fig.~\ref{fig:or}, the XsTD-DFT predictions of $[\Phi]_D$ follow the trends obtained with the sTD-DFT scheme, confirming a good predictive capability.  
+Overall, XsTD-DFT shows comparable or slightly improved MDs but somewhat larger MADs (generaly above one third of an order of magnitude).  
 A detailed statistical analysis is provided in the SI (Tables~S1--S2): as in previous studies, systems dominated by $\pi \to \pi^\star$ excitations are well described, whereas molecules with significant Rydberg character remain challenging.  
 B3LYP and PBE0 provide the most consistent results, while RSH functionals can offer improvements for specific subsets such as helicenes; in this context, CAM-B3LYP, as well as its simplified variants sCAM-B3LYP and XsCAM-B3LYP, emerge as competitive alternatives, although the sTD variant generally performs more consistently than XsTD, as also reflected in Fig.~\ref{fig:or}.  
-No significant difference is observed between LG and MVG results, likely because the molecules were positioned close to their center of mass.
+No significant difference is observed between LG and MVG results, likely because the molecules were positioned close to their center of charge.
 
 In terms of interpretation, norbornenone (molecule 20 in the OR45 set) represents a particularly challenging case for theoretical chiroptical methods due to its exceptionally large experimental molar rotation, ranging from approximately \SIrange{-1146}{-1239}{\degree\centi\meter\squared\per\deci\mole} depending on the solvent.  
 This value is considerably larger than that of structurally related compounds such as camphor (21) or norbornanone (19), a phenomenon attributed to the electronic coupling between the nearly orthogonal \ce{C=C} and \ce{C=O} $\pi$ systems.  
@@ -751,7 +749,10 @@ Overall, the same considerations guiding XCFs selection in conventional TD-DFT a
 \begin{figure}[!h]
 \centering
 \includegraphics[width=\linewidth]{./Figure13}
-\caption{Violin plots of the difference of 2PA properties (excitation energies, $\Delta E_{0\to n}$, and strength, $\delta^{\mathrm{2PA}}$) relative to RI-CC2 reference values for the CT dataset, as reported in Ref.~\citenum{maraldiEvaluatingPerformanceExact2025}, computed with the aug-cc-pVDZ basis set. Results are shown for several XCFs and levels of approximation (TD, sTD, and XsTD). Left: excitation energies. Right: 2PA strength expressed as $\log_{10}(\delta^{\mathrm{2PA}})$ (a difference of 1 translates into an order of magnitude). For each method, the MD of this difference is reported, with the MAD are given in parentheses.}
+\caption{Violin plots of the difference of 2PA properties (excitation energies, $\Delta E_{0\to n}$, and strength, $\delta^{\mathrm{2PA}}$) relative to RI-CC2 reference values for the CT dataset, as reported in Ref.~\citenum{maraldiEvaluatingPerformanceExact2025}, computed with the aug-cc-pVDZ basis set. 
+Results are shown for several XCFs and levels of approximation (TD, sTD, and XsTD). 
+Left: excitation energies. Right: 2PA strength expressed as $\log_{10}(\delta^{\mathrm{2PA}})$ (a difference of 1 translates into an order of magnitude). 
+For each method, the MD of this difference is reported, with the MAD are given in parentheses.}
 \label{fig:2pa-ct}
 \end{figure}
 
@@ -852,24 +853,52 @@ In this case, comparisons between ADQM-MD and ADQM-Boltz.~results show similar t
 	\label{fig:beta-kwwkwwk}
 \end{figure}
 
-\textbf{[now, tease that quadratic responses at the XsTD level for large system are out of reach... For the moment.]
-}
+Note that the current \texttt{std2} implementation remains limited for very large systems (if $E_{thr}$ gets large), particularly for quadratic response properties and the evaluation of their residues, due to the explicit construction and diagonalization of large matrices.  
+These limitations will be alleviated in the future by adopting iterative eigensolvers, such as the Davidson method, which would enable a more efficient treatment of selected excited states and significantly reduce both memory and computational requirements.\cite{kauczorEfficiencyAlgorithmsSolving2011,KauczorEfficient2014}
+Preliminary implementations of such iterative approaches for linear and quadratic response properties and residues have already been developed and show promising results, with significant reductions in computational cost.
 
 \clearpage
 \section{Conclusions and perspectives}
 
-\begin{itemize}
-	\item ``\texttt{std2} provides approximations that retain most of the physics" [citation needed]
-	\item What about AI?\cite{greensteinOrganicPhotovoltaicEfficiency2022,greensteinTutorialDeterminingBest2023}
-\end{itemize}
+In summary, the \texttt{std2} package provides an efficient and modular framework for simplified quantum chemical approaches to excited states and response properties.  
+By introducing controlled approximations, such as the neglect of the exchange--correlation kernel and simplified treatments of two-electron integrals, (X)sTD-DFT enables routine calculations on systems comprising thousands of atoms, thereby bridging the gap between computational cost and predictive capability.  
+Benchmark comparisons against higher-level methods (e.g., RI-CC2) show that XsTD-DFT accurately reproduces excitation energies and oscillator strengths for valence-dominated transitions, while improving upon sTD-DFT for charge-transfer states, with typical speedups of two to three orders of magnitude.  
+The versatility of the framework is further demonstrated through applications to a wide range of spectroscopic observables, including 1PA, 2PA, ECD, OR, as well as nonlinear responses such as SHG and ESA.  
+Moreover, the use of ASQM and ADQM schemes, in particular ADQM-MD, enables the inclusion of environmental and dynamical effects, which are essential for realistic simulations of complex (bio)molecular systems.
+
+Despite these strengths, several limitations remain.  
+In particular, Rydberg and doubly excited states are less reliably described due to the underlying ZDO approximations.  
+Although XsTD-DFT reduces the dependence on empirical parameters, certain quadratic response properties may still benefit from improved integral treatments or targeted reparameterization, especially in resonant regimes.  
+Furthermore, the overall accuracy remains sensitive to the choice of exchange--correlation functional: global hybrids such as B3LYP and PBE0 generally provide balanced performance, whereas range-separated hybrids may be advantageous for specific systems or properties.
+
+Future developments will focus on extending both the robustness and the scope of the approach.  
+Promising directions include:
+\begin{enumerate}
+	\item Improving the quality of ground-state wavefunctions, while reducing the computational cost, for instance through integration with newly developed tight-binding approaches such as g-xTB, to enhance the reliability of subsequent excited-state calculations.
+	\item Incorporating damped response formalisms to enable a more robust and physically sound treatment of resonant nonlinear properties.
+	\item Developing new sQC approaches, inspired by recent low-scaling TD-DFT strategies (e.g., TD-DFT-ris), to further reduce computational cost while retaining accuracy for targeted classes of excitations and properties.
+	\item Advancing parallelization and high-performance computing implementations to efficiently tackle increasingly large molecular systems.
+	\item Extending the methodology to additional spectroscopic observables, including phosphorescence, Raman scattering, and higher-order nonlinear response properties.
+\end{enumerate}
+
+Overall, simplified approaches such as those implemented in \texttt{std2} are expected to play an increasingly important role in predictive spectroscopy, enabling quantum-mechanical investigations of complex molecular systems across chemistry, materials science, and biology.
 
 \begin{acknowledgments}
-	We acknowledge past, present, and future devs.
+	We acknowledge past, present, and future developers of the \texttt{std2} package and related tools.
+	In particular, we thanks Prof. S. Grimme for his pioneering work on simplified quantum chemical methods and for providing the xTB code, which serves as a key component of our framework.
+	We also thank our collaborators and colleagues for their contributions to the development and application of these methods, as well as the funding agencies that have supported this research over the years.
 \end{acknowledgments}
 
 \section*{Data Availability Statement}
 
-Data sharing is not applicable to this article as no new data were created or analyzed in this study.
+The Supporting Information includes: \begin{inparaenum}[(i)]
+	\item an assessment of the validity of the ZDO approximation for two-electron integrals,
+	\item 1PA and 2PA excitation energies and strengths for the QUEST datasets, and
+	\item a detailed statistical analysis of $[\Phi]_D$ for the OR45 benchmark set, computed with various XCFs and levels of theory.
+\end{inparaenum}
+
+The scripts and data used to generate the figures are available at \url{https://github.com/pierre-24/publi-sQC-std2}.
+Additional data supporting the findings of this study are available from the corresponding author upon reasonable request.
 
 \bibliography{biblio}
 
