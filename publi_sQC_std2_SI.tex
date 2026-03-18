@@ -26,6 +26,8 @@ preprint,%
 
 \usepackage{mhchem}
 \usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{rotating}
 
 %% Apr 2021: AIP requests that the corresponding 
 %% email to be moved after the affiliations
@@ -146,13 +148,91 @@ Overall, near equilibrium geometries the MAE on the ERIs in the MO basis is on t
 \clearpage
 \section{OR45 benchmark}
 
+Previous TD results were taken from Ref.~\citenum{dewergifosseSimplifiedTimedependentDensity2020}, and the corresponding wavefunctions were used as input for the subsequent (X)sPBE0, (X)sB3LYP, and (X)sBHHLYP calculations.  
+Additional TD calculations, with hybrid and range-separated hybrid functionals (M06-2X, CAM-B3LYP, and $\omega$B97X-D3), were performed with \textsc{Gaussian~16} using the aug-cc-pVDZ basis set in conjunction with gauge-including atomic orbitals (GIAOs).  
+The molecular geometries (Fig.~\ref{fig:or-compounds}) were also taken from Ref.~\citenum{dewergifosseSimplifiedTimedependentDensity2020} and used without further optimization.  
+All resulting wavefunctions were subsequently employed as input for the corresponding (X)sTD calculations.
 
 \begin{figure}[!h]
 	\centering
 	\includegraphics{FigureS6}
 	\caption{Structures of the 42 first organic molecules of the OR45 test set. Reprinted with permission from Ref.~\citenum{dewergifosseSimplifiedTimedependentDensity2020}. 
 	Copyright 2020 AIP Publishing.}
+	\label{fig:or-compounds}
 \end{figure}
+
+The performance of the different methods is summarized in Tables~\ref{tab:or45-old} (previous XCFs) and \ref{tab:or45-new} (new XCFs), which report mean and median deviations of the calculated $[\Phi]_D$ from experiment.  
+Because the dataset spans several orders of magnitude, both global statistics and subset-specific results are provided for groups of compounds with similar responses, following Ref.~\citenum{dewergifosseSimplifiedTimedependentDensity2020}.  
+Unsigned absolute and relative mean ($\Delta$) and median ($\delta$) deviations are reported; significant differences between $\Delta$ and $\delta$ typically indicate the presence of outliers.  
+As noted in the original OR45 study,\cite{srebroOpticalRotationCalculated2011} relative deviations can become very large for molecules with small optical rotations (compounds \textbf{1}--\textbf{13}), including cases where the predicted sign is incorrect.  
+These systems are dominated by excited states with significant Rydberg character, for which both TD and simplified TD approaches perform poorly ($\Delta^r > \SI{100}{\percent}$), although XsTD generally yields smaller $\delta^r$ values than sTD.  
+In contrast, compounds with predominant $\pi \to \pi^\star$ character (in \textbf{14}--\textbf{42}) are more reliably described.  
+
+While B3LYP and PBE0 remain robust overall choices (yielding the smallest $\Delta^r$ and $\delta^r$), certain subsets (e.g., six-membered rings, \textbf{19}--\textbf{30}, and helicenes, \textbf{38}--\textbf{42}) benefit from RSH functionals, with, for instance, $\Delta^r < \SI{20}{\percent}$ and $\delta^r < \SI{10}{\percent}$ for helicenes.  
+In this context, sCAM-B3LYP and XsCAM-B3LYP emerge as competitive alternatives, although the former generally performs more consistently (with performances similar to CAM-B3LYP) across all compounds studied here (\textbf{1}--\textbf{42}).  
+Interestingly, XsPBE0, XsBHHLYP, and XsM06-2X can outperform their sTD counterparts for helicenes, highlighting a non-uniform behavior across functionals that warrants further investigation.  
+Finally, the MVG formulation does not provide significant improvements over LG (except in a few specific cases), likely because the molecules were positioned close to their center of mass.
+
+\begin{sidewaystable}
+	\caption{Unsigned relative ($\Delta^r = \lvert[\Phi]_D - [\Phi]_D^{\mathrm{exp}}\rvert / \lvert[\Phi]_D^{\mathrm{exp}}\rvert \times 100$ and $\delta^r$, in \si{\percent}) and absolute ($\Delta = \lvert[\Phi]_D - [\Phi]_D^{\mathrm{exp}}\rvert$ and $\delta$, in \si{\degree\centi\meter\squared\per\deci\mole}) mean ($\Delta$) and median ($\delta$) deviations for different subsets of molecules in the OR45 dataset.}
+	\label{tab:or45-old}
+\begin{tabular}{lccccccccccccccccccccccccccccc}
+	\toprule
+	&$\Delta^r$& $\delta^r$ &$\Delta$& $\delta$ &  & $\Delta^r$& $\delta^r$ &$\Delta$& $\delta$  &  & $\Delta^r$& $\delta^r$ &$\Delta$& $\delta$  &  & $\Delta^r$& $\delta^r$ &$\Delta$& $\delta$  &  & $\Delta^r$& $\delta^r$ &$\Delta$& $\delta$  &  & $\Delta^r$& $\delta^r$ &$\Delta$& $\delta$  \\
+	\midrule
+	& \multicolumn{4}{c}{Compounds 1-42} &  &  \multicolumn{4}{c}{Compounds 1-13} &  &  \multicolumn{4}{c}{Compounds 14-18}  &  &  \multicolumn{4}{c}{Compounds 19-30} &  &  \multicolumn{4}{c}{Compounds 31-37}  &  &  \multicolumn{4}{c}{Compounds 38-42} \\
+	\cline{2-5} \cline{7-10} \cline{12-15} \cline{17-20} \cline{22-25} \cline{27-30}
+	B3LYP (LG) & 54 & 29 & 634.0 & 24.0 &  & 83 & 30 & 17.1 & 12.1 &  & 55 & 61 & 17.1 & 23.4 &  & 28 & 16 & 26.1 & 27.0 &  & 49 & 21 & 55.6 & 22.7 &  & 44 & 35 & 5123.3 & 3895.9 \\
+	sB3LYP (LG) & 153 & 49 & 1288.3 & 42.9 &  & 338 & 75 & 38.0 & 30.8 &  & 79 & 57 & 34.0 & 38.2 &  & 33 & 25 & 51.4 & 33.0 &  & 120 & 73 & 133.5 & 95.8 &  & 84 & 70 & 10378.4 & 9825.0 \\
+	XsB3LYP (LG) & 243 & 65 & 1445.1 & 58.2 &  & 456 & 64 & 33.7 & 27.5 &  & 147 & 78 & 40.5 & 14.8 &  & 84 & 58 & 90.0 & 56.0 &  & 297 & 90 & 204.9 & 148.1 &  & 95 & 82 & 11508.0 & 11684.6 \\
+	sB3LYP (MVG) & 196 & 61 & 1172.6 & 48.8 &  & 467 & 128 & 48.7 & 45.5 &  & 92 & 64 & 35.8 & 47.7 &  & 32 & 26 & 51.2 & 33.5 &  & 136 & 90 & 136.5 & 92.9 &  & 76 & 62 & 9373.2 & 9041.2 \\
+	XsB3LYP (MVG) & 289 & 74 & 1376.9 & 59.2 &  & 580 & 75 & 39.8 & 29.1 &  & 155 & 96 & 45.8 & 23.3 &  & 83 & 53 & 93.0 & 59.2 &  & 339 & 109 & 218.5 & 158.9 &  & 90 & 77 & 10887.3 & 11164.3 \\
+	\midrule
+	PBE0 (LG) & 65 & 25 & 462.1 & 22.1 &  & 127 & 30 & 18.4 & 13.5 &  & 60 & 74 & 18.7 & 18.0 &  & 26 & 18 & 22.1 & 22.4 &  & 44 & 23 & 48.7 & 19.9 &  & 33 & 25 & 3694.1 & 2741.2 \\
+	sPBE0 (LG) & 144 & 53 & 1328.6 & 41.8 &  & 305 & 78 & 38.6 & 31.9 &  & 73 & 54 & 32.9 & 46.6 &  & 32 & 25 & 50.7 & 32.8 &  & 128 & 70 & 146.9 & 104.8 &  & 86 & 70 & 10700.1 & 10131.1 \\
+	XsPBE0 (LG) & 216 & 65 & 1240.2 & 52.9 &  & 390 & 64 & 32.0 & 24.9 &  & 135 & 74 & 39.8 & 27.6 &  & 81 & 49 & 83.2 & 54.2 &  & 280 & 70 & 215.3 & 137.3 &  & 82 & 73 & 9793.7 & 9448.7 \\
+	sPBE0 (MVG) & 187 & 52 & 1265.1 & 46.9 &  & 435 & 115 & 50.4 & 44.4 &  & 78 & 51 & 34.8 & 46.9 &  & 33 & 28 & 55.7 & 33.9 &  & 146 & 85 & 145.9 & 99.6 &  & 81 & 67 & 10123.0 & 9787.2 \\
+	XsPBE0 (MVG) & 264 & 66 & 1173.9 & 54.8 &  & 513 & 78 & 39.1 & 31.5 &  & 138 & 80 & 46.7 & 36.0 &  & 82 & 54 & 86.0 & 55.6 &  & 338 & 81 & 231.7 & 162.9 &  & 77 & 68 & 9181.8 & 8590.9 \\
+	\midrule
+	BHHLYP (LG) & 88 & 28 & 293.1 & 29.0 &  & 199 & 31 & 23.2 & 14.5 &  & 34 & 27 & 13.4 & 17.6 &  & 36 & 29 & 62.7 & 37.2 &  & 62 & 17 & 71.1 & 27.6 &  & 16 & 10 & 2138.7 & 630.8 \\
+	sBHHLYP (LG) & 164 & 60 & 1484.7 & 50.9 &  & 362 & 99 & 61.6 & 27.7 &  & 79 & 62 & 36.4 & 50.3 &  & 40 & 36 & 37.4 & 38.0 &  & 114 & 103 & 172.7 & 99.4 &  & 97 & 85 & 11942.8 & 11059.3 \\
+	XsBHHLYP (LG) & 218 & 65 & 720.8 & 55.4 &  & 401 & 59 & 33.9 & 25.1 &  & 134 & 84 & 44.2 & 22.3 &  & 80 & 61 & 65.8 & 60.7 &  & 294 & 71 & 254.9 & 116.5 &  & 49 & 43 & 5407.8 & 5171.9 \\
+	sBHHLYP (MVG) & 246 & 86 & 1602.3 & 51.9 &  & 581 & 157 & 97.4 & 51.4 &  & 123 & 132 & 38.8 & 51.9 &  & 48 & 39 & 56.1 & 49.4 &  & 153 & 87 & 174.0 & 116.2 &  & 103 & 89 & 12789.0 & 12188.1 \\
+	XsBHHLYP (MVG) & 290 & 74 & 622.4 & 56.9 &  & 583 & 93 & 45.7 & 32.2 &  & 165 & 92 & 49.3 & 24.3 &  & 79 & 56 & 59.1 & 58.3 &  & 375 & 81 & 272.0 & 177.0 &  & 42 & 36 & 4537.6 & 4279.2 \\
+	\bottomrule
+\end{tabular}
+\end{sidewaystable}
+
+
+\begin{sidewaystable}
+	\caption{Unsigned relative ($\Delta^r = \lvert[\Phi]_D - [\Phi]_D^{\mathrm{exp}}\rvert / \lvert[\Phi]_D^{\mathrm{exp}}\rvert \times 100$ and $\delta^r$, in \si{\percent}) and absolute ($\Delta = \lvert[\Phi]_D - [\Phi]_D^{\mathrm{exp}}\rvert$ and $\delta$, in \si{\degree\centi\meter\squared\per\deci\mole}) mean ($\Delta$) and median ($\delta$) deviations for different subsets of molecules in the OR45 dataset.}
+	\label{tab:or45-new}
+\begin{tabular}{lccccccccccccccccccccccccccccc}
+	\toprule
+	&$\Delta^r$& $\delta^r$ &$\Delta$& $\delta$ &  & $\Delta^r$& $\delta^r$ &$\Delta$& $\delta$  &  & $\Delta^r$& $\delta^r$ &$\Delta$& $\delta$  &  & $\Delta^r$& $\delta^r$ &$\Delta$& $\delta$  &  & $\Delta^r$& $\delta^r$ &$\Delta$& $\delta$  &  & $\Delta^r$& $\delta^r$ &$\Delta$& $\delta$  \\
+	\midrule
+	& \multicolumn{4}{c}{Compounds 1-42} &  &  \multicolumn{4}{c}{Compounds 1-13} &  &  \multicolumn{4}{c}{Compounds 14-18}  &  &  \multicolumn{4}{c}{Compounds 19-30} &  &  \multicolumn{4}{c}{Compounds 31-37}  &  &  \multicolumn{4}{c}{Compounds 38-42} \\
+	\cline{2-5} \cline{7-10} \cline{12-15} \cline{17-20} \cline{22-25} \cline{27-30}
+	M06-2X (LG) & 68 & 27 & 275.0 & 23.3 &  & 134 & 29 & 21.0 & 13.1 &  & 54 & 67 & 15.0 & 7.5 &  & 34 & 23 & 42.2 & 26.5 &  & 54 & 29 & 49.4 & 28.3 &  & 15 & 10 & 2069.6 & 597.8 \\
+	sM06-2X (LG) & 347 & 85 & 1952.5 & 57.6 &  & 885 & 144 & 95.6 & 33.1 &  & 113 & 112 & 38.7 & 48.5 &  & 49 & 37 & 87.5 & 47.6 &  & 182 & 68 & 188.6 & 148.8 &  & 125 & 109 & 15639.3 & 14831.8 \\
+	XsM06-2X (LG) & 431 & 77 & 982.3 & 62.4 &  & 964 & 98 & 57.5 & 46.3 &  & 146 & 86 & 45.3 & 47.6 &  & 110 & 60 & 106.8 & 60.9 &  & 455 & 77 & 256.3 & 142.6 &  & 65 & 59 & 7441.1 & 6995.3 \\
+	sM06-2X (MVG) & 572 & 110 & 2246.3 & 80.5 &  & 1531 & 243 & 163.3 & 78.7 &  & 153 & 181 & 40.6 & 21.0 &  & 61 & 48 & 129.1 & 41.4 &  & 272 & 81 & 200.6 & 198.3 &  & 141 & 123 & 17812.8 & 17772.4 \\
+	XsM06-2X (MVG) & 651 & 90 & 982.1 & 91.3 &  & 1531 & 215 & 92.5 & 62.7 &  & 221 & 120 & 60.5 & 66.0 &  & 118 & 51 & 124.5 & 60.6 &  & 659 & 88 & 292.5 & 188.1 &  & 63 & 56 & 7240.8 & 6670.3 \\
+	\midrule
+	CAM-B3LYP (LG) & 78 & 28 & 283.0 & 27.1 &  & 166 & 33 & 21.1 & 15.0 &  & 49 & 53 & 14.5 & 12.6 &  & 35 & 26 & 50.0 & 32.6 &  & 55 & 20 & 50.4 & 28.1 &  & 16 & 11 & 2117.4 & 645.7 \\
+	sCAM-B3LYP (LG) & 85 & 38 & 354.6 & 47.8 &  & 165 & 94 & 45.3 & 20.5 &  & 58 & 23 & 25.6 & 12.9 &  & 40 & 28 & 47.1 & 41.8 &  & 79 & 43 & 114.4 & 102.3 &  & 23 & 15 & 2561.8 & 1253.2 \\
+	XsCAM-B3LYP (LG) & 203 & 68 & 646.6 & 54.4 &  & 357 & 67 & 32.2 & 26.3 &  & 147 & 76 & 35.6 & 8.6 &  & 83 & 61 & 59.9 & 62.6 &  & 276 & 84 & 213.9 & 123.2 &  & 45 & 40 & 4868.6 & 4618.3 \\
+	sCAM-B3LYP (MVG) & 89 & 48 & 362.6 & 49.1 &  & 166 & 81 & 51.8 & 34.3 &  & 70 & 52 & 30.1 & 28.6 &  & 45 & 38 & 50.5 & 46.7 &  & 80 & 30 & 107.1 & 81.5 &  & 23 & 15 & 2610.1 & 1344.5 \\
+	XsCAM-B3LYP (MVG) & 261 & 67 & 569.3 & 53.6 &  & 511 & 71 & 41.9 & 30.2 &  & 204 & 80 & 42.3 & 19.1 &  & 79 & 51 & 59.8 & 54.8 &  & 305 & 92 & 222.4 & 113.9 &  & 40 & 34 & 4175.8 & 4009.4 \\
+	\midrule
+	$\omega$B97X-D3 (LG) & 85 & 25 & 304.6 & 26.9 &  & 185 & 34 & 21.3 & 14.7 &  & 53 & 60 & 15.9 & 8.9 &  & 34 & 25 & 47.4 & 29.6 &  & 57 & 22 & 51.6 & 41.7 &  & 16 & 7 & 2301.6 & 587.7 \\
+	s$\omega$B97X-D3 (LG) & 256 & 60 & 949.7 & 55.6 &  & 673 & 203 & 74.9 & 55.3 &  & 97 & 60 & 31.2 & 29.9 &  & 39 & 28 & 65.5 & 35.7 &  & 103 & 79 & 159.7 & 109.4 &  & 63 & 54 & 7370.5 & 6404.3 \\
+	Xs$\omega$B97X-D3 (LG) & 385 & 79 & 1488.4 & 59.1 &  & 836 & 99 & 54.4 & 42.2 &  & 163 & 72 & 40.4 & 24.4 &  & 108 & 56 & 118.5 & 59.1 &  & 383 & 83 & 234.0 & 163.1 &  & 97 & 90 & 11708.5 & 11104.1 \\
+	s$\omega$B97X-D3 (MVG) & 374 & 65 & 1169.2 & 75.1 &  & 1030 & 315 & 121.5 & 99.8 &  & 91 & 65 & 37.3 & 36.6 &  & 48 & 41 & 89.7 & 45.9 &  & 128 & 109 & 266.0 & 115.1 &  & 75 & 63 & 8880.4 & 7925.9 \\
+	Xs$\omega$B97X-D3 (MVG) & 610 & 88 & 1670.6 & 77.0 &  & 1466 & 170 & 87.1 & 63.4 &  & 210 & 125 & 52.9 & 30.1 &  & 120 & 53 & 163.5 & 63.6 &  & 508 & 90 & 280.5 & 242.4 &  & 107 & 101 & 12968.4 & 12023.0 \\
+	\bottomrule
+\end{tabular}
+\end{sidewaystable}
 
 \clearpage
 \bibliography{biblio}

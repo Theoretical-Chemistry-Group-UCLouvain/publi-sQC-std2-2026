@@ -9,9 +9,12 @@ def mad(data, axis=None):
 def prepare_data(data: pandas.DataFrame):
     return data
 
+nmin = 38
+nmax = 42
+
 def plot_XC(ax, data_n, data_s, k, name, approach: str, ref: str = 'EXP', gmax: float = 0.6):
     data_ref = data_n[(data_n['Method'] == ref)]
-    data_ref_sub = data_n[(data_n['Method'] == ref) & (data_n['System'] < 36)]
+    data_ref_sub = data_n[(data_n['Method'] == ref) & (data_n['System'] >= nmin) & (data_n['System'] <= nmax)]
     
     for i, a in enumerate(['', 's', 'Xs']):
         if i == 0 and approach == 'MVG':
@@ -19,16 +22,18 @@ def plot_XC(ax, data_n, data_s, k, name, approach: str, ref: str = 'EXP', gmax: 
 
         if i > 0:
             data_XC = data_s[(data_s['Method'] == a + name) & (data_s['Approach'] == approach)]
-            data_XC_sub = data_s[(data_s['Method'] == a + name) & (data_s['Approach'] == approach) & (data_s['System'] < 36)]
+            data_XC_sub = data_s[(data_s['Method'] == a + name) & (data_s['Approach'] == approach) & (data_s['System'] >= nmin) & (data_s['System'] <= nmax)]
         else:
             data_XC = data_n[(data_n['Method'] == name)]
-            data_XC_sub = data_n[(data_n['Method'] == name) & (data_n['System'] < 36)]
+            data_XC_sub = data_n[(data_n['Method'] == name) & (data_n['System'] >= nmin) & (data_n['System'] <= nmax)]
         
         diff = numpy.log10(numpy.abs(data_XC['Phi_D'].values)) - numpy.log10(numpy.abs(data_ref['Phi_D'].values))
         
-        sdiff = numpy.abs(data_XC['Phi_D'].values - data_ref['Phi_D'].values)
         sdiff_sub = numpy.abs(data_XC_sub['Phi_D'].values - data_ref_sub['Phi_D'].values)
-        print(a, name, approach, sdiff.mean(), numpy.median(sdiff), sdiff_sub.mean(), numpy.median(sdiff_sub))
+        sdiff_sub_x = sdiff_sub / numpy.abs(data_ref_sub['Phi_D'].values) * 100
+        print(a, name, approach, 
+            sdiff_sub_x.mean(), numpy.median(sdiff_sub_x), sdiff_sub.mean(), numpy.median(sdiff_sub)
+        )
         
         vp = ax.violinplot(diff, positions=[k  + i / 4 - .25], widths=0.25, showmeans=True, showextrema=True, orientation='horizontal')
         vp['bodies'][0].set_facecolor('C{}'.format(i))

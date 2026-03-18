@@ -677,8 +677,7 @@ The method provides good agreement with experiment for systems dominated by vale
 For smaller systems with significant Rydberg character, the accuracy deteriorates, consistent with the intrinsic limitations observed in the OR45 benchmark.  
 An additional technical aspect concerns gauge-origin invariance: although both length and velocity formulations can be employed, residual deviations remain when finite basis sets are used, typically below 1\% but reaching up to 30\% in challenging cases.
 
-To assess the impact of the XsTD approximation, we revisited the OR45 benchmark (the organic molecules, see Fig.~S6) using the original XC functionals (B3LYP, PBE0, and BHHLYP), complemented by additional hybrid and range-separated hybrid functionals (M06-2X, CAM-B3LYP, and $\omega$B97X-D3).  
-All new TD calculations were carried out with \textsc{Gaussian~16}, employing the aug-cc-pVDZ basis set together with gauge-including atomic orbitals (GIAOs), subsequently used as the starting point for (X)sTD calculations.
+To assess the impact of the XsTD approximation, we revisited the OR45 benchmark (the organic molecules, see Fig.~S6) using the original XC functionals (B3LYP, PBE0, and BHHLYP), complemented by additional hybrid and range-separated hybrid functionals (M06-2X, CAM-B3LYP, and $\omega$B97X-D3), see details in the SI.  
 The molar rotation $[\Phi]_\omega$ is \textbf{[correctly!]} defined as
 \begin{equation*}
 	[\Phi]_\omega = \overbrace{72\times 10^6\,\frac{\hbar^2\,\mathcal N_a}{c^2m_e^2}}^{6.4657\times 10^{6}} \times \frac{\omega^2\,\beta(\omega)}{100},
@@ -707,14 +706,33 @@ The resulting distributions of $[\Phi]_D$ errors, relative to experiment, are su
 	\label{fig:or}
 \end{figure}
  
-As shown in Fig.~\ref{fig:or}, the XsTD-DFT predictions of $[\Phi]_D$ closely follow the trends obtained with the sTD-DFT scheme, confirming a good predictive capability, particularly for systems dominated by valence excitations.  
-Among the tested functionals, B3LYP and PBE0 remain reliable choices for predicting molar rotation, whereas RSH functionals do not lead to systematic improvements, although CAM-B3LYP performs reasonably well.  
-While the mean absolute error is slightly reduced with XsTD, the spread of the deviations increases compared to sTD.  
-Moreover, the use of the MVG formulation yields no significant improvement over the LG results, likely because the molecules were positioned close to their center of mass.
+As shown in Fig.~\ref{fig:or}, the XsTD-DFT predictions of $[\Phi]_D$ closely follow the trends obtained with the sTD-DFT scheme, confirming a good predictive capability.  
+Overall, XsTD-DFT reproduces the performance trends observed with sTD-DFT, with comparable or slightly improved mean errors but a somewhat larger spread of deviations.  
+A detailed statistical analysis is provided in the SI (Tables~S1--S2): as in previous studies, systems dominated by $\pi \to \pi^\star$ excitations are well described, whereas molecules with significant Rydberg character remain challenging.  
+B3LYP and PBE0 provide the most consistent results, while RSH functionals can offer improvements for specific subsets such as helicenes; in this context, CAM-B3LYP, as well as its simplified variants sCAM-B3LYP and XsCAM-B3LYP, emerge as competitive alternatives, although the sTD variant generally performs more consistently than XsTD, as also reflected in Fig.~\ref{fig:or}.  
+No significant difference is observed between LG and MVG results, likely because the molecules were positioned close to their center of mass.
+
+In terms of interpretation, norbornenone (molecule 20 in the OR45 set) represents a particularly challenging case for theoretical chiroptical methods due to its exceptionally large experimental molar rotation, ranging from approximately \SIrange{-1146}{-1239}{\degree\centi\meter\squared\per\deci\mole} depending on the solvent.  
+This value is considerably larger than that of structurally related compounds such as camphor (21) or norbornanone (19), a phenomenon attributed to the electronic coupling between the nearly orthogonal \ce{C=C} and \ce{C=O} $\pi$ systems.  
+Conventional TD-DFT calculations at the B3LYP/aug-cc-pVDZ or PBE0/aug-cc-pVDZ level reproduce the experimental values with deviations below \SI{5}{\percent}, whereas simplified sTD-DFT or XsTD-DFT approaches generally underestimate the response by roughly \SI{20}{\percent}, depending on the functional.  
+Notably, XsCAM-B3LYP/aug-cc-pVDZ performs exceptionally well for this system, yielding an error of only \SI{3.6}{\percent}.
+
+A comparative analysis using the NRO framework [Eq.~\eqref{eq:nros}] highlights the distinct electronic origins of optical rotation in these bicyclic ketones.\cite{dewergifosseUnifiedStrategyChemically2020}  
+For norbornenone (Fig.~\ref{fig:nros-20}), the response is highly localized and dominated by the $\beta_{zz}$ component of the OR tensor, with the $z$-axis oriented along the \ce{C=O} bond.  
+The NRO analysis indicates that the response is primarily governed by a single transition (weight 0.52) contributing \SI{-2.9}{a.u.}, corresponding to the coupling between the carbonyl $n \to \pi^\star$ excitation and the $\pi \to \pi^\star$ transition of the \ce{C=C} bond.  
+Fragment-based decomposition further confirms that the interaction between the carbonyl and alkene fragments is the main driver of the enhanced chiroptical response.  
+This demonstrates that NROs provide a level of interpretive power comparable to NTOs for understanding the origin of molecular optical responses.  
+In contrast, camphor exhibits a more delocalized response, characterized by a large participation ratio ($PR_\mathrm{NRO} = 29.1$) and dominated by numerous low-weight Rydberg-type excitations, which complicates both interpretation and predictive modeling.
+Resorting to fragment-based decomposition is however of great help.
 
 \begin{figure}
 	\includegraphics[width=.8\linewidth]{Figure12}
-	\caption{NTOs.}
+	\caption{Molecular coordinate system for norbornenone (molecule 20 in the OR45 dataset) and dominant hole--particle NRO pair contributing to the $\beta_{zz}$ component of the optical rotation tensor. 
+		The weight of the NRO pair is indicated above the arrows, while its contribution to the response is given below. 
+		Also shown are the fragment definitions and the corresponding on-site (red) and inter-fragment contributions (green for A$<$B and blue for A$>$B) to $\beta_{zz}$. 
+		Reprinted with permission from Ref.~\citenum{dewergifosseUnifiedStrategyChemically2020}. 
+		Copyright 2020 American Chemical Society.}
+	\label{fig:nros-20}
 \end{figure}
 
 \subsection{Quadratic responses}
