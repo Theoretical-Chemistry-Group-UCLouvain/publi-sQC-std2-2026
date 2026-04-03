@@ -498,10 +498,14 @@ It should also be noted that unrestricted (X)sTD-DFT is also available in \textt
 \subsection{Implementation details}
 
 The methods discussed in the previous sections are implemented in the \texttt{std2} executable (currently version~2.0), freely available on GitHub (\url{https://github.com/grimme-lab/std2}). 
-The program is written in Fortran and uses \texttt{libcint}\cite{libcint} for the evaluation of atomic-orbital integrals, while linear-algebra routines are delegated to either netlib's BLAS/LAPACK or Intel's oneAPI MKL, to be chosen at compilation times. 
+The program is written in Fortran and uses \texttt{libcint}\cite{libcint} for the evaluation of atomic-orbital integrals, while linear-algebra routines are delegated to either netlib's BLAS/LAPACK or Intel's oneAPI MKL, to be chosen at compilation times.
 The most computationally demanding modules are parallelized using OpenMP.
+The code is distributed with limited user support, provided trough GitHub issues. 
+It is built and installed using either Make or Meson, with an automatic adaptation to supported platforms. 
+\texttt{std2} also distributed with a limited test suite. 
 
 The executable works as a command-line input (CLI) program, whose options are documented in the GitHub repository (\url{https://github.com/grimme-lab/std2/blob/master/std2_manual.pdf}).
+
 
 Every (X)sTD-DFT calculation requires a ground-state wavefunction as input. 
 For this purpose, \texttt{std2} reads MOLDEN-formatted files, which are produced by most quantum-chemistry packages.
@@ -520,6 +524,16 @@ Throughout the text, the shorthand ``sXCF'' and ``XsXCF'' (e.g., sB3LYP) will be
 
 
 \subsection{Excitations: 1PA and ECD spectra}
+
+
+Historically, the use of \texttt{std2} (formerly \texttt{stda}) has progressively expanded from early applications in optical spectroscopy to the routine modeling of UV/Vis and ECD spectra for increasingly complex systems, reflecting its broad adoption within the quantum chemistry community. 
+Notably, many of these usages were carried out independently of the original method developers, underscoring the transferability and practical appeal of the approach. 
+Early studies established the feasibility of simplified TD-DFT methods for describing electronic spectra and photophysical properties of medium-sized systems, including photochromic molecules and coordination compounds, with substantial computational savings compared to conventional TD-DFT.\cite{wiebelerOpticalSpectrumPerceived2014,bannwarthElectronicCircularDichroism2015,chmelaDifferentialManyBodyCooperativity2016,sorgBismuthVersatileCation2018} 
+Shortly thereafter, sTD-DFT was successfully applied to the interpretation of chiroptical properties, in particular ECD spectra used for absolute configuration assignments in organic and bioorganic molecules.\cite{bannwarthElectronicCircularDichroism2016,gehroldAxialHelicalPlanar2016,covingtonAtropoisomerismBiflavonesAbsolute2016} 
+Systematic assessments further demonstrated the reliability of these simplified approaches for UV/Vis spectroscopy across families of chromophores, highlighting their ability to reproduce spectral trends at a fraction of the computational cost, especially when combined with hybrid or range-separated functionals.\cite{martynovMethodologicalSurveySimplified2019} 
+The introduction of xTB-based variants\cite{grimmeUltrafastComputationElectronic2016} significantly extended the applicability to very large systems, enabling the treatment of biomacromolecules\cite{liuUltraFastComputationExcitedStates2021,beaujeanAllAtomQuantumMechanical2021} and complex aggregates, such as dye assemblies where configurational sampling is essential.\cite{usoltsevSemiEmpiricalCalculationBodipy2022} 
+More recently, sTDA/sTD-DFT has been integrated into high-throughput and data-driven workflows, where machine-learning calibration schemes mitigate systematic errors and enable large-scale screening of excited-state properties with near-TD-DFT accuracy.\cite{vermaMachineLearnedCalibrations2022} 
+In parallel, developments targeting extended and periodic systems have confirmed that simplified approaches retain a favorable balance between accuracy and efficiency, paving the way for applications to nanostructures and materials.\cite{hehnExcitedStatePropertiesExtended2022,nguyenTheoreticalInvestigationElectronic2022}
 
 As mentioned in the previous section, the recently introduced XsTD formalism further improves accuracy by restoring key integral contributions at limited additional cost.\cite{dewergifosseEXactIntegralSimplified2024,dewergifosseComputingExcitedStates2024} 
 Establishing the reliability of these low-cost approaches is therefore a prerequisite before extending their use to realistic, large-scale systems.
@@ -671,8 +685,6 @@ In the ECD spectrum, the 21st excited state is responsible for the positive band
 
 Together, these examples emphasize the complementary roles of ADQM and ASQM: the former enables a realistic treatment of complex chromophores in solution or flexible biomolecules by incorporating structural dynamics, whereas the latter delivers accurate spectra for comparatively rigid systems at a reduced computational cost, while preserving a fully quantum-mechanical description of the entire assembly.
 
-
-{\bfseries [Note that UV/Vis\cite{wiebelerQMMMBenchmarking2019,streiterImpactChlorineInternal2020,batraBenchmarkSimplifiedTimeDependent2020,mayOpticalLimitingProperties2020,hidalgo-rosaSensingMechanismElucidation2020,greensteinOrganicPhotovoltaicEfficiency2022,buninLowSymmetryPhthalocyaninesBearing2022,yangEnergybasedFragmentationContribution2022,dmitrienkoExploringReplacementAxially2022,usoltsevSemiEmpiricalCalculationBodipy2022,eroshinIronIIComplexesPorphyrin2023,degtyarevInvestigationSpectraElectronic2023,seveurModelingPhotoAbsorptionProperties2023,lindenthalUnderstandingOpticalProperties2023,paulsEfficientExcitonCoupling2025} (and many others, in fact) and ECD\cite{gehroldAxialHelicalPlanar2016,covingtonAtropoisomerismBiflavonesAbsolute2016,jarzebskiDiastereoselectiveSelfAssemblyNeutral2017,ianniApplicationInvertedChirality2019,mohrEnantioselectivePropertiesNeglected2025} calculations (with sTD-DFT) are also done the wild... Mostly thanks to the ORCA implementation.]}
 
 
 \subsection{Linear response: optical rotation}
