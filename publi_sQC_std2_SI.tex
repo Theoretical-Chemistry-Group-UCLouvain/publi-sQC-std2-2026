@@ -50,12 +50,21 @@ preprint,%
 \begin{document}
 
 
-\title{Molecular responses in a snap: the \texttt{std2} package\\Supporting information}
+\title{The \texttt{std2} Package: An Efficient Tool for Molecular Response Properties and Spectroscopies using Simplified Time-Dependent Density Functional Theory\\Supporting information}
 
 \author{Pierre Beaujean}
- \affiliation{
-Theoretical Chemistry Laboratory, Unit of Theoretical and Structural Physical Chemistry, Namur Institute of Structured Matter (NISM), University of Namur, Rue de Bruxelles, 61, B-5000 Namur (Belgium)
- }
+\affiliation{
+	Theoretical Chemistry Laboratory, Unit of Theoretical and Structural Physical Chemistry, Namur Institute of Structured Matter (NISM), University of Namur, Rue de Bruxelles, 61, B-5000 Namur (Belgium)
+}
+
+\author{Christoph Bannwarth}
+\affiliation{
+	Institute of Physical Chemistry, RWTH Aachen University, Melatener Str. 20, Aachen, G-52074 (Germany)
+}
+
+\author{Axel Liger}
+\author{Arya Satisha}
+\author{Marilù G. Maraldi}
 
 \author{Marc de Wergifosse}
 \email{marc.dewergifosse@uclouvain.be}
@@ -94,6 +103,7 @@ the first-order approximation (including the linear terms in $\Delta$),
 or the second-order approximation (including the terms in $\Delta^2$).
 
 The impact of this truncation on the ERIs is illustrated in Figs.~\ref{fig:cndo-lih}--\ref{fig:cndo-c2h4}, which report the mean absolute error (MAE) on the $(pq|rs)$ integrals for representative bond deformations in small molecules.  
+Note that all the (atomic) two-electron integrals are evaluated exactly.
 For simple systems such as \ce{LiH} (Fig.~\ref{fig:cndo-lih}), short bond lengths lead to large AO overlaps ($\Delta_{\alpha\beta} \gg 0$), which accentuate the poor convergence behavior of the $\Delta$ power series in Eq.~\eqref{eq:cndo-approx} (especially for large basis sets and number of atoms, see cc-pvTZ results).\cite{chandlerReexaminationJustificationNeglect1980}
 In contrast, at larger bond distances the overlaps become small and the truncated expansion provides a more reliable approximation.  
 Interestingly, the 0\textsuperscript{th}-order approximation consistently follows the ``exact'' limit rather closely for all systems over the full range of bond distances considered.
