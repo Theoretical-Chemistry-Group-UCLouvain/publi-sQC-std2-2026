@@ -69,7 +69,14 @@ Theoretical Chemistry Laboratory, Unit of Theoretical and Structural Physical Ch
 \date{\today}
 
 \begin{abstract}
-An abstract.
+	We present \texttt{std2}, a modular program package dedicated to simplified quantum-chemical approaches for excited states and molecular response properties.  
+	The framework implements several variants of simplified time-dependent density functional theory, including sTDA, sTD-DFT, and XsTDA/XsTD-DFT, allowing linear and quadratic response properties.  
+	By combining controlled approximations with efficient numerical implementations, \texttt{std2} enables routine calculations on systems containing thousands of atoms while retaining a favorable balance between computational cost and predictive accuracy.  
+	The framework therefore supports all-atom quantum-mechanical strategies for the treatment of environmental and dynamical effects in complex systems. 
+	
+	The capabilities of the package are illustrated for spectroscopic observables such as one- and two-photon absorption, electronic circular dichroism, optical rotation, second-harmonic generation, and excited-state absorption.  
+	Benchmark calculations show that XsTD-DFT improves the description of charge-transfer excitations relative to sTD-DFT while preserving speedups of two to three orders of magnitude compared to standard TD-DFT.  
+	Overall, \texttt{std2} provides an efficient platform for large-scale excited-state and spectroscopic simulations.
 \end{abstract}
 
 \maketitle
