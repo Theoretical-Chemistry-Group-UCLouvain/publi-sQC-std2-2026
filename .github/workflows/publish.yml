@@ -30,11 +30,11 @@ jobs:
         if: contains(github.ref, 'tags')
         run: |
             echo "REF=${{ github.ref_name }}" >> "$GITHUB_ENV"
-      - name: make images
-        run: |
-          cd analyses
-          pip install -r requirements.txt
-          ./make.sh
+#      - name: make images
+#        run: |
+#          cd analyses
+#          pip install -r requirements.txt
+#          ./make.sh
       - name: build PDFs
         run: |
            latexmk -pdflatex
