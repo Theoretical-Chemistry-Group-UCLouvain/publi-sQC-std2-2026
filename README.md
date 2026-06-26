@@ -2,7 +2,7 @@
 
 P. Beaujean, A. Liger, A. Satisha, M. G. Maraldi, C. Bannwarth, and M. de Wergifosse.
 
-The [`std2` modular program package](https://github.com/grimme-lab/std2) is dedicated to the computation of excited states and molecular response properties using simplified quantum chemistry (sQC) approaches.
+The [`std2` modular program package](https://github.com/Theoretical-Chemistry-Group-UCLouvain/std2) is dedicated to the computation of excited states and molecular response properties using simplified quantum chemistry (sQC) approaches.
 The framework involves several variants of the simplified time-dependent density functional theory, including sTDA, sTD-DFT, SF-sTD-DFT, XsTDA, XsTD-DFT, and SF-XsTD-DFT methods.
 Combining controlled approximations with efficient implementations, the `std2` program enables routine calculations on systems containing thousands of atoms while retaining a favorable balance between computational cost and predictive accuracy.
 Therefore, the framework supports all-atom quantum mechanics (AQM) methodologies for the treatment of surrounding and dynamical structural effects considering realistic systems. In this contribution, the capabilities of the `std2` package are illustrated for spectroscopic observables such as one- and two-photon absorption, electronic circular dichroism, optical rotation, second-harmonic generation, and excited-state absorption.
