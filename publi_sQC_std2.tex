@@ -506,7 +506,7 @@ Overall, this framework enables the computation of electronic spectra for system
 
 \subsection{Implementation details}
 
-The methods discussed in the previous sections are implemented in the \texttt{std2} program (currently version~2.0.1\cite{std2zenodo}), freely available on GitHub (\url{https://github.com/grimme-lab/std2}). 
+The methods discussed in the previous sections are implemented in the \texttt{std2} program (currently version~2.0.1\cite{std2zenodo}), freely available on GitHub (\url{https://github.com/Theoretical-Chemistry-Group-UCLouvain/std2/}). 
 The program is written in Fortran and uses the \texttt{libcint}\cite{libcint} library for the evaluation of atomic-orbital integrals, while linear-algebra routines are delegated to either netlib's BLAS/LAPACK or Intel's oneAPI MKL, to be chosen at compilation times.
 Its structures follows closely the one of Fig.~\ref{fig:computationalsequence}.
 The most computationally demanding modules, which are the CSFs screening, the $\mathbf A'\pm \mathbf B'$ supermatrices construction, and the formation of the resulting tensors, are parallelized using OpenMP.
@@ -514,7 +514,7 @@ The code is distributed with limited user support, provided trough GitHub issues
 It is built and installed using either Make or Meson, with an automatic adaptation to supported platforms. 
 \texttt{std2} also distributed with a limited test suite. 
 
-The executable works as a command-line input (CLI) program, whose options are documented in the GitHub repository (\url{https://github.com/grimme-lab/std2/blob/master/std2_manual.pdf}).
+The executable works as a command-line input (CLI) program, whose options are documented in the GitHub repository (\url{https://github.com/Theoretical-Chemistry-Group-UCLouvain/std2/blob/master/std2_manual.pdf}).
 
 
 Every (X)sTD-DFT calculation requires a ground-state wavefunction as input. 
