@@ -532,8 +532,7 @@ If needed, external tools such as Multiwfn\cite{luMultiwfnMultifunctionalWavefun
 For very large systems, one of the main application domains of \texttt{std2},\cite{beaujeanAllAtomQuantumMechanical2021,lescosSelfassemblingStructureNonlinear2021,loffelsenderAllAtomQuantumMechanical2025} obtaining a sufficiently accurate ground-state wavefunction at a standard DFT level may be challenging or prohibitively costly. 
 To address this, the auxiliary program \texttt{xtb4stda} (\url{https://github.com/grimme-lab/xtb4stda}) has been developed.\cite{grimmeUltrafastComputationElectronic2016}
 It generates a wavefunction at the xTB level with a specific Hamiltonian and using a specially optimized augmented basis set that includes an additional set of polarization functions, significantly improving the description of the virtual orbital space, which is traditionally a weakness of tight binding-based methods. 
-We expect the upcoming g-xTB approach\cite{froitzheimGxTBGeneralPurposeExtended2025} explicitly designed to remedy deficiencies in the HOMO-LUMO gap 
-to further enhance the quality of the ground-state reference wavefunction, particularly, if valence-only excitations are desired. %CB: I thought this is worth adding, as the diffuse functions in XTB allow for Rydberg excitations as well (g-xTB won't be able to do that well)
+We expect the upcoming g-xTB approach\cite{froitzheimGxTBGeneralPurposeExtended2025} explicitly designed to remedy deficiencies in the HOMO-LUMO gap  to further enhance the quality of the ground-state reference wavefunction.
 
 
 \clearpage
