@@ -1,4 +1,4 @@
-# The `std2` Package: A Computationally Efficient Program to Compute Molecular Response Properties and Excited States using Simplified Quantum Chemistry Methods
+# The `std2` Package: A Computationally Efficient Program to Calculate Molecular Response Properties and Excited States using Simplified Quantum Chemistry Methods
 
 P. Beaujean, A. Liger, A. Satisha, M. G. Maraldi, C. Bannwarth, and M. de Wergifosse.
 

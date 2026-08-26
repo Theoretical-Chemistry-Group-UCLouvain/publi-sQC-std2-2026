@@ -26,6 +26,9 @@ preprint,%
 \usepackage{hyperref}
 
 \usepackage{mhchem}
+\usepackage[
+%final
+]{changes}
 
 %% Apr 2021: AIP requests that the corresponding 
 %% email to be moved after the affiliations
@@ -44,7 +47,7 @@ preprint,%
 \begin{document}
 
 
-\title{The \texttt{std2} Package: A Computationally Efficient Program to Compute Molecular Response Properties and Excited States using Simplified Quantum Chemistry Methods}
+\title{The \texttt{std2} Package: A Computationally Efficient Program to Calculate Molecular Response Properties and Excited States using Simplified Quantum Chemistry Methods}
 
 \author{Pierre Beaujean}
  \affiliation{
@@ -91,8 +94,9 @@ Their development was largely motivated by the cost of modern \textit{ab initio}
 Prior to their widespread adoption, semiempirical techniques constituted the primary tools for modeling excited states in large molecules.\cite{thielSemiempiricalQuantumChemical2014,loffelsenderSimplifiedQuantumChemistry2024}
 These methodologies frequently relied on the zero-differential overlap (ZDO) approximation.
 Among these, the ZINDO/S method\cite{ridleyIntermediateNeglectDifferential1973,zernerSemiempiricalMolecularOrbital1991} (Zerner's Intermediate Neglect of Differential Overlap using Configuration Interaction with Singles) proved particularly successful for describing vertical excitations and electronic spectra, enabling early studies on complex chromophores and biological assemblies.  
-Response functions, such as the first hyperpolarizability, were also considered early on.\cite{papadopoulosCalculationsInducedMoments1982,waiteCalculationsInducedMoments1982,nicolaidesCalculationsInducedMoments1982}
+Response functions, such as the first hyperpolarizability, were also considered early on.\cite{lalamaOriginNonlinearSecondorder1979,papadopoulosCalculationsInducedMoments1982,waiteCalculationsInducedMoments1982,nicolaidesCalculationsInducedMoments1982,tengDispersionNonlinearSecondorder1983,dochertyCalculationSecondorderElectronic1985,morleyNonlinearOpticalProperties1987}
 Later on, methods based on the Neglect of Diatomic Differential Overlap\cite{dewarGroundStatesMolecules1977,dewarDevelopmentUseQuantum1985} (NDDO) with orthogonalization corrections, including the OM$x$ families,\cite{kolbMNDOModelMethodical1993} further improved the exploration of potential energy surfaces and excited-state dynamics.  
+\added{Tight biding approaches were also considered for response calculations.}\cite{nenonSCCDFTBCalculationStatic2013,nenonOriginSurfaceInducedFirst2014}
 
 The modern simplified framework was inaugurated with the introduction of the simplified Tamm--Dancoff approximation (sTDA) in 2013 by Grimme,\cite{grimmeSimplifiedTammDancoffDensity2013} followed shortly by its TD-DFT counterpart (sTD-DFT).\cite{bannwarthSimplifiedTimedependentDensity2014}
 These methods achieve substantial acceleration through controlled approximations, including the neglect of the exchange--correlation kernel and approximate expression for two-electron integrals (see below).  
@@ -101,11 +105,11 @@ Alternative schemes inspired by the success of sTD-DFT/sTDA have then been propo
 The TD-DFT+TB method introduced by Rüger \emph{et al.}\cite{rugerTightbindingApproximationsTimedependent2016} combines a DFT ground state with a monopole approximation and local exchange--correlation functionals, delivering speedups of up to two orders of magnitude while maintaining errors below $\sim$0.15~eV for excitation energies in large plasmonic systems.
 Giannone and Della Sala\cite{giannoneMinimalAuxiliaryBasis2020} recently proposed the TD-DFT-as approach, based on a resolution-of-identity scheme with a single $s$-type auxiliary function per atom, from which sTD-DFT, sTDA, and TD-DFT+TB can be viewed as approximations; this strategy was subsequently extended to hybrid functionals through TD-DFT-ris.\cite{zhouMinimalAuxiliaryBasis2023}
 Additional developments include the extension of TD-DFT+TB to analytical excited-state gradients, the incorporation of periodic boundary conditions within sTDA,\cite{hehnExcitedStatePropertiesExtended2022} and the introduction of simplified GW/BSE approaches,\cite{choSimplifiedGWBSE2022} collectively illustrating the sustained effort to reduce computational cost while preserving predictive accuracy.
-As a consequence, both sTDA and TD-DFT-ris can serve as preconditionner for actual full TD-DFT calculation, resulting in non-negligible speep-up.\cite{zhouAcceleratingMolecularProperty2021,zhouConvergingTimeDependentDensity2024}
+As a consequence, both sTDA and TD-DFT-ris can serve as preconditioner for actual full TD-DFT calculation, resulting in non-negligible spee\replaced{d}{p}-up.\cite{zhouAcceleratingMolecularProperty2021,zhouConvergingTimeDependentDensity2024}
 
 Over time, the sTD-DFT framework has expanded to encompass a broad spectrum of linear and nonlinear response properties,\cite{dewergifossePerspectiveSimplifiedQuantum2021} such as polarizabilities, hyperpolarizabilities,\cite{dewergifosseNonlinearresponsePropertiesSimplified2018} two-photon absor\-ption,\cite{dewergifosseUltrafastEvaluationTwoPhoton2022} excited-state absorption,\cite{dewergifosseNonlinearresponsePropertiesSimplified2019} optical rotation,\cite{dewergifosseSimplifiedTimedependentDensity2020} and spin-flip formulations for strongly correlated situations,\cite{dewergifosseSimplifiedSpinFlipTimeDependent2019}  thereby transforming simplified methods into versatile tools for large-scale simulations.  
 Recent developments have led to the eXact-integral simplified TD-DFT (XsTD-DFT) methodology,\cite{dewergifosseEXactIntegralSimplified2024} which moves the simplified framework toward a more rigorous first-principles formulation.  
-By replacing semiempirical integral approximations with exact one- and two-center atomic-orbital integrals, XsTD-DFT removes the dependence on fitted parameters while preserving favorable scaling.  
+By replacing semiempirical integral approximations with explicit \added{and exact} one- and two-center atomic-orbital integrals \added{while retaining the other approximations,} XsTD-DFT removes the dependence on fitted parameters while preserving favorable scaling.  
 The extension to support range-separated hybrid functionals\cite{dewergifosseComputingExcitedStates2024} further improves the description for long-range charge-transfer excitations and nonlinear optical responses.  
 Taken together, these advances establish simplified TD-DFT as a reliable platform for predictive simulations of very large molecular systems.  
 
@@ -147,7 +151,7 @@ In practice, one is often interested in molecular properties associated with mea
 Within the framework of perturbation theory, these can be defined as response properties of the system to external perturbations .  
 Typical examples include:  
 \begin{inparaenum}[(i)]
-	\item Nuclear displacements ($\Delta \vec{x}$), which give rise to molecular gradients (first order) and harmonic vibrational frequencies derived from the Hessian (second order);
+	\item Nuclear displacements ($\Delta \vec{r}$), which give rise to molecular gradients (first order) and harmonic vibrational frequencies derived from the Hessian (second order);
 	\item Time-dependent magnetic fields $\vec{B}(t)$, which lead to properties such as NMR shieldings;
 	\item Time-dependent electric fields $\vec{F}(t)$, which provide access to the polarizability ($\dstack{\alpha}{\leftrightarrow}$), the first hyperpolarizability ($\dstack{\beta}{\dstack{\leftrightarrow}{\rightarrow}}$), and higher-order responses; and
 	\item Mixed properties, such as optical rotation, via the electric--magnetic polarizability tensor, $\dstack{G}{\leftrightarrow}$.
@@ -199,7 +203,7 @@ These vectors collect the off-diagonal matrix elements of $\langle p | \hat{V} |
 The vectors $\mathbf{X}_\zeta(\omega)$ and $\mathbf{Y}_\zeta(\omega)$ therefore describe the excitation and de-excitation components of the linear response, respectively.
 The matrices $\mathbf{A}$ and $\mathbf{B}$ constitute the electronic Hessian (supermatrices). 
 They are generally indexed using the occupied-virtual notation ($ia$, $jb$), indicating that each element involves one occupied and one unoccupied orbital. 
-Assuming a global hybrid functional of the form $E_{XC} = (1-a_x)\,E_X^{\mathrm{GGA}} + a_x\,E_X^{\mathrm{HF}} + E_C^{\mathrm{GGA}}$, their elements, obtained via the Slater-Condon rules, are:
+Assuming a global hybrid functional of the form $E_{XC} = (1-a_x)\,E_X^{\mathrm{GGA}} + a_x\,E_X^{\mathrm{HF}} + E_C^{\mathrm{GGA}}$\added{, where $a_x$ is thus the amount of HF exchange}, their elements, obtained via the Slater-Condon rules, are:
 \begin{align}
 	A_{ia,jb} &= \delta_{ij}\delta_{ab} (\varepsilon_a - \varepsilon_i)
 	+ 2\,(ia|jb)
@@ -212,7 +216,7 @@ Assuming a global hybrid functional of the form $E_{XC} = (1-a_x)\,E_X^{\mathrm{
 	\label{eq:TD-AandB}
 \end{align}
 where $\varepsilon_i$ and $\varepsilon_a$ denote occupied and virtual orbital energies, respectively, and $a_x$ is the fraction of nonlocal Fock exchange. 
-The terms $(ia|jb)$, $(ia|bj)$, and $(ib|aj)$ denote two-electron exchange-type integrals, while $(ij|ab)$ denotes a Coulomb-type integral. 
+The terms $(ia|jb)$, $(ia|bj)$, and $(ib|aj)$ denote two-electron exchange-type integrals,\added{ written using Mulliken (or chemist’s) notation,} while $(ij|ab)$ denotes a Coulomb-type integral. 
 The terms $(ia|f_{XC}|jb)$ and $(ia|f_{XC}|bj)$ represent exchange-correlation kernel contributions (deriving from Eq.~\eqref{eq:adiabatic}). 
 In the Tamm-Dancoff approximation (TDA),\cite{hirataTimedependentDensityFunctional1999} the $\mathbf{B}$ matrix is neglected.
 
@@ -290,7 +294,7 @@ Two simplified TD-DFT variants are implemented in \text{std2}: the recently-intr
 \subsubsection{XsTD-DFT}
 
 The XsTD-DFT method (generally abbreviated XsTD) was specifically designed to overcome several shortcomings of sTD-DFT, most notably its limited reliability for systems with substantial long-range exchange or pronounced charge-transfer character.  
-XsTD-DFT assumes a range-separated (RSH) or global hybdrid (GH) XCFs,\cite{dewergifosseEXactIntegralSimplified2024,dewergifosseComputingExcitedStates2024} and constructs the approximate TD-DFT supermatrix elements by removing all explicit XCF contributions. The resulting expressions are, for a RSH and a closed-shell system:
+XsTD-DFT assumes a range-separated (RSH) or global hyb\deleted{d}rid (GH) XCFs,\cite{dewergifosseEXactIntegralSimplified2024,dewergifosseComputingExcitedStates2024} and constructs the approximate TD-DFT supermatrix elements by removing all explicit XCF contributions\added{, in practice resulting in the removal of the exchange–correlation kernel integrals ($f_{XC}$)}. The resulting expressions are, for a RSH and a closed-shell system:
 \begin{align}
 	(\mathbf A'+ \mathbf B')_{ia,jb} &=  \delta_{ij}\delta_{ab} (\varepsilon_a - \varepsilon_i)
 	+ 4\,(ia|jb)' - a_x\,[(ib|aj)'+(ij|ab)'] \nonumber\\&\hspace{2em}- c_x\,[(ij|\mathrm{erf}(\omega r)|ab)'+ (ib|\mathrm{erf}(\omega r)|aj)'],\nonumber\\
@@ -298,6 +302,7 @@ XsTD-DFT assumes a range-separated (RSH) or global hybdrid (GH) XCFs,\cite{dewer
 	\label{eq:xstddft}
 \end{align}
 Here, $a_x$ and $c_x$ denote the constant and long-range fractions of Hartree--Fock exchange, respectively, and $\omega$ is the RSH range-separation parameter.
+\added{The prime on integrals indicates that they are now approximated (see below).}
 Note that unrestricted TD-DFT is also implemented for GH in the \texttt{std2} program to characterize open-shell systems.
 
 The approximate form of the $(ia|jb)'$ integrals follows from a sequence of controlled simplifications.  
@@ -394,7 +399,7 @@ For Coulomb-type contributions ($X=J$),
 	\left[\frac{1}{R_{AB}^{\gamma_J} + \left(a_x\,\eta_{AB}\right)^{-\gamma_J}}\right]^{1/\gamma_J},
 \end{equation*}
 where $R_{AB}$ is the interatomic distance, $\eta_{AB} = \tfrac{1}{2}(\eta_A + \eta_B)$ is the average chemical hardness, and $\gamma_J$ is a global damping parameter.  
-Note that this formulation is choosen so that for $R_{AB}\to 0$, the integral simplifies to $a_x\,\eta$ which is consistent with Eq.~\eqref{eq:TD-AandB}.\cite{grimmeSimplifiedTammDancoffDensity2013}
+Note that this formulation is cho\deleted{o}sen so that for $R_{AB}\to 0$, the integral simplifies to $a_x\,\eta$ which is consistent with Eq.~\eqref{eq:TD-AandB}.\cite{grimmeSimplifiedTammDancoffDensity2013}
 Exchange-type integrals ($X=K$) employ
 \begin{equation*}
 	(AA|BB)_K =
@@ -461,7 +466,7 @@ The weight of each NRO contribution is given by
 \end{equation*}
 and the corresponding participation ratio reads
 \begin{equation*}
-	PR_{NRO}(\omega)  = \frac{[\sum_i w_i(\omega)]^2}{\sum_i w_i(\omega)}.
+	PR_{NRO}(\omega)  = \frac{[\sum_i w_i(\omega)]^2}{\sum_i [w_i(\omega)]^2}.
 \end{equation*}
 An alternative perspective is obtained by applying a Löwdin orthogonalization to $\mathbf A$ and the 1TDM.  
 Starting from $\mathbf C = \mathbf P \Sigma \mathbf Q^T$, one defines
@@ -562,6 +567,7 @@ Establishing the reliability of these low-cost approaches is therefore a prerequ
 Reference~\citenum{maraldiEvaluatingPerformanceExact2025} therefore evaluates the performance of TD-, sTD-, and XsTD-DFT methods for 1PA spectra using several global hybrid and range-separated hybrid exchange--correlation functionals, benchmarking against RI-CC2 results obtained with the aug-cc-pVDZ basis set for the first bright excitation ($f_{0\to n} > 0.02$). 
 Results for the CT (QUEST) dataset are presented in Fig.~\ref{fig:1pa-ct} (Fig.~S4). 
 These datasets comprise small- to medium-sized push--pull $\pi$-conjugated molecules dominated by valence excitations, often with pronounced charge-transfer character. 
+\added{As a result, with the exception of three molecules, the oscillator strengths in the CT dataset are larger than 0.5.}
 XsTD-DFT closely tracks conventional TD-DFT for both excitation energies ($\Delta E_{0\to n}$) and oscillator strengths ($f_{0\to n}$), as reflected by comparable mean deviations (MDs) and mean absolute deviations (MADs). 
 In particular, XsCAM-B3LYP shows excellent agreement with RI-CC2 across both datasets. 
 By contrast, sTD-DFT exhibits larger errors, especially with functionals containing high fractions of Hartree--Fock exchange (e.g., BHHLYP and M06-2X). 
@@ -575,7 +581,7 @@ By contrast, sTD-DFT exhibits larger errors, especially with functionals contain
 
 The XsTDA approximation, which provides additional computational savings, likewise reproduces TDA-DFT trends with good fidelity.\cite{dewergifosseEXactIntegralSimplified2024,dewergifosseComputingExcitedStates2024}
 Relative to their non-simplified counterparts, MADs of 0.14 and \SI{0.22}{\electronvolt} are obtained for XsTDA/B3LYP and XsTDA/CAM-B3LYP, respectively, compared to 0.16 and \SI{0.27}{\electronvolt} for the corresponding sTDA variants.
-Overall, the XsTDA-DFT method emerges as a robust low-cost alternative to TD-DFT, reducing CPU time by roughly two to three orders of magnitude while maintaining similar accuracy (Fig.~\ref{fig:1pa-timing}). 
+Overall, the XsTDA-DFT method emerges as a robust low-cost alternative to TD-DFT, reducing CPU time by roughly \replaced{one to two}{two to three} orders of magnitude while maintaining similar accuracy (Fig.~\ref{fig:1pa-timing}). 
 
 \begin{figure}[!p]
 	\centering
@@ -612,7 +618,7 @@ For spin-flip calculations, however, the XsTD-DFT formulation provides only marg
 The SF-sTD-DFT framework has also proven valuable for studying large polycyclic hydrocarbons with diradical character. 
 For instance, investigations of indeno[1,2b]fluorene and related diindeno[n]thiophene derivatives\cite{dewergifosseAreFullyConjugated2019} showed that the method efficiently reproduces experimental absorption trends while allowing an intuitive interpretation of excited states using NTOs.  
 Importantly, the spin-flip formulation captures small contributions from one doubly excited configuration that is inaccessible to conventional TD-DFT, leading to a consistent correlation between theoretical and experimental excitation energies.  
-Beyond spectroscopy, SF-sTD-DFT has also been applied to the design of singlet-fission chromophores.\cite{kostadinovaSingletFissionTinkertoys2022,stoychevaSingletFissionTinkertoys}  
+Beyond spectroscopy, SF-sTD-DFT has also been applied to the design of singlet-fission chromophores.\cite{kostadinovaSingletFissionTinkertoys2026}  
 Because many efficient singlet-fission materials exhibit significant diradical character, the method provides a computationally efficient strategy to explore large candidate systems and rationalize how structural factors such as topology, conjugation length, or substituents influence singlet-fission propensity.
 
 The computation of excitation spectra has recently been extended to near-edge X-ray absorption fine structure (NEXAFS), further broadening the applicability of simplified excited-state methods.\cite{dewergifosseUltrafastNearEdgeXray2025}
@@ -664,7 +670,7 @@ The ADQM protocol is also essential for describing the electronic circular dichr
 This is illustrated by myoglobin in Ref.~\citenum{seibertBiomolecularStructureInformation2017}, a prototypical member of the globin family responsible for intramuscular oxygen transport and comprising roughly 2500 atoms, well beyond the reach of conventional excited-state quantum-chemical methods.  
 Within the ADQM-MD framework, performed at the sTDA-xTB level, the CD spectrum was obtained by averaging over 100 snapshots extracted from a molecular dynamics trajectory.  
 This ensemble averaging suppresses artificial spectral features associated with individual conformations and yields a physically meaningful lineshape.  
-The resulting spectrum (Fig.~\ref{fig:ecd-myo}) reproduces all characteristic experimental signatures with very good agreement.  
+The resulting spectrum (Fig.~\ref{fig:ecd-myo}) reproduces all characteristic experimental signatures\added{ and the overall spectral shape} with very good agreement.  
 Because myoglobin contains eight $\alpha$-helices, the CD response is dominated by backbone transitions typical of helical peptides, confirming that the method correctly captures secondary-structure fingerprints while simultaneously accounting for the heme cofactor and its coupling to the protein environment.  
 
 \begin{figure}[!h]
@@ -757,7 +763,7 @@ The resulting distributions of $[\Phi]_D$ errors, relative to experiment, are su
 \end{figure}
  
 As shown in Fig.~\ref{fig:or}, the XsTD-DFT predictions of $[\Phi]_D$ follow the trends obtained with the sTD-DFT scheme, confirming a good predictive capability.  
-Overall, XsTD-DFT shows comparable or slightly improved MDs but somewhat larger MADs (generaly above one third of an order of magnitude).  
+Overall, XsTD-DFT shows comparable or slightly improved MDs but somewhat larger MADs (general\added{l}y above one third of an order of magnitude).  
 A detailed statistical analysis is provided in the SI (Tables~S1--S2): as in previous studies, systems dominated by $\pi \to \pi^\star$ excitations are well described, whereas molecules with significant Rydberg character remain challenging.  
 B3LYP and PBE0 provide the most consistent results, while RSH functionals can offer improvements for specific subsets such as helicenes; in this context, CAM-B3LYP, as well as its simplified variants sCAM-B3LYP and XsCAM-B3LYP, emerge as competitive alternatives, although the sTD-DFT variant generally performs more consistently than XsTD-DFT , as also reflected in Fig.~\ref{fig:or}.  
 No significant difference is observed between LG and MVG results, likely because the molecules were positioned close to their center of charge.
@@ -812,7 +818,7 @@ For each method, the MD of this difference is reported, with the MAD are given i
 
 Consistent with the conclusions drawn from the 2PA benchmarks, a similarly favorable picture emerges for first hyperpolarizabilities, demonstrating that simplified approaches can reliably describe quadratic response properties.  
 For small push--pull $\pi$-conjugated molecules, the original sTD-DFT scheme is known to exhibit artificially red-shifted resonance enhancements in $\beta_{\mathrm{HRS}}$.  
-To mitigate this limitation, some of use previously proposed refitting the MNOK two-electron integral parameters in order to better reproduce higher-level reference calculations.  
+To mitigate this limitation, some of us\deleted{e} previously proposed refitting the MNOK two-electron integral parameters in order to better reproduce higher-level reference calculations.  
 This strategy proved particularly effective for large systems, within the ASQM framework.  
 In Ref.~\citenum{beaujeanAllAtomQuantumMechanical2021}, bacteriorhodopsin (bR, $\sim$4000 atoms) was investigated as a challenging test case, benefiting from the availability of experimental $\beta_{\mathrm{HRS}}$ spectra measured by Clays and co-workers.\cite{decoeneFluorescenceFreeSpectralDispersion2017}  
 As customary, the experimental data were extrapolated to the static limit using refined two-state models; here, a simple vibronic model was employed with parameters adjusted to reproduce the experimental one-photon absorption spectrum.  
@@ -930,15 +936,15 @@ For cis isomers, a less regular size dependence is observed, which can be attrib
 	\centering
 	\includegraphics[width=\linewidth]{Figure19}
 	\caption{
-		Size dependence of the dynamic NLO response $\braket{\beta_{\mathrm{HRS}}/N^{\mathrm{AZO}}}$ for trans- (left) and cis-azobenzene (right) clusters, computed at the TD-DFT/M06-2X/6-311+G(d) level and with optimally tuned sTD-DFT schemes based on DFT and xTB orbitals. 
+		Size dependence of the dynamic NLO response $\braket{\beta_{\mathrm{HRS}}/N^{\mathrm{AZO}}}$ \added{($N^{\mathrm{AZO}}$ is the number of azobenzenes in the cluster)} for trans- (left) and cis-azobenzene (right) clusters, computed at the TD-DFT/M06-2X/6-311+G(d) level and with optimally tuned sTD-DFT schemes based on DFT and xTB orbitals. 
 		The size of the trans-azobenzene cluster is given in the bottom panel.
-		Each point corresponds to an average over nine independent clusters extracted from MD simulations. 
+		Each point corresponds to an average over nine independent clusters extracted from MD simulations \added{(standard deviations are provided in the SI of Ref.}\citenum{huggetSimplifiedTimeDependentDFT2026a} \added{). The notation sTDDFT[X]\textsuperscript{Y} indicates that method X has been used for the ground-state calculation, while the frequency (or frequency range) Y is used to optimally tune the $\gamma_J$ and $\gamma_K$ parameters of the sTD-DFT approach [Eq.~\eqref{eq:sints}].} 
 		The progressive decrease of the normalized response highlights the non-additive nature of SHG in aggregated systems and the importance of explicitly accounting for intermolecular interactions. 
 		Reprinted with permission from Ref.~\citenum{huggetSimplifiedTimeDependentDFT2026a}. Copyright 2026 Wiley.}
 	\label{fig:beta-sams}
 \end{figure}
 
-Overall, these two results emphasize the importance of an explicit AQM treatment of intermolecular interactions and demonstrate that combining MD sampling with simplied TD-DFT provides a practical route for modeling NLO responses in complex supramolecular systems.
+Overall, these two results emphasize the importance of an explicit AQM treatment of intermolecular interactions and demonstrate that combining MD sampling with simpli\added{fi}ed TD-DFT provides a practical route for modeling NLO responses in complex supramolecular systems.
 
 \clearpage
 \section{Conclusions and perspectives}
@@ -968,7 +974,7 @@ Promising directions include:
 	\item Improving the quality of ground-state wavefunctions, while reducing the computational cost, for instance through integration with newly developed tight-binding approaches such as g-xTB is ongoing to enhance the reliability of subsequent excited-state  and response calculations.
 	\item Incorporating damped response formalisms to enable a more robust and physically sound treatment of resonant nonlinear properties.
 	Preliminary tests show that the near resonance region is well described by this new addition.
-	\item The introduction of the new $\eta$XsTD-DFT family of methods\cite{etaXS} into the next \texttt{std2} version that retains the accuracy and robustness of the XsTD-DFT scheme but at a fraction of the time and memory usage. Inspired by recent low-scaling TD-DFT strategies (e.g., TD-DFT-ris), it uses the resolution of identity approximation with a minimal auxiliary basis set to further reduce computational cost. For exemple, both one- and two-photon absorption spectra of the bacteriorhodopsin (3835 atoms) were computed in only 2h25min on a desktop computer using  $\sim$500GB of RAM, providing striking comparisons with respect to experiment.
+	\item The introduction of the new $\eta$XsTD-DFT family of methods\cite{etaXS} into the next \texttt{std2} version that retains the accuracy and robustness of the XsTD-DFT scheme but at a fraction of the time and memory usage. Inspired by recent low-scaling TD-DFT strategies (e.g., TD-DFT-ris), it uses the resolution of identity approximation with a minimal auxiliary basis set to further reduce computational cost. For ex\replaced{a}{e}mple, both one- and two-photon absorption spectra of the bacteriorhodopsin (3835 atoms) were computed in only 2h25min on a desktop computer using  $\sim$500GB of RAM, providing striking comparisons with respect to experiment.
 	\item Advancing parallelization and high-performance computing implementations to efficiently tackle increasingly large molecular systems.
 	\item Extending the methodology to additional spectroscopic observables, including phosphorescence, Raman scattering, and higher-order nonlinear response properties.
 	\item Extending the XsTD-DFT methodology to the treatment of electron correlation, such as multi-reference or MP2 corrections.
@@ -981,7 +987,7 @@ The supplementary material provides a section about the validity of the CNDO app
 
 \begin{acknowledgments}
 	We acknowledge past, present, and future developers of the \texttt{std2} package and related tools.
-	In particular, we warmly thanks Prof.\ S.\ Grimme for his mentoring during all those years and giving us the freedom to make \texttt{std2} what it is now as well as his  pioneering work on simplified quantum chemical methods and for providing the xTB binding, which serves as on of the key components of this framework.
+	In particular, we warmly thank\deleted{s} Prof.\ S.\ Grimme for his mentoring during all those years and giving us the freedom to make \texttt{std2} what it is now as well as his  pioneering work on simplified quantum chemical methods and for providing the xTB binding, which serves as on of the key components of this framework.
 	We also thank our collaborators and colleagues for their contributions to the development and application of these methods, as well as the funding agencies that have supported this research over the years.
 	MGM thanks the F.R.S.-FNRS for her Research Fellow position. 
   CB acknowledges the support of the Ministry of Culture and Science of the State of North Rhine-Westphalia (MKW) through the NRW R{\"u}ckkehrprogram. 
