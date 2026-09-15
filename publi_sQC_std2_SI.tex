@@ -114,16 +114,21 @@ In contrast, at larger bond distances the overlaps become small and the truncate
 Interestingly, the 0\textsuperscript{th}-order approximation consistently follows the ``exact'' limit rather closely for all systems over the full range of bond distances considered.
 Overall, near equilibrium geometries the MAE on the ERIs in the MO basis is on the order of \SI{e-2}{\hartree}, and decreases with increasing basis set size, reaching values below \SI{e-3}{\hartree}.
 
+\newpage
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=\linewidth]{./FigureS1}
 	\caption{Mean absolute error (MAE) of the $(pq|rs)$ ERIs for the deformation of the \ce{Li-H} bond in \ce{LiH}.  
 		Reference integrals were computed at the HF level using basis sets of increasing size.  
 		The CNDO integrals were evaluated either with Eq.~\eqref{eq:loweri} (``exact'' orthogonalized expression) or with different truncation orders of Eq.~\eqref{eq:cndo-approx}.  
-		The dashed line indicates the equilibrium bond length obtained at the HF/cc-pVDZ level.}
+		The dashed line indicates the equilibrium bond length obtained at the HF/cc-pVDZ level.
+		}
 	\label{fig:cndo-lih}
 \end{figure}
 
+\noindent Alt-text: Three-panel line plot showing mean absolute errors in two-electron integrals as a function of oxygen-hydrogen bond in water distance across three basis sets. The curves compare exact integral values against zeroth-, first-, and second-order approximations to demonstrate accuracy trends with internuclear separation.
+
+\newpage
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=\linewidth]{./FigureS2}
@@ -133,6 +138,10 @@ Overall, near equilibrium geometries the MAE on the ERIs in the MO basis is on t
 		The dashed line marks the equilibrium bond length obtained at the HF/cc-pVDZ level.}
 	\label{fig:cndo-h2o}
 \end{figure}
+
+\noindent Alt-text: Three-panel line plot showing mean absolute errors in two-electron integrals as a function of carbon-carbon bond distance in ethylene across three basis sets. The curves compare exact integral values against zeroth-, first-, and second-order approximations to demonstrate accuracy trends with internuclear separation.
+
+\newpage
 
 \begin{figure}[!h]
 	\centering
@@ -144,21 +153,27 @@ Overall, near equilibrium geometries the MAE on the ERIs in the MO basis is on t
 	\label{fig:cndo-c2h4}
 \end{figure}
 
+\noindent Alt-text: Three-panel line plot showing mean absolute errors in two-electron integrals as a function of lithium hydride bond distance across three basis sets. The curves compare exact integral values against zeroth-, first-, and second-order approximations to demonstrate accuracy trends with internuclear separation.
+
 \clearpage
 \section{QUEST dataset for 1PA and 2PA}
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=\linewidth]{./FigureS5}
+	\includegraphics[width=.9\linewidth]{./FigureS4}
 	\caption{Violin plots of the deviations in one-photon absorption (1PA) properties relative to RI-CC2 reference values for the QUEST dataset, as reported in Ref.~\citenum{maraldiEvaluatingPerformanceExact2025}, computed with the aug-cc-pVDZ basis set. Results are shown for several exchange--correlation functionals (XCFs) and levels of approximation (TD, sTD, and XsTD). Left: excitation energies. Right: oscillator strengths. For each method, the mean deviation is reported, with the MAD given in parentheses.}
 \end{figure}
 
+\noindent Alt-text: Violin plot comparing the accuracy of sTD, XsTD, and TD-DFT methods across various density functionals for calculated excitation energies and oscillator strengths of the QUEST dataset. The distributions illustrate mean energy and transition intensity deviations relative to benchmark reference data.
 
+\newpage
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=\linewidth]{./FigureS5}
 	\caption{Violin plots of the deviations in two-photon absorption (2PA) properties relative to RI-CC2 reference values for the QUEST dataset, as reported in Ref.~\citenum{maraldiEvaluatingPerformanceExact2025}, computed with the aug-cc-pVDZ basis set. Results are shown for several exchange--correlation functionals (XCFs) and levels of approximation (TD, sTD, and XsTD). Left: excitation energies. Right: 2PA strengths expressed as $\log_{10}(\delta^{\mathrm{2PA}})$. For each method, the mean deviation is reported, with the MAD given in parentheses.}
 \end{figure}
+
+\noindent Alt-text: Two-panel violin plot comparing the performance of sTD, XsTD, and TD-DFT methods across various density functionals for two-photon absorption calculations in the QUEST dataset. The distributions illustrate mean error spreads for two-photon excitation energies and logarithmic transition cross-sections.
 
 \clearpage
 \section{OR45 benchmark}
@@ -169,6 +184,7 @@ The molecular geometries (Fig.~\ref{fig:or-compounds}) were also taken from Ref.
 All resulting wavefunctions were subsequently employed as input for the corresponding (X)sTD calculations.
 Following Ref.~\citenum{dewergifosseSimplifiedTimedependentDensity2020}, (X)sTD calculations were performed using $E_{thr}=\SI{50}{\electronvolt}$ (reduced to \SI{20}{\electronvolt} for compounds \textbf{36}-\textbf{42}).
 
+ \newpage
 \begin{figure}[!h]
 	\centering
 	\includegraphics{FigureS6}
@@ -177,6 +193,9 @@ Following Ref.~\citenum{dewergifosseSimplifiedTimedependentDensity2020}, (X)sTD 
 	\label{fig:or-compounds}
 \end{figure}
 
+\noindent Alt-text: Grid of chemical structures displaying the OR45 benchmark set of organic molecules evaluated in the calculations. The array illustrates the structural diversity of chromophores and functionalized compounds studied for their optical properties.
+
+\clearpage
 The performance of the different methods is summarized in Tables~\ref{tab:or45-old} (previous XCFs) and \ref{tab:or45-new} (new XCFs), which report mean and median deviations of the calculated $[\Phi]_D$ from experiment.  
 Because the dataset spans several orders of magnitude, both global statistics and subset-specific results are provided for groups of compounds with similar responses, following Ref.~\citenum{dewergifosseSimplifiedTimedependentDensity2020}.  
 Unsigned absolute and relative mean ($\Delta$) and median ($\delta$) deviations are reported; significant differences between $\Delta$ and $\delta$ typically indicate the presence of outliers.  
@@ -251,6 +270,8 @@ Finally, the MVG formulation does not provide significant improvements over LG (
 \end{sidewaystable}
 
 \clearpage
+\noindent Alt-text: Table presenting relative and absolute mean and median statistical errors for calculated specific optical rotation across molecular subsets in the OR45 benchmark dataset. The entries evaluate the performance of simplified response models against standard time-dependent density functional theory across various density functionals and gauge choices.
+
 \bibliography{biblio}
 
 \end{document}
