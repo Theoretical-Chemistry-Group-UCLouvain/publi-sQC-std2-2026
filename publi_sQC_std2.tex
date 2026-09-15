@@ -316,7 +316,7 @@ Introducing the Löwdin-orthogonalized coefficients $\mathbf{C}^\perp = \mathbf{
 	(ia|jb) = \sum_{\mu\alpha\nu\beta}( C_{i\mu}^\perp)^\star C_{a\alpha}^\perp (C^\perp_{j\nu})^\star C_{b\beta}^\perp\,(\lambda_\mu\lambda_\alpha|\lambda_\nu\lambda_\beta),
 \end{equation*}
 where each orthogonalized AO is written as $\lambda_\mu = \sum_\beta \phi_\beta\,S_{\mu\beta}^{-1/2}$, with $\{\phi_\beta\}$ the original atomic basis functions.  
-The ZDO approximation employed in XsTD-DFT corresponds to a complete neglect of differential overlap (CNDO) treatment:
+The ZDO approximation employed in XsTD-DFT corresponds to\deleted{ a complete neglect of differential overlap (CNDO) treatment}:
 \begin{equation}
 	(\lambda_\mu\lambda_\alpha|\lambda_\nu\lambda_\beta) \approx \delta_{\mu\alpha}\delta_{\nu\beta}\,(\lambda_\mu\lambda_\mu|\lambda_\nu\lambda_\nu), \label{eq:cndo}
 \end{equation}
@@ -384,7 +384,7 @@ The approximate electronic Hessian elements take the form\cite{grimmeSimplifiedT
 	(\mathbf A' - \mathbf B')_{ia,jb} &= \delta_{ij}\delta_{ab} (\varepsilon_a - \varepsilon_i) + a_x\,[(ib|aj)'_K-(ij|ab)'_J ].
 	\label{eq:stddft}
 \end{align}
-Different from Eq.~\eqref{eq:xsints}, these integrals are evaluated semi-empirically through a atomic monopole-based representation, with the transition charges projected on atoms:
+Different from Eq.~\eqref{eq:xsints}, these integrals are evaluated semi-empirically through a atomic monopole-based representation, \added{which thus corresponds to a complete neglect of differential overlap (CNDO) treatment,} with the transition charges projected on atoms:
 \begin{equation}
 	(ia|jb)'_X = \sum_{AB} q_A^{ia}\,q_B^{jb}\,(AA|BB)_X, 
 	\qquad 
