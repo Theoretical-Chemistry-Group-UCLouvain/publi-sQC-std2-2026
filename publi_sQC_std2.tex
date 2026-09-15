@@ -216,7 +216,7 @@ Assuming a global hybrid functional of the form $E_{XC} = (1-a_x)\,E_X^{\mathrm{
 	\label{eq:TD-AandB}
 \end{align}
 where $\varepsilon_i$ and $\varepsilon_a$ denote occupied and virtual orbital energies, respectively, and $a_x$ is the fraction of nonlocal Fock exchange. 
-The terms $(ia|jb)$, $(ia|bj)$, and $(ib|aj)$ denote two-electron exchange-type integrals,\added{ written using Mulliken (or chemist’s) notation,} while $(ij|ab)$ denotes a Coulomb-type integral. 
+The terms $(ia|jb)$, $(ia|bj)$, and $(ib|aj)$ denote two-electron exchange-type integrals,\added{ written using Mulliken (or chemist's) notation,} while $(ij|ab)$ denotes a Coulomb-type integral. 
 The terms $(ia|f_{XC}|jb)$ and $(ia|f_{XC}|bj)$ represent exchange-correlation kernel contributions (deriving from Eq.~\eqref{eq:adiabatic}). 
 In the Tamm-Dancoff approximation (TDA),\cite{hirataTimedependentDensityFunctional1999} the $\mathbf{B}$ matrix is neglected.
 
@@ -294,7 +294,7 @@ Two simplified TD-DFT variants are implemented in \text{std2}: the recently-intr
 \subsubsection{XsTD-DFT}
 
 The XsTD-DFT method (generally abbreviated XsTD) was specifically designed to overcome several shortcomings of sTD-DFT, most notably its limited reliability for systems with substantial long-range exchange or pronounced charge-transfer character.  
-XsTD-DFT assumes a range-separated (RSH) or global hyb\deleted{d}rid (GH) XCFs,\cite{dewergifosseEXactIntegralSimplified2024,dewergifosseComputingExcitedStates2024} and constructs the approximate TD-DFT supermatrix elements by removing all explicit XCF contributions\added{, in practice resulting in the removal of the exchange–correlation kernel integrals ($f_{XC}$)}. The resulting expressions are, for a RSH and a closed-shell system:
+XsTD-DFT assumes a range-separated (RSH) or global hyb\deleted{d}rid (GH) XCFs,\cite{dewergifosseEXactIntegralSimplified2024,dewergifosseComputingExcitedStates2024} and constructs the approximate TD-DFT supermatrix elements by removing all explicit XCF contributions\added{, in practice resulting in the removal of the exchange--correlation kernel integrals ($f_{XC}$)}. The resulting expressions are, for a RSH and a closed-shell system:
 \begin{align}
 	(\mathbf A'+ \mathbf B')_{ia,jb} &=  \delta_{ij}\delta_{ab} (\varepsilon_a - \varepsilon_i)
 	+ 4\,(ia|jb)' - a_x\,[(ib|aj)'+(ij|ab)'] \nonumber\\&\hspace{2em}- c_x\,[(ij|\mathrm{erf}(\omega r)|ab)'+ (ib|\mathrm{erf}(\omega r)|aj)'],\nonumber\\
